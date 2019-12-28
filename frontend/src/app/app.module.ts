@@ -11,6 +11,7 @@ import { RestaurantComponent } from './components/restaurant/restaurant.componen
 import { ScrollComponent } from './components/scroll/scroll.component';
 import { RatingComponent } from './components/rating/rating.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     RestaurantComponent,
     ScrollComponent,
-    RatingComponent
+    RatingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
