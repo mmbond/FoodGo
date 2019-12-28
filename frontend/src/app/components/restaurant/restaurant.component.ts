@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./restaurant.component.sass']
 })
 export class RestaurantComponent implements OnInit {
