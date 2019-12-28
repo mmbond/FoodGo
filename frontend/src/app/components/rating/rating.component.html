@@ -1,0 +1,8 @@
+<ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+      <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+    </span>
+  </ng-template>
+  <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+  <!-- <hr>
+  <pre>Rate: <b>{{currentRate}}</b></pre> -->

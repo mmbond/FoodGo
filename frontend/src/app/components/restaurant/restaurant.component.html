@@ -1,0 +1,47 @@
+<main role="main">
+
+  <section class="jumbotron text-center section-bg">
+    <div class="container">
+      <h1 class="jumbotron-heading">FoodGo</h1>
+      <p class="lead text-white">Dobijanje omiljene hrane više je nego što vam je život olakšan. Kada naručujete kod FoodGo-a,<br/>
+         pomažete hiljadama marljivih restorana i kurira da zarade za život.</p>
+      <!-- <p>
+        <a href="#" class="btn btn-primary my-2">Main call to action</a>
+        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+      </p> -->
+    </div>
+  </section>
+
+  <div class="py-2 bg-light">
+    <div class="container">
+      <h3 class="py-3">Restorani</h3>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let restaurant of data.result">
+          <a href="restaurant/{{restaurant.restaurantId}}" class="link">
+            <div class="card mb-4 box-shadow" ngbTooltip="Otvorite meni restorana" tooltipClass="foodgo-tooltip">
+              <img class="card-img-top" alt="{{restaurant.name}}" style="height: 225px; width: 100%; display: block;"
+                src="{{restaurant.restorantLogo}}" data-holder-rendered="true">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="">
+                    <h5 class="card-text">{{restaurant.name}}</h5>
+                    <p class="text-muted">{{restaurant.address}}</p>
+                  </div>
+                  <app-rating [currentRate]=restaurant.mark></app-rating>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="card-text">{{restaurant.description}}</p>
+                  <!-- <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                </div> -->
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
