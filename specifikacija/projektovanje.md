@@ -17,7 +17,6 @@
 | password       | String(SHA256) |
 
 ## LoginResponse
-
 | Naziv atributa | Tip                                 |
 |----------------|-------------------------------------|
 | customer       | [CustomerProfile](#customerprofile) |
@@ -43,7 +42,7 @@
 | name           | String |
 | restorantLogo  | String |
 | description    | String |
-| mark           | String |
+| mark           | Long   |
 | address        | String |
 
 ## Meal
@@ -69,12 +68,9 @@
 | price          | Long                      |
 | note           | String                    |
 
-
 ## Ingredients
 | Naziv atributa | Tip    |
 |----------------|--------|
 | ingridientsId  | Long   |
 | name           | String |
 | price          | Long   |
-
-
