@@ -1,0 +1,82 @@
+<section class="text-center">
+    <form class="form-register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <h1 class="h3 mb-3 font-weight-normal p-5">Registrujte se</h1>
+        <div class="form-group">
+            <label for="name" class="sr-only">Vaše Ime</label>
+            <input type="text" formControlName="name" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Unesite Vaše Ime" required
+                autofocus />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Polje ne sme biti prazno</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="sr-only">Unesite Vaše Prezime</label>
+            <input type="text" formControlName="lastname" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" placeholder="Unesite Vaše Prezime" required/>
+            <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                <div *ngIf="f.lastname.errors.required">Polje ne sme biti prazno</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address" class="sr-only">Unesite Vašu Adresu</label>
+            <input type="text" formControlName="address" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.address.errors }" placeholder="Unesite Vašu Adresu" required/>
+            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                <div *ngIf="f.address.errors.required">Polje ne sme biti prazno</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="sr-only">Unesite Vaš Broj Telefona</label>
+            <input type="tel" formControlName="phone" class="form-control" [pattern]="mobNumberPattern"
+                [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" placeholder="Unesite Vaš Broj Telefona" required/>
+            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                <div *ngIf="f.phone.errors.required">Polje ne sme biti prazno</div>
+                <div *ngIf="f.phone.errors.pattern">Broj Telefona nije dobrog formata</div> 
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="sr-only">Unesite Mejl adresu</label>
+            <input type="email" formControlName="email" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Unesite Mejl adresu" email required/>
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Polje ne sme biti prazno</div>
+                <div *ngIf="!f.email.errors.required">Koristite odgovarajući format</div>
+            </div>
+        </div>
+        <div class="form-group input-group mb-3">
+            <label for="password" class="sr-only">Unesite Lozinku</label>
+            <input [type]="hide ? 'password' : 'text'" formControlName="password" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Unesite Lozinku" required minlength="8" />
+            <div class="input-group-append">
+                <span (click)="hide = !hide" class="input-group-text">
+                    <i [class]="hide ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"></i></span>
+            </div>
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Polje ne sme biti prazno</div>
+                <div *ngIf="f.password.errors.minlength">Dužina treba biti veća od 8 karaktera</div>
+            </div>
+        </div>
+        <div class="form-group input-group mb-3">
+            <label for="againPassword" class="sr-only">Ponovite Lozinku</label>
+            <input [type]="hide ? 'password' : 'text'" formControlName="againPassword" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.againPassword.errors }" placeholder="Ponovite Lozinku" required minlength="8" />
+            <div class="input-group-append">
+                <span (click)="hide = !hide" class="input-group-text">
+                    <i [class]="hide ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"></i></span>
+            </div>
+            <div *ngIf="submitted && f.againPassword.errors" class="invalid-feedback">
+                <div *ngIf="f.againPassword.errors.required">Polje ne sme biti prazno</div>
+                <div *ngIf="f.againPassword.errors.minlength">Dužina treba biti veća od 8 karaktera</div>
+            </div>
+            <div *ngIf="submitted && registerForm.errors?.passwordsDontMatch" class="cross-validation-error-message alert alert-danger">
+                Lozinka i potvrda lozinke se ne podudaraju
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-lg btn-warning btn-block">Registrujte se</button>
+            <img *ngIf="loading" class="pl-3"
+                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+    </form>
+</section>
