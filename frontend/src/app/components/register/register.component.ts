@@ -18,23 +18,23 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   hide = true;
-  mobNumberPattern = "^((\\+381-?)|0)+[0-9]{8,9}$";
-
+  mobNumberPattern = "^((\\+381)|0)+[0-9]{8,9}$";
+  addressPattern = "^([A-z]+\\s)+([1-9]|[1-9][0-9]{1,2})[a-z]{0,1}$";
+  
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
     this.customer = ({} as CustomerRegistration);
   }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      againPassword: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
       name: ['', Validators.required],
       lastname: ['', Validators.required],
       address: ['', Validators.required],
       phone: ['', Validators.required]
-      //});
-    }, { validators: passwordsDontMatch });
+    }, { validator: passwordsMustMatch('password', 'confirmPassword') });
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -71,9 +71,24 @@ export class RegisterComponent implements OnInit {
   }
 }
 
-export const passwordsDontMatch: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
-  const password = control.get('password');
-  const againPassword = control.get('againPassword');
-
-  return password.value === againPassword.value ? null : { 'passwordsDontMatch': true };
-};
+// custom validator to check that two fields match
+export function passwordsMustMatch(controlName: string, matchingControlName: string) {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    const matchingControl = formGroup.controls[matchingControlName];
+    console.log(control.errors);
+      console.log(matchingControl.errors);
+    if ((control.errors  && !control.hasError('passwordsMustMatch'))  || (matchingControl.errors && !matchingControl.hasError('passwordsMustMatch'))) {
+      console.log('nema provere')
+        return;
+    }
+    // set error on controlers if validation fails
+    if (control.value !== matchingControl.value) {
+      control.setErrors({passwordsMustMatch: true });
+      matchingControl.setErrors({ passwordsMustMatch: true });
+    } else {
+      control.setErrors(null);
+      matchingControl.setErrors(null);
+    }
+  }
+}
