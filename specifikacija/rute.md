@@ -8,7 +8,7 @@
 
 
 > rute počinju sa `api/profile/`
-## Autentikacija
+## Profil
 | Ruta | Metoda | In                | Out             |
 |------|--------|-------------------|-----------------|
 | edit | POST   | CustomerProfile   |                 |

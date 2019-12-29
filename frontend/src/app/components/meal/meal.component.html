@@ -1,0 +1,72 @@
+<main role="main">
+  <section class="jumbotron text-center meal-bg" [ngStyle]="{'background-image': getRestaurantImage()}">
+    <div class="container">
+      <h1 class="jumbotron-heading">{{restaurant.name}}</h1>
+      <p class="lead text-white">Dobijanje omiljene hrane više je nego što vam je život olakšan. Kada naručujete kod
+        FoodGo-a,<br />
+        pomažete hiljadama marljivih restorana i kurira da zarade za život.</p>
+    </div>
+  </section>
+
+  <div class="py-2 bg-light">
+    <div class="container">
+      <h3 class="py-3">Meni</h3>
+      <div class="row">
+        <div class="col-md-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <div class="row" *ngFor="let meal of meals">
+            <div class="card mb-4 box-shadow">
+              <img class="card-img-top" alt="{{meal.name}}" style="height: 280px; width: 100%; display: block;"
+                src="{{meal.mealPicture}}" data-holder-rendered="true">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="">
+                    <h5 class="card-text">{{meal.name}}</h5>
+                    <p class="text-muted">{{meal.price}}</p>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="card-text">{{meal.description}}</p>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <h3>Informacije o restoranu</h3>
+          <h4>Adresa</h4>
+          <div class="VenueSideInfo__venueAddress___z1adw">
+            <div class="text-muted">{{restaurant.address}}</div>
+            <div id="map-container-google-1" class="z-depth-1-half map-container">
+              <iframe src="https://maps.google.com/maps?q=belgrade&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                style="border:0"></iframe>
+            </div>
+          </div>
+          <p class="text-justify">If you have allergies or other dietary restrictions,
+              please contact the restaurant. The restaurant will provide food-specific information upon request.
+           </p> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

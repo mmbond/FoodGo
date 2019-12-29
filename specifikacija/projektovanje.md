@@ -52,7 +52,7 @@
 | name           | String                            |
 | mealPicture    | String                            |
 | description    | String                            |
-| category       | Enum                              |
+| category       | [Category](#category)             |
 | price          | Long                              |
 | ingredients    | List([Ingredients](#ingredients)) |
 
@@ -74,3 +74,13 @@
 | ingridientsId  | Long   |
 | name           | String |
 | price          | Long   |
+
+
+## Category
+| Vrednosti    |
+|--------------|
+| Hamburger    |
+| Cheeseburger |
+| Sandwich     |
+| Burrito      |
+| Taco         |
