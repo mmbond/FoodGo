@@ -35,7 +35,6 @@ export class MealComponent implements OnInit {
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
   private getRestaurantImage() : string {
-    return this.restaurant!=null ? 'url('+this.restaurant.restorantLogo+')' : 'none';
+    return this.restaurant!=null ? `url(${this.restaurant.restorantLogo})` : 'none';
   }
-
 }

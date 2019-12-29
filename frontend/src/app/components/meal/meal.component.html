@@ -13,7 +13,7 @@
       <h3 class="py-3">Meni</h3>
       <div class="row">
         <div class="col-md-3">
-          <ul class="nav flex-column">
+          <ul class="nav flex-column card sticky-top">
             <li class="nav-item">
               <a class="nav-link active" href="#">Active</a>
             </li>
@@ -54,16 +54,15 @@
         <div class="col-md-3">
           <h3>Informacije o restoranu</h3>
           <h4>Adresa</h4>
-          <div class="VenueSideInfo__venueAddress___z1adw">
-            <div class="text-muted">{{restaurant.address}}</div>
-            <div id="map-container-google-1" class="z-depth-1-half map-container">
-              <iframe src="https://maps.google.com/maps?q=belgrade&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
-                style="border:0"></iframe>
-            </div>
+          <div class="text-muted">{{restaurant.address}}</div>
+          <div id="map-container-google-1" class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item"
+            src="https://maps.google.com/maps?q=belgrade&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="1"
+              style="border:0"></iframe>
           </div>
           <p class="text-justify">If you have allergies or other dietary restrictions,
-              please contact the restaurant. The restaurant will provide food-specific information upon request.
-           </p> 
+            please contact the restaurant. The restaurant will provide food-specific information upon request.
+          </p>
         </div>
       </div>
     </div>
