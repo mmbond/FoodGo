@@ -15,6 +15,8 @@ export class MealComponent implements OnInit {
   @Input() meals: Array<Meal>;
   @Input() restaurant: Restaurant;
   error: any;
+  active = false;
+  favorite = false;
   constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -34,7 +36,28 @@ export class MealComponent implements OnInit {
       .then(response => this.restaurant = response)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
-  private getRestaurantImage() : string {
-    return this.restaurant!=null ? `url(${this.restaurant.restorantLogo})` : 'none';
+  private getRestaurantImage(): string {
+    return this.restaurant != null ? `url(${this.restaurant.restorantLogo})` : 'none';
+  }
+
+  private getCategories(): Set<string> {
+    let categories = new Set<string>();
+    this.meals.forEach(meal => categories.add(meal.category));
+    return categories;
+  }
+
+  private addToOrder(mealName:string) {
+    console.log(mealName);
+    this.active = true;
+  }
+
+  private removeFromOrder(mealName:string) {
+    console.log(mealName);
+  }
+
+  private isFavorite(restaurantName : string) {
+    this.favorite = !this.favorite;
+    console.log(restaurantName); 
+    console.log(this.favorite); 
   }
 }
