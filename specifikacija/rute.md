@@ -1,46 +1,52 @@
-> rute počinju sa `api/administration/`
 ## Autentikacija
+> rute počinju sa `api/administration/`
+
 | Ruta     | Metoda | In                   | Out           |
 |----------|--------|----------------------|---------------|
 | login    | POST   | CustomerLogin        | LoginResponse |
-| logout   | POST   | CustomerId (long)    |               |
+| logout   | POST   | CustomerId (Long)    | Boolean       |
 | register | POST   | CustomerRegistration | LoginResponse |
 
 
-> rute počinju sa `api/profile/`
 ## Profil
+> rute počinju sa `api/profile/`
+
 | Ruta | Metoda | In                | Out             |
 |------|--------|-------------------|-----------------|
 | edit | POST   | CustomerProfile   |                 |
 | get  | POST   | CustomerId (long) | CustomerProfile |
 
 
-> rute počinju sa `api/restaurant/`
 ## Restaurant
+> rute počinju sa `api/restaurant/`
+
 | Ruta | Metoda | In                  | Out                |
 |------|--------|---------------------|--------------------|
 | all  | GET    |                     | List< Restaurant > |
 | id   | GET    | RestaurantId (long) | Restaurant         |
 
 
-> rute počinju sa `api/meal/`
 ## Meal
+> rute počinju sa `api/meal/`
+
 | Ruta | Metoda | In                  | Out          |
 |------|--------|---------------------|--------------|
 | all  | GET    | RestaurantId (long) | List< Meal > |
 | id   | GET    | MealId (long)       | Meal         |
 
 
-> rute počinju sa `api/order/`
 ## Order
+> rute počinju sa `api/order/`
+
 | Ruta | Metoda | In                  | Out        |
 |------|--------|---------------------|------------|
 | send | POST   | Order               | boolean    |
 <!-- | id   | GET    | RestaurantId (long) | Restaurant | -->
 
 
-> rute počinju sa `api/history/`
 ## History
+> rute počinju sa `api/history/`
+
 | Ruta | Metoda | In                  | Out           |
 |------|--------|---------------------|---------------|
 | all  | GET    | CustomerId          | List< Order > |

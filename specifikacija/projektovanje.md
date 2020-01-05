@@ -22,15 +22,15 @@
 | customer       | [CustomerProfile](#customerprofile) |
 
 ## CustomerProfile
-| Naziv atributa | Tip          |
-|----------------|--------------|
-| address        | String       |
-| customerId     | Long         |
-| email          | String       |
-| favoriteMeals  | List[String] |
-| firstName      | String       |
-| lastName       | String       |
-| phone          | String       |
+| Naziv atributa | Tip            |
+|----------------|----------------|
+| address        | String         |
+| customerId     | Long           |
+| email          | String         |
+| favoriteMeals  | List< String > |
+| firstName      | String         |
+| lastName       | String         |
+| phone          | String         |
 
 
 # Operativni rad aplikacije
@@ -61,8 +61,8 @@
 |----------------|---------------------------|
 | orderId        | Long                      |
 | restaurant     | [Restaurant](#restaurant) |
-| status         | Enum                      |
-| meals          | List[Meal]                |
+| status         | [Status](#status)         |
+| meals          | List< [Meal](#meal) >     |
 | description    | String                    |
 | orderDate      | Date                      |
 | price          | Long                      |
@@ -75,7 +75,6 @@
 | name           | String |
 | price          | Long   |
 
-
 ## Category
 | Vrednosti    |
 |--------------|
@@ -84,3 +83,9 @@
 | Sandwich     |
 | Burrito      |
 | Taco         |
+## Status
+| Vrednosti |
+|-----------|
+| Finished  |
+| Current   |
+| Canceled  |
