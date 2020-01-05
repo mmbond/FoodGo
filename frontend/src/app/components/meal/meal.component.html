@@ -31,11 +31,11 @@
       <h3 class="py-3">Meni</h3>
       <div class="row">
         <div class="col-md-3">
-          <ul class="nav flex-column card sticky-top">
-            <!-- TODO srediti da ide u posebne sekcije na strani-->
+          <ul class="nav flex-column card sticky-top p-3">
+            <h5>Kategorije<hr></h5>
             <li class="nav-item" *ngFor="let category of getCategories()">
               <!-- active? -->
-              <a class="nav-link" href="#{{category}}">{{category}}</a>
+              <a class="first after nav-link" (click)="scrollToCategory(category)">{{category}}</a>
             </li>
           </ul>
         </div>

@@ -21,6 +21,7 @@ export class MealComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      window.scrollTo(0, 0);
       this._fetchMeals(params['restaurantId']);
       this._fetchRestaurant(params['restaurantId']);
     });
@@ -59,5 +60,10 @@ export class MealComponent implements OnInit {
     this.favorite = !this.favorite;
     console.log(restaurantName); 
     console.log(this.favorite); 
+  }
+
+  private scrollToCategory(category : string) {
+    console.log(category); 
+    document.getElementById(category).scrollIntoView();
   }
 }
