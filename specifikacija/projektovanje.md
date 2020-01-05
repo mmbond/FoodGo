@@ -22,15 +22,15 @@
 | customer       | [CustomerProfile](#customerprofile) |
 
 ## CustomerProfile
-| Naziv atributa | Tip          |
-|----------------|--------------|
-| address        | String       |
-| customerId     | Long         |
-| email          | String       |
-| favoriteMeals  | List[String] |
-| firstName      | String       |
-| lastName       | String       |
-| phone          | String       |
+| Naziv atributa | Tip            |
+|----------------|----------------|
+| address        | String         |
+| customerId     | Long           |
+| email          | String         |
+| favoriteMeals  | List< String > |
+| firstName      | String         |
+| lastName       | String         |
+| phone          | String         |
 
 
 # Operativni rad aplikacije
@@ -46,23 +46,23 @@
 | address        | String |
 
 ## Meal
-| Naziv atributa | Tip                               |
-|----------------|-----------------------------------|
-| mealId         | Long                              |
-| name           | String                            |
-| mealPicture    | String                            |
-| description    | String                            |
-| category       | Enum                              |
-| price          | Long                              |
-| ingredients    | List([Ingredients](#ingredients)) |
+| Naziv atributa | Tip                                 |
+|----------------|-------------------------------------|
+| mealId         | Long                                |
+| name           | String                              |
+| mealPicture    | String                              |
+| description    | String                              |
+| category       | Enum                                |
+| price          | Long                                |
+| ingredients    | List< [Ingredients](#ingredients) > |
 
 ## Order
 | Naziv atributa | Tip                       |
 |----------------|---------------------------|
 | orderId        | Long                      |
 | restaurant     | [Restaurant](#restaurant) |
-| status         | Enum                      |
-| meals          | List[Meal]                |
+| status         | [Status](#status)         |
+| meals          | List< [Meal](#meal) >     |
 | description    | String                    |
 | orderDate      | Date                      |
 | price          | Long                      |
@@ -74,3 +74,10 @@
 | ingridientsId  | Long   |
 | name           | String |
 | price          | Long   |
+
+## Status
+| Vrednosti |
+|-----------|
+| Finished  |
+| Current   |
+| Canceled  |

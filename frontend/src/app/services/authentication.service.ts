@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { CustomerProfile } from '../models/customer-profile.model';
 import { LoginResponse } from '../models/login-response.model';
 import { CustomerRegistration } from '../models/customer-registration.model';
+import { CustomerLogin } from '../models/customer-login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,28 @@ export class AuthenticationService {
     return this.currentCustomerSubject.value;
   }
 
-  logout(_customerId : number) {
+  login(_customerLogin: CustomerLogin) {
+    console.log(_customerLogin);
+    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/login`, _customerLogin)
+      .pipe(map(loginResponse => {
+        // login successful if there's a jwt token in the response
+        if (loginResponse) { // && customer.token) {
+          let customer = loginResponse.customer;
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('customer', JSON.stringify(customer));
+          this.currentCustomerSubject.next(customer);
+        }
+
+        return loginResponse.customer;
+      }));
+  }
+
+  logout(_customerId: number) {
     // remove user from local storage to log user out
     return this.http.post<boolean>(`${this._apiUrl}/administration/logout`, _customerId)
       .pipe(map(logout => {
         // logout success if true 
-        if (logout) { 
+        if (logout) {
           // remove user details and jwt token from local storage to logout user
           localStorage.removeItem('customer');
           this.currentCustomerSubject.next(null);
@@ -38,7 +55,6 @@ export class AuthenticationService {
       }));
 
   }
-
   register(_customerRegistration: CustomerRegistration) {
     // register user 
     console.log(_customerRegistration);

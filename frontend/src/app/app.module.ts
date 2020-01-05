@@ -12,6 +12,7 @@ import { ScrollComponent } from './components/scroll/scroll.component';
 import { RatingComponent } from './components/rating/rating.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RegisterComponent } from './components/register/register.component';
     RestaurantComponent,
     ScrollComponent,
     RatingComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,7 @@
     <div class="container">
       <h3 class="py-3">Restorani</h3>
       <div class="row">
-        <div class="col-md-4" *ngFor="let restaurant of data.result">
+        <div class="col-md-4" *ngFor="let restaurant of restaurants">
           <a href="restaurant/{{restaurant.restaurantId}}" class="link">
             <div class="card mb-4 box-shadow" ngbTooltip="Otvorite meni restorana" tooltipClass="foodgo-tooltip">
               <img class="card-img-top" alt="{{restaurant.name}}" style="height: 225px; width: 100%; display: block;"
