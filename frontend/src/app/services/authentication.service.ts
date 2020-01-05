@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CustomerLogin } from '../models/customer-login.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { CustomerProfile } from '../models/customer-profile.model';
 import { LoginResponse } from '../models/login-response.model';
+import { CustomerRegistration } from '../models/customer-registration.model';
+import { CustomerLogin } from '../models/customer-login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,12 +40,12 @@ export class AuthenticationService {
       }));
   }
 
-  logout(_customerId : number) {
+  logout(_customerId: number) {
     // remove user from local storage to log user out
     return this.http.post<boolean>(`${this._apiUrl}/administration/logout`, _customerId)
       .pipe(map(logout => {
         // logout success if true 
-        if (logout) { 
+        if (logout) {
           // remove user details and jwt token from local storage to logout user
           localStorage.removeItem('customer');
           this.currentCustomerSubject.next(null);
@@ -53,5 +54,21 @@ export class AuthenticationService {
         return logout;
       }));
 
+  }
+  register(_customerRegistration: CustomerRegistration) {
+    // register user 
+    console.log(_customerRegistration);
+    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/register`, _customerRegistration)
+      .pipe(map(loginResponse => {
+        // register successful if there's a jwt token in the response
+        if (loginResponse) { // && customer.token) {
+          let customer = loginResponse.customer;
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('customer', JSON.stringify(customer));
+          this.currentCustomerSubject.next(customer);
+        }
+
+        return loginResponse.customer;
+      }));
   }
 }
