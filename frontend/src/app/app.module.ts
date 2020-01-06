@@ -13,6 +13,12 @@ import { RatingComponent } from './components/rating/rating.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { CustomerComponent } from './components/customer/customer.component';
+import { ProfileComponent } from './components/customer/profile/profile.component';
+import { AddressComponent } from './components/customer/address/address.component';
+import { FavouriteComponent } from './components/customer/favourite/favourite.component';
+import { CommentComponent } from './components/customer/comment/comment.component';
+import { OrdersComponent } from './components/customer/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,13 @@ import { LoginComponent } from './components/login/login.component';
     ScrollComponent,
     RatingComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    CustomerComponent,
+    ProfileComponent,
+    AddressComponent,
+    FavouriteComponent,
+    CommentComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
