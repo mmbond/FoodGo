@@ -76,10 +76,7 @@ export function passwordsMustMatch(controlName: string, matchingControlName: str
   return (formGroup: FormGroup) => {
     const control = formGroup.controls[controlName];
     const matchingControl = formGroup.controls[matchingControlName];
-    console.log(control.errors);
-      console.log(matchingControl.errors);
     if ((control.errors  && !control.hasError('passwordsMustMatch'))  || (matchingControl.errors && !matchingControl.hasError('passwordsMustMatch'))) {
-      console.log('nema provere')
         return;
     }
     // set error on controlers if validation fails

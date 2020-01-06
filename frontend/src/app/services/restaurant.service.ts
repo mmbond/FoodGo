@@ -18,7 +18,6 @@ export class RestaurantService {
       const requestUrl = `${this._apiUrl}/restaurant/all`;
       return this.http.get<Restaurant[]>(requestUrl)
           .pipe(map(response => {
-            console.log(response)
               return response;
           }),
           catchError(error => {
