@@ -1,22 +1,23 @@
 <div class="container">
     <div class="row">
-        <form class="form-profile" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <form *ngIf="editProfile()" class="form-profile" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
             <h5 class="font-weight-normal">Vaši podaci</h5>
-            <p class="text-muted">Da li želite da promenite nešto? Ne zaboravite da kliknete na "Snimi izmene" na kraju
+            <p class="text-muted">Da li želite da promenite nešto? Ne zaboravite da kliknete na "Snimi izmene" na
+                kraju
                 forme</p>
             <div class="row">
                 <div class="form-group col-6">
                     <label for="name" class="sr-only">Vaše Ime</label>
-                    <input type="text" formControlName="name" class="form-control" [(ngModel)]=customer.firstName
-                        [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Unesite Vaše Ime" required
-                        autofocus />
+                    <input type="text" formControlName="name" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Unesite Vaše Ime"
+                        required />
                     <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                         <div *ngIf="f.name.errors.required">Polje ne sme biti prazno</div>
                     </div>
                 </div>
                 <div class="form-group  col-6">
                     <label for="lastname" class="sr-only">Unesite Vaše Prezime</label>
-                    <input type="text" formControlName="lastname" class="form-control" [(ngModel)]=customer.lastName
+                    <input type="text" formControlName="lastname" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" placeholder="Unesite Vaše Prezime"
                         required />
                     <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
@@ -28,7 +29,7 @@
                 <div class="form-group col-6">
                     <label for="phone" class="sr-only">Unesite Vaš Broj Telefona</label>
                     <input type="tel" formControlName="phone" class="form-control" [pattern]="mobNumberPattern"
-                        [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" [(ngModel)]=customer.phone
+                        [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
                         placeholder="Unesite Vaš Broj Telefona" required />
                     <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
                         <div *ngIf="f.phone.errors.required">Polje ne sme biti prazno</div>
@@ -37,7 +38,7 @@
                 </div>
                 <div class="form-group col-6">
                     <label for="email" class="sr-only">Unesite Mejl adresu</label>
-                    <input type="email" formControlName="email" class="form-control" [(ngModel)]=customer.email
+                    <input type="email" formControlName="email" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Unesite Mejl adresu"
                         email required />
                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
@@ -82,5 +83,33 @@
                     src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
             </div>
         </form>
+        <!-- TODO videti sta je bolje -->
+        <div *ngIf="!editProfile()" class="form-profile">
+            <h5 class="font-weight-normal">Vaši podaci</h5>
+            <div class="row">
+                <div class="col-6">
+                    <label>Vaše Ime</label>
+                    <p>{{customer.firstName}}</p>
+                </div>
+                <div class="col-6">
+                    <label>Vaše Prezime</label>
+                    <p>{{customer.lastName}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label>Vaš Broj Telefona</label>
+                    <p>{{customer.phone}}</p>
+                </div>
+                <div class="col-6">
+                    <label>Mejl adresu</label>
+                    <p>{{customer.email}}</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <button (click)="showForm = !showForm" class="btn btn-lg btn-warning">Izmene</button>
+            </div>
+        </div>
     </div>
+
 </div>
