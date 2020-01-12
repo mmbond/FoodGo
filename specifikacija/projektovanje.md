@@ -16,6 +16,11 @@
 | phone          | String         |
 | password       | String(SHA256) |
 
+## ProfileAddressList
+| Naziv atributa | Tip            |
+|----------------|----------------|
+| addresses      | List< String > |
+
 ## LoginResponse
 | Naziv atributa | Tip                                 |
 |----------------|-------------------------------------|
@@ -63,7 +68,7 @@
 | restaurant     | [Restaurant](#restaurant) |
 | status         | [Status](#status)         |
 | meals          | List< [Meal](#meal) >     |
-| description    | String                    |
+| comment        | String                    |
 | orderDate      | Date                      |
 | price          | Long                      |
 | note           | String                    |
@@ -76,8 +81,8 @@
 | price          | Long   |
 
 ## Status
-| Vrednosti |
-|-----------|
-| Finished  |
-| Current   |
-| Canceled  |
+| Vrednosti   |
+|-------------|
+| Finished    |
+| In progress |
+| Canceled    |
