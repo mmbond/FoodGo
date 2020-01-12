@@ -10,7 +10,11 @@ const routes: Routes = [
   { path: 'restaurant', component: RestaurantComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'customer', component: CustomerComponent},
+  { path: 'customer/profile', component: CustomerComponent, data : {tab : 'profile'}},
+  { path: 'customer/address', component: CustomerComponent, data : {tab : 'address'}},
+  { path: 'customer/favourite', component: CustomerComponent, data : {tab : 'favourite'}},
+  { path: 'customer/comment', component: CustomerComponent, data : {tab : 'comment'}},
+  { path: 'customer/orders', component: CustomerComponent, data : {tab : 'orders'}},
   {
     path: '',
     redirectTo: 'restaurant',
