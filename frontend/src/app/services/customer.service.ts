@@ -1,9 +1,48 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { CustomerProfile } from '../models/customer-profile.model';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { ProfileAddressList } from '../models/profile-address-list.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  constructor() { }
+  private _apiUrl = environment.apiUrl;
+
+  constructor(private http: HttpClient) { }
+  
+  // Post edit customerProfile
+  updateCustomer(_customerProfile: CustomerProfile) {
+    // TODO videti da li mozda da backend vrati neku potvrdu
+    localStorage.setItem('customer', JSON.stringify(_customerProfile));
+    this.http.post(`${this._apiUrl}/profile/edit`, _customerProfile);
+  }
+
+  // get Customer
+  getCustomer(limit: number = 1) {
+      const requestUrl = `${this._apiUrl}/profile/get`;
+      return this.http.get<CustomerProfile>(requestUrl)
+          .pipe(response => {
+              return response;
+          }),
+          catchError(error => {
+              return throwError(error);
+          });
+  }
+
+    // get Customer addresses
+    getCustomerAddresses(limit: number = 1) {
+      const requestUrl = `${this._apiUrl}/profile/getAddresses`;
+      return this.http.get<ProfileAddressList>(requestUrl)
+          .pipe(map(response => {
+              return response;
+          }),
+          catchError(error => {
+              return throwError(error);
+          }));
+  }
 }

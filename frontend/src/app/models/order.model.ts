@@ -7,7 +7,7 @@ export class Order {
     restaurant: Restaurant;
     status: Status;
     meals: Array<Meal>;
-    description: string;
+    comment: string;
     orderDate: Date;
     price: number;
     note: string;
