@@ -5,26 +5,33 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
+        <th scope="col">Status</th>
+        <th scope="col">Restoran</th>
+        <th scope="col">Datum</th>
         <th scope="col">Utisak</th>
         <th scope="col">Opcija</th>
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor='let comment of comments'> -->
-      <tr>
-        <th scope="row">3</th>
-        <td>the Bird</td>
-        <td>@twitter</td>
+      <tr *ngFor='let order of orders'>
+        <th scope="row">{{order.orderId}}</th>
+        <td>{{order.status}}</td>
+        <td>{{order.restaurant.name}}</td>
+        <td>{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
+        <td *ngIf='order.comment!=undefined'>{{order.comment}}</td>
+        <td *ngIf='order.comment==undefined'>Nema komentara</td>
+        <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa input text area i unosi se utisak-->
+        <td *ngIf='order.comment==undefined'><button class="btn btn-warning">Ostavi utisak</button></td>
       </tr>
-      <!-- </tr> -->
     </tbody>
   </table>
   <div *ngIf='!showComments()'>
-  <div class="mx-auto text-center" style="width: 50%;">
-    <img class="mt-3" src="/assets/icons/comment.png" alt="No comment">
-    <h3>Nema Utisaka</h3>
-    <p class="text-muted">Nemojte zaboraviti da ostavite utisak o vašim narudžbinama. Na ovaj način, vaše efood iskustvo može postati još bolje.</p>
-    <button (click)='orders()' class="btn btn-warning">Pogledajte Vaše porudžbine</button>
-  </div>
+    <div class="mx-auto text-center" style="width: 50%;">
+      <img class="mt-3" src="/assets/icons/comment.png" alt="No comment">
+      <h3>Nema Utisaka</h3>
+      <p class="text-muted">Nemojte zaboraviti da ostavite utisak o vašim narudžbinama. Na ovaj način, vaše efood
+        iskustvo može postati još bolje.</p>
+      <button (click)='goToOrders()' class="btn btn-warning">Pogledajte Vaše porudžbine</button>
+    </div>
   </div>
 </div>
