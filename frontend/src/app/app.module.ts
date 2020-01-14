@@ -19,6 +19,7 @@ import { AddressComponent } from './components/customer/address/address.componen
 import { FavouriteComponent } from './components/customer/favourite/favourite.component';
 import { CommentComponent } from './components/customer/comment/comment.component';
 import { OrdersComponent } from './components/customer/orders/orders.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { OrdersComponent } from './components/customer/orders/orders.component';
     AddressComponent,
     FavouriteComponent,
     CommentComponent,
-    OrdersComponent
+    OrdersComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
