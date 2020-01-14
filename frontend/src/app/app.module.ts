@@ -11,6 +11,7 @@ import { RestaurantComponent } from './components/restaurant/restaurant.componen
 import { ScrollComponent } from './components/scroll/scroll.component';
 import { RatingComponent } from './components/rating/rating.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MealComponent } from './components/meal/meal.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { CustomerComponent } from './components/customer/customer.component';
@@ -29,6 +30,7 @@ import { ChatComponent } from './components/chat/chat.component';
     RestaurantComponent,
     ScrollComponent,
     RatingComponent,
+    MealComponent,
     RegisterComponent,
     LoginComponent,
     CustomerComponent,
