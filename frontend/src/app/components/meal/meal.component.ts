@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SecurityContext } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MealService } from 'src/app/services/meal.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { Meal } from 'src/app/models/meal.model';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { Restaurant } from 'src/app/models/restaurant.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-meal',
@@ -17,7 +18,7 @@ export class MealComponent implements OnInit {
   error: any;
   active = false;
   favorite = false;
-  constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute) { }
+  constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute,public sanitizer:DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -58,12 +59,15 @@ export class MealComponent implements OnInit {
 
   private isFavorite(restaurantName : string) {
     this.favorite = !this.favorite;
-    console.log(restaurantName); 
-    console.log(this.favorite); 
   }
 
   private scrollToCategory(category : string) {
-    console.log(category); 
     document.getElementById(category).scrollIntoView();
   }
+
+  private getMapUrl() {
+    let url = "https://maps.google.com/maps?q="+this.restaurant.address.replace(/ /gi,"+")+","+this.restaurant.name.replace(/ /gi,"+")+"&output=embed";
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
 }
