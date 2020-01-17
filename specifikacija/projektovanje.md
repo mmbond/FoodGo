@@ -46,15 +46,15 @@
 | address        | String |
 
 ## Meal
-| Naziv atributa | Tip                                 |
-|----------------|-------------------------------------|
-| mealId         | Long                                |
-| name           | String                              |
-| mealPicture    | String                              |
-| description    | String                              |
-| category       | Enum                                |
-| price          | Long                                |
-| ingredients    | List< [Ingredients](#ingredients) > |
+| Naziv atributa | Tip                               |
+|----------------|-----------------------------------|
+| mealId         | Long                              |
+| name           | String                            |
+| mealPicture    | String                            |
+| description    | String                            |
+| category       | [Category](#category)             |
+| price          | Long                              |
+| ingredients    | List([Ingredients](#ingredients)) |
 
 ## Order
 | Naziv atributa | Tip                       |
@@ -75,6 +75,14 @@
 | name           | String |
 | price          | Long   |
 
+## Category
+| Vrednosti    |
+|--------------|
+| Hamburger    |
+| Cheeseburger |
+| Sandwich     |
+| Burrito      |
+| Taco         |
 ## Status
 | Vrednosti |
 |-----------|

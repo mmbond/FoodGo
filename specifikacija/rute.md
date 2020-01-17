@@ -7,7 +7,8 @@
 | logout   | POST   | CustomerId (Long)    | Boolean       |
 | register | POST   | CustomerRegistration | LoginResponse |
 
-## Autentikacija
+
+## Profil
 > rute počinju sa `api/profile/`
 
 | Ruta | Metoda | In                | Out             |
