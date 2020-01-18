@@ -24,4 +24,11 @@ export class HistoryService {
               return throwError(error);
           }));
   }
+
+    // add Order comment
+    addComment(_order : Order) {
+      const requestUrl = `${this._apiUrl}/history/addComment`;
+      this.http.post(requestUrl, _order);
+      console.log(_order);
+    }
 }

@@ -48,7 +48,8 @@
 ## History
 > rute počinju sa `api/history/`
 
-| Ruta | Metoda | In                  | Out           |
-|------|--------|---------------------|---------------|
-| all  | GET    | CustomerId          | List< Order > |
+| Ruta       | Metoda | In         | Out           |
+|------------|--------|------------|---------------|
+| all        | GET    | CustomerId | List< Order > |
+| addComment | POST   | Order      |               |
 <!-- | id   | GET    | RestaurantId (long) | Restaurant    | -->

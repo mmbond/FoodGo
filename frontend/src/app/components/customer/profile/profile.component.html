@@ -2,7 +2,7 @@
     <div class="row">
         <form *ngIf="editProfile()" class="form-profile" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
             <h5 class="font-weight-normal">Vaši podaci</h5>
-            <p class="text-muted">Da li želite da promenite nešto? Ne zaboravite da kliknete na "Snimi izmene" na
+            <p class="text-muted">Da li želite da promenite nešto? Ne zaboravite da kliknete na "Snimite izmene" na
                 kraju forme</p>
             <div class="row">
                 <div class="form-group col-6">
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button [disabled]="loading" class="btn btn-lg btn-warning btn-block">Snimi izmene</button>
+                <button [disabled]="loading" class="btn btn-lg btn-warning btn-block">Snimite izmene</button>
                 <img *ngIf="loading" class="pl-3"
                     src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
             </div>
@@ -101,12 +101,12 @@
                     <p>{{customer.phone}}</p>
                 </div>
                 <div class="col-6">
-                    <label>Mejl adresu</label>
+                    <label>Vaša Mejl Adresa</label>
                     <p>{{customer.email}}</p>
                 </div>
             </div>
             <div class="text-center">
-                <button (click)="showForm = !showForm" class="btn btn-lg btn-warning">Izmene</button>
+                <button (click)="showForm = !showForm" class="btn btn-lg btn-warning mt-3">Izmenite</button>
             </div>
         </div>
     </div>

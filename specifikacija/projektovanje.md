@@ -88,6 +88,7 @@
 | Sandwich     |
 | Burrito      |
 | Taco         |
+
 ## Status
 | Vrednosti   |
 |-------------|

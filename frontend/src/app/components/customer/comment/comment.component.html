@@ -21,7 +21,8 @@
         <td *ngIf='order.comment!=undefined'>{{order.comment}}</td>
         <td *ngIf='order.comment==undefined'>Nema komentara</td>
         <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa input text area i unosi se utisak-->
-        <td *ngIf='order.comment==undefined'><button class="btn btn-warning">Ostavi utisak</button></td>
+        <td *ngIf='order.comment==undefined'><button (click)="index(order.orderId)" data-toggle="modal" data-target="#commentModal"
+            class="btn btn-warning">Ostavite utisak</button></td>
       </tr>
     </tbody>
   </table>
@@ -32,6 +33,38 @@
       <p class="text-muted">Nemojte zaboraviti da ostavite utisak o vašim narudžbinama. Na ovaj način, vaše efood
         iskustvo može postati još bolje.</p>
       <button (click)='goToOrders()' class="btn btn-warning">Pogledajte Vaše porudžbine</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentModalLabel">Ostavite Vaš Utisak za Porudžbinu #{{orderId}}</h5>
+        <button type="button" class="close" (click)="resetForm()" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <button hidden type="button" class="close" #closeCommentModal data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-comment" [formGroup]="commentForm" (ngSubmit)="addComment()">
+          <div class="form-group">
+            <label for="comment" class="sr-only">Unesite Vaš Utisak</label>
+            <textarea [ngClass]="{ 'is-invalid': submitted && f.comment.errors}" formControlName="comment"
+              class="form-control" rows="3" placeholder="Unesite Vaš Utisak" required></textarea>
+            <div *ngIf="submitted && f.comment.errors" class="invalid-feedback">
+              <div *ngIf="f.comment.errors.required">Polje ne sme biti prazno</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" (click)="resetForm()" class="btn btn-secondary"
+              data-dismiss="modal">Zatvorite</button>
+            <button type="submit" class="btn btn-warning">Ostavite Utisak</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
