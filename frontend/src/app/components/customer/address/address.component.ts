@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
+import { ProfileAddressList } from 'src/app/models/profile-address-list.model';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-address',
@@ -9,13 +11,22 @@ import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
   styleUrls: ['./address.component.sass']
 })
 export class AddressComponent implements OnInit {
-  
+  @ViewChild('closeAddExpenseModal',{static: true}) closeAddExpenseModal: ElementRef;
   addresses: Array<string>;
+  addressPattern = "^([A-z]+\\s)+([1-9]|[1-9][0-9]{1,2})[a-z]{0,1}$";
+  registerForm: FormGroup;
+  returnUrl: string;
+  submitted = false;
+  hide = true;
   error: any;
-  constructor(private router: Router, private _customerService: CustomerService) { }
+  constructor(private router: Router, private _customerService: CustomerService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this._fetchCustomerAddresses(10);
+    this.registerForm = this.formBuilder.group({
+      address: ['', Validators.required],
+
+    });
   }
 
   private _fetchCustomerAddresses(limit: number = 1) {
@@ -23,13 +34,34 @@ export class AddressComponent implements OnInit {
       .then(response => this.addresses = response.addresses)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
-
-
-  private restaurant() {
-    this.router.navigate(['/']);
+  private updateAddresses(removeAddress: string) {
+    var index = this.addresses.findIndex(address => address == removeAddress);
+    this.addresses.splice(index, 1);
+    var updateAddresses = new ProfileAddressList();
+    updateAddresses.addresses = this.addresses;
+    this._customerService.updateCustomerAddresses(updateAddresses);
   }
 
-  public showAddresses() : boolean{
-    return this.addresses!=undefined;
+  public showAddresses(): boolean {
+    return this.addresses != undefined && this.addresses.length != 0;
+  }
+
+
+  // convenience getter for easy access to form fields
+  get f() { return this.registerForm.controls; }
+
+  addAddress() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+      return;
+    }
+    this.addresses.push(this.f.address.value);
+    var updateAddresses = new ProfileAddressList();
+    updateAddresses.addresses = this.addresses;
+    this._customerService.updateCustomerAddresses(updateAddresses);
+    this.registerForm.reset();
+    this.submitted = false;
+    this.closeAddExpenseModal.nativeElement.click();
   }
 }

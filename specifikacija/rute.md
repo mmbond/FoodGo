@@ -11,12 +11,12 @@
 ## Profil
 > rute počinju sa `api/profile/`
 
-| Ruta         | Metoda | In                | Out                |
-|--------------|--------|-------------------|--------------------|
-| edit         | POST   | CustomerProfile   |                    |
-| get          | GET    | CustomerId (long) | CustomerProfile    |
-| getAddresses | GET    | CustomerId (long) | ProfileAddressList |
-
+| Ruta            | Metoda | In                 | Out                |
+|-----------------|--------|--------------------|--------------------|
+| edit            | POST   | CustomerProfile    |                    |
+| get             | GET    | CustomerId (long)  | CustomerProfile    |
+| getAddresses    | GET    | CustomerId (long)  | ProfileAddressList |
+| updateAddresses | POST   | ProfileAddressList |                    |
 
 ## Restaurant
 > rute počinju sa `api/restaurant/`
