@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RestaurantComponent } from './components/restaurant/restaurant.component';
+import { MealComponent } from './components/meal/meal.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { CustomerComponent } from './components/customer/customer.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'customer/favourite', component: CustomerComponent, data : {tab : 'favourite'}},
   { path: 'customer/comment', component: CustomerComponent, data : {tab : 'comment'}},
   { path: 'customer/orders', component: CustomerComponent, data : {tab : 'orders'}},
+  { path: 'restaurant/:restaurantId', component: MealComponent },
   {
     path: '',
     redirectTo: 'restaurant',

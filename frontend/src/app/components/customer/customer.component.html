@@ -5,13 +5,7 @@
 </section>
 <div class="container">
     <ul class="nav nav-tabs">
-      <!-- TODO pitati profu sta je bolje -->
-      <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#profil">Profil</a></li>
-      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#adrese">Moje Adrese</a></li>
-      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#favourite">Omiljeni restorani</a></li>
-      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#utisci">Utisci</a></li>
-      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#orders">Porudžbine</a></li> -->
-      <li class="nav-item"><a class="nav-link" [class.active]="tab === 'profile'" href="customer/profile">Profil</a></li>
+      <li class="nav-item"><a class="nav-link" [class.active]="tab === 'profile'" href="customer/profile">Moji podaci</a></li>
       <li class="nav-item"><a class="nav-link" [class.active]="tab === 'address'" href="customer/address">Moje Adrese</a></li>
       <li class="nav-item"><a class="nav-link" [class.active]="tab === 'favourite'" href="customer/favourite">Omiljeni restorani</a></li>
       <li class="nav-item"><a class="nav-link" [class.active]="tab === 'comment'" href="customer/comment">Utisci</a></li>
