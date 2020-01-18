@@ -5,6 +5,7 @@ import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { Meal } from 'src/app/models/meal.model';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { Restaurant } from 'src/app/models/restaurant.model';
+import { Order } from 'src/app/models/order.model';
 
 @Component({
   selector: 'app-meal',
@@ -14,8 +15,8 @@ import { Restaurant } from 'src/app/models/restaurant.model';
 export class MealComponent implements OnInit {
   @Input() meals: Array<Meal>;
   @Input() restaurant: Restaurant;
+  orderMeals : Array<Meal> = [];
   error: any;
-  active = false;
   favorite = false;
   constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute) { }
 
@@ -48,22 +49,25 @@ export class MealComponent implements OnInit {
   }
 
   private addToOrder(mealName:string) {
-    console.log(mealName);
-    this.active = true;
-  }
-
-  private removeFromOrder(mealName:string) {
-    console.log(mealName);
+    this.orderMeals.push(this.meals.find(meal => meal.name == mealName));
   }
 
   private isFavorite(restaurantName : string) {
+    // TODO Implement this
     this.favorite = !this.favorite;
     console.log(restaurantName); 
     console.log(this.favorite); 
   }
 
   private scrollToCategory(category : string) {
-    console.log(category); 
     document.getElementById(category).scrollIntoView();
+  }
+
+  private hasOrders() : boolean {
+    if (this.orderMeals == undefined || this.orderMeals.length==0) {
+      return false;
+      
+    }
+    return true;
   }
 }

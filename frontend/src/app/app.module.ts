@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MealComponent } from './components/meal/meal.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginComponent } from './components/login/login.component';
     RatingComponent,
     MealComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

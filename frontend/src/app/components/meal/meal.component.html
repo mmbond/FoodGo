@@ -34,7 +34,7 @@
           <ul class="nav flex-column card sticky-top p-3">
             <h5>Kategorije<hr></h5>
             <li class="nav-item" *ngFor="let category of getCategories()">
-              <!-- active? -->
+              <!-- TODO when active link? -->
               <a class="first after nav-link" (click)="scrollToCategory(category)">{{category}}</a>
             </li>
           </ul>
@@ -55,10 +55,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <p class="card-text">{{meal.description}}</p>
                   <div class="btn-group">
-                    <button type="button" (click)="addToOrder(meal.name)" class="btn btn-sm btn-outline-secondary"><i
-                        class="fa fa-plus"></i></button>
-                    <button type="button" (click)="removeFromOrder(meal.name)" [disabled]="!activate"
-                      class="btn btn-sm btn-outline-secondary"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-warning" (click)="addToOrder(meal.name)">Dodajte</button>
                   </div>
                 </div>
               </div>
@@ -74,8 +71,7 @@
               src="https://maps.google.com/maps?q=belgrade&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="1"
               style="border:0"></iframe>
           </div>
-          <p class="text-justify mt-3">Neki info
-          </p>
+          <app-order [(mealOrder)]=orderMeals [restaurantOrder]=restaurant class="p-3"></app-order>
         </div>
       </div>
     </div>
