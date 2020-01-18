@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ChildActivationStart } from '@angular/router';
 import { MealService } from 'src/app/services/meal.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { Meal } from 'src/app/models/meal.model';
@@ -16,6 +16,7 @@ export class MealComponent implements OnInit {
   @Input() meals: Array<Meal>;
   @Input() restaurant: Restaurant;
   orderMeals : Array<Meal> = [];
+  activeCategory: string;
   error: any;
   favorite = false;
   constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute) { }
@@ -60,6 +61,7 @@ export class MealComponent implements OnInit {
   }
 
   private scrollToCategory(category : string) {
+    this.activeCategory = category;
     document.getElementById(category).scrollIntoView();
   }
 
@@ -69,5 +71,14 @@ export class MealComponent implements OnInit {
       
     }
     return true;
+  }
+
+  private isActive(category : string): boolean {
+    return this.activeCategory == category;
+  }
+
+  private firstCategory(category : string, index: number): boolean {
+    var first =  this.meals.findIndex(meal => meal.category==category);
+    return first==index;
   }
 }

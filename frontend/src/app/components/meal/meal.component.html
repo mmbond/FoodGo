@@ -34,14 +34,13 @@
           <ul class="nav flex-column card sticky-top p-3">
             <h5>Kategorije<hr></h5>
             <li class="nav-item" *ngFor="let category of getCategories()">
-              <!-- TODO when active link? -->
-              <a class="first after nav-link" (click)="scrollToCategory(category)">{{category}}</a>
+              <a class="first after nav-link" [ngClass]="{'active':isActive(category)}" (click)="scrollToCategory(category)">{{category}}</a>
             </li>
           </ul>
         </div>
         <div class="col-md-6">
-          <div class="row" *ngFor="let meal of meals">
-            <h3 [attr.id]="meal.category">{{meal.category}}</h3>
+          <div class="row" *ngFor="let meal of meals; let i = index">
+            <h3 *ngIf="firstCategory(meal.category,i)" [attr.id]="meal.category">{{meal.category}}</h3>
             <div class="card mb-4 box-shadow">
               <img class="card-img-top" [attr.alt]="meal.name" style="height: 280px; width: 100%; display: block;"
                 [attr.src]="meal.mealPicture" data-holder-rendered="true">
