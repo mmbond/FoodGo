@@ -11,11 +11,10 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./address.component.sass']
 })
 export class AddressComponent implements OnInit {
-  @ViewChild('closeAddExpenseModal',{static: true}) closeAddExpenseModal: ElementRef;
+  @ViewChild('closeAddressModal',{static: true}) closeAddressModal: ElementRef;
   addresses: Array<string>;
   addressPattern = "^([A-z]+\\s)+([1-9]|[1-9][0-9]{1,2})[a-z]{0,1}$";
-  registerForm: FormGroup;
-  returnUrl: string;
+  addressForm: FormGroup
   submitted = false;
   hide = true;
   error: any;
@@ -23,9 +22,8 @@ export class AddressComponent implements OnInit {
 
   ngOnInit() {
     this._fetchCustomerAddresses(10);
-    this.registerForm = this.formBuilder.group({
+    this.addressForm = this.formBuilder.group({
       address: ['', Validators.required],
-
     });
   }
 
@@ -48,20 +46,20 @@ export class AddressComponent implements OnInit {
 
 
   // convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
+  get f() { return this.addressForm.controls; }
 
   addAddress() {
     this.submitted = true;
     // stop here if form is invalid
-    if (this.registerForm.invalid) {
+    if (this.addressForm.invalid) {
       return;
     }
     this.addresses.push(this.f.address.value);
     var updateAddresses = new ProfileAddressList();
     updateAddresses.addresses = this.addresses;
     this._customerService.updateCustomerAddresses(updateAddresses);
-    this.registerForm.reset();
+    this.addressForm.reset();
     this.submitted = false;
-    this.closeAddExpenseModal.nativeElement.click();
+    this.closeAddressModal.nativeElement.click();
   }
 }
