@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SecurityContext } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MealService } from 'src/app/services/meal.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
@@ -15,8 +15,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class MealComponent implements OnInit {
   @Input() meals: Array<Meal>;
   @Input() restaurant: Restaurant;
+  orderMeals : Array<Meal> = [];
+  activeCategory: string;
   error: any;
-  active = false;
   favorite = false;
   constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute,public sanitizer:DomSanitizer) { }
 
@@ -49,20 +50,34 @@ export class MealComponent implements OnInit {
   }
 
   private addToOrder(mealName:string) {
-    console.log(mealName);
-    this.active = true;
-  }
-
-  private removeFromOrder(mealName:string) {
-    console.log(mealName);
+    this.orderMeals.push(this.meals.find(meal => meal.name == mealName));
   }
 
   private isFavorite(restaurantName : string) {
+    // TODO Implement this
     this.favorite = !this.favorite;
   }
 
   private scrollToCategory(category : string) {
+    this.activeCategory = category;
     document.getElementById(category).scrollIntoView();
+  }
+
+  private hasOrders() : boolean {
+    if (this.orderMeals == undefined || this.orderMeals.length==0) {
+      return false;
+      
+    }
+    return true;
+  }
+
+  private isActive(category : string): boolean {
+    return this.activeCategory == category;
+  }
+
+  private firstCategory(category : string, index: number): boolean {
+    var first =  this.meals.findIndex(meal => meal.category==category);
+    return first==index;
   }
 
   private getMapUrl() {

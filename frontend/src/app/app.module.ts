@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MealComponent } from './components/meal/meal.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { OrderComponent } from './components/order/order.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { ProfileComponent } from './components/customer/profile/profile.component';
 import { AddressComponent } from './components/customer/address/address.component';
@@ -33,6 +34,7 @@ import { ChatComponent } from './components/chat/chat.component';
     MealComponent,
     RegisterComponent,
     LoginComponent,
+    OrderComponent,
     CustomerComponent,
     ProfileComponent,
     AddressComponent,
