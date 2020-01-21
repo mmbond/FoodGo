@@ -1,0 +1,42 @@
+<div class="container">
+  <h5 class="font-weight-normal">Vaše porudžbine</h5>
+  <p class="text-muted">Da li ste raspoloženi za kafu? Picu? Burger? Za šta ste god raspoloženi, mi to imamo!</p>
+  <table *ngIf='showOrders()' class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Status</th>
+        <th scope="col">Jela</th>
+        <th scope="col">Datum</th>
+        <th scope="col">Cena</th>
+        <th scope="col">Beleška</th>
+        <th scope="col">Opcija</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let order of orders'>
+        <th scope="row">{{order.orderId}}</th>
+        <td>{{order.status}}</td>
+        <td>
+          <p *ngFor='let meal of order.meals'>
+            {{meal.name}}
+          </p>
+          </td>
+        <td>{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
+        <td>{{order.price}} RSD</td>
+        <td>{{order.note}}</td>
+        <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa vise informacija-->
+        <td><button class="btn btn-warning">Klikni</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf='!showOrders()'>
+    <div class="mx-auto text-center" style="width: 50%;">
+      <img class="mt-3" src="/assets/icons/orders.png" alt="No orders">
+      <h3>Nema Porudžbina</h3>
+      <p class="text-muted">Ovde možete videti vaše porudžbina, pregledati ih i ponovo naručiti sa samo jednim klikom.
+      </p>
+      <button (click)='restaurant()' class="btn btn-warning">Poručite hranu</button>
+    </div>
+  </div>
+</div>

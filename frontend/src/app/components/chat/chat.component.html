@@ -1,0 +1,24 @@
+<div class="show-chat rounded-circle" [ngClass]="{'hide-chat': chatWindow}" (click)="showHideChat()">
+    <i class="fa fa-comment fa-lg"></i>
+</div>
+<div *ngIf="chatWindow" class="chat-popup" [ngClass]="{'show': chatWindow}">
+    <div class="chat-header d-flex justify-content-between">
+        <h5>Chat</h5>
+        <button (click)="showHideChat()" type="button" class="close" aria-label="Close">
+            <i class="fa fa-window-close fa-lg"></i>
+          </button>
+    </div>
+    <div id="chat-area">
+        <ng-container style="height: 100px;" *ngFor="let message of messages | async">
+            <div class="message" [ngClass]="{ 'from': message.sentBy === 'bot',
+                                    'to':   message.sentBy === 'user' }">
+                {{ message.content }}
+            </div>
+        </ng-container>
+    </div>
+    <div class="form-group form-inline d-flex justify-content-between chat-message">
+        <input placeholder="Unesite Poruku" [(ngModel)]="poruka" class="form-control" (keyup.enter)="sendMessage()"
+            type="text">
+        <button (click)="sendMessage()" class="btn btn-warning"><i class="fa fa-paper-plane fa-lg"></i></button>
+    </div>
+</div>

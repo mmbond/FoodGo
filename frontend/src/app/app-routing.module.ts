@@ -4,12 +4,18 @@ import { RestaurantComponent } from './components/restaurant/restaurant.componen
 import { MealComponent } from './components/meal/meal.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { CustomerComponent } from './components/customer/customer.component';
 
 const routes: Routes = [
   { path: '', component: RestaurantComponent },
   { path: 'restaurant', component: RestaurantComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
+  { path: 'customer/profile', component: CustomerComponent, data : {tab : 'profile'}},
+  { path: 'customer/address', component: CustomerComponent, data : {tab : 'address'}},
+  { path: 'customer/favourite', component: CustomerComponent, data : {tab : 'favourite'}},
+  { path: 'customer/comment', component: CustomerComponent, data : {tab : 'comment'}},
+  { path: 'customer/orders', component: CustomerComponent, data : {tab : 'orders'}},
   { path: 'restaurant/:restaurantId', component: MealComponent },
   {
     path: '',

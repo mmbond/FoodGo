@@ -1,0 +1,38 @@
+<section class="jumbotron text-center section-bg">
+  <div class="container">
+    <h1 class="jumbotron-heading">Vaš profil</h1>
+  </div>
+</section>
+<div class="container">
+    <ul class="nav nav-tabs">
+      <!-- TODO pitati profu sta je bolje -->
+      <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#profil">Profil</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#adrese">Moje Adrese</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#favourite">Omiljeni restorani</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#utisci">Utisci</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#orders">Porudžbine</a></li> -->
+      <li class="nav-item"><a class="nav-link" [class.active]="tab === 'profile'" href="customer/profile">Profil</a></li>
+      <li class="nav-item"><a class="nav-link" [class.active]="tab === 'address'" href="customer/address">Moje Adrese</a></li>
+      <li class="nav-item"><a class="nav-link" [class.active]="tab === 'favourite'" href="customer/favourite">Omiljeni restorani</a></li>
+      <li class="nav-item"><a class="nav-link" [class.active]="tab === 'comment'" href="customer/comment">Utisci</a></li>
+      <li class="nav-item"><a class="nav-link" [class.active]="tab === 'orders'" href="customer/orders">Porudžbine</a></li>
+    </ul>
+  
+    <div class="tab-content">
+      <div id="profile" class="tab-pane fade py-5" [class.active]="tab === 'profile'" [class.show]="tab === 'profile'" >
+        <app-profile></app-profile>
+      </div>
+      <div id="address" class="tab-pane fade py-5" [class.active]="tab === 'address'" [class.show]="tab === 'address'" >
+        <app-address></app-address>
+      </div>
+      <div id="favourite" class="tab-pane fade py-5" [class.active]="tab === 'favourite'" [class.show]="tab === 'favourite'" >
+        <app-favourite></app-favourite>
+      </div>
+      <div id="comment" class="tab-pane fade py-5"  [class.active]="tab === 'comment'" [class.show]="tab === 'comment'" >
+        <app-comment></app-comment>
+      </div>
+      <div id="orders" class="tab-pane fade py-5"  [class.active]="tab === 'orders'" [class.show]="tab === 'orders'" >
+        <app-orders></app-orders>
+      </div>
+    </div>
+  </div>

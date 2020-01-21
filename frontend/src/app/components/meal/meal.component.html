@@ -1,10 +1,7 @@
 <main role="main">
   <section class="jumbotron text-center meal-bg" [ngStyle]="{'background-image': getRestaurantImage()}">
     <div class="container">
-      <h1 class="jumbotron-heading text-white">{{restaurant.name}}</h1>
-      <p class="lead text-white">Dobijanje omiljene hrane više je nego što vam je život olakšan. Kada naručujete kod
-        FoodGo-a,<br />
-        pomažete hiljadama marljivih restorana i kurira da zarade za život.</p>
+      <h1 class="jumbotron-heading text-white title">{{restaurant.name}}</h1>
     </div>
   </section>
   <div class="container">
@@ -71,9 +68,9 @@
           <div class="text-muted mb-3">{{restaurant.address}}</div>
           <div id="map-container-google-1" class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item"
-              src="https://maps.google.com/maps?q=belgrade&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="1"
+            [src]="getMapUrl()" frameborder="1"
               style="border:0"></iframe>
-          </div>
+          </div>  
           <p class="text-justify mt-3">Neki info
           </p>
         </div>
