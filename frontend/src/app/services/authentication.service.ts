@@ -25,7 +25,6 @@ export class AuthenticationService {
   }
 
   login(_customerLogin: CustomerLogin) {
-    console.log(_customerLogin);
     return this.http.post<LoginResponse>(`${this._apiUrl}/administration/login`, _customerLogin)
       .pipe(map(loginResponse => {
         // login successful if there's a jwt token in the response
@@ -43,21 +42,20 @@ export class AuthenticationService {
   logout(_customerId: number) {
     // remove user from local storage to log user out
     return this.http.post<boolean>(`${this._apiUrl}/administration/logout`, _customerId)
-      .pipe(map(logout => {
+      .pipe(logout => {
         // logout success if true 
         if (logout) {
           // remove user details and jwt token from local storage to logout user
           localStorage.removeItem('customer');
           this.currentCustomerSubject.next(null);
         }
-
+        
         return logout;
-      }));
+      });
 
   }
   register(_customerRegistration: CustomerRegistration) {
     // register user 
-    console.log(_customerRegistration);
     return this.http.post<LoginResponse>(`${this._apiUrl}/administration/register`, _customerRegistration)
       .pipe(map(loginResponse => {
         // register successful if there's a jwt token in the response

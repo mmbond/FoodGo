@@ -1,0 +1,162 @@
+[
+    {
+        "restaurantId": 1,
+        "name": "Burger House ",
+        "restorantLogo": "assets/restaurants/burger_house.jpg",
+        "description": "Naš meni je kombinacija premijum burgera, domaćeg pomfrita, soseva i sendviča sa originalnim sastojcima. ",
+        "mark": 4.6,
+        "address": "Nikole Spasića 3"
+    },
+    {
+        "restaurantId": 2,
+        "name": "Majstor i Margarita",
+        "restorantLogo": "assets/restaurants/majstor_i_margarita.jpg",
+        "description": "Mesto gde se prijatelji i porodica rado okupljaju oko majstorskih ukusa prave italijanske pice",
+        "mark": 4.6,
+        "address": "Balkanska 16"
+    },
+    {
+        "restaurantId": 3,
+        "name": "KFC - Studentski Trg",
+        "restorantLogo": "assets/restaurants/kfc_-_studentski_trg.jpg",
+        "description": "Dobro, prste da poližeš!",
+        "mark": 4.6,
+        "address": "Vase Čarapića 24"
+    },
+    {
+        "restaurantId": 4,
+        "name": "Smokvica - Jovanova",
+        "restorantLogo": "assets/restaurants/smokvica_-_jovanova.jpg",
+        "description": "Naši restorani su poznati u Beogradu, kao i u celom regionu. Naša misija je poznata od samog početka: da služimo najbolju hranu i pića i ništa manje od toga.",
+        "mark": 4.6,
+        "address": "Gospodar Jovanova 45a "
+    },
+    {
+        "restaurantId": 5,
+        "name": "Pomodoro",
+        "restorantLogo": "assets/restaurants/pomodoro.jpg",
+        "description": "Pomodoro je malo toplo mesto u starom delu Beograda, gde smo se okupili 2005. godine kako bismo podelili ljubav, znanje i iskustvo, koje smo godinama sakupljali od velikih majstora i zaljubljenika u italijansku kuhinju i tradiciju.",
+        "mark": 4.5,
+        "address": "Hilandarska 32"
+    },
+    {
+        "restaurantId": 6,
+        "name": "Sakura",
+        "restorantLogo": "assets/restaurants/sakura.jpg",
+        "description": "Pravo savršenstvo kada je u pitanju japanska kuhinja, suši i azijski specijaliteti.",
+        "mark": 4.4,
+        "address": "Karađorđeva 2-4"
+    },
+    {
+        "restaurantId": 7,
+        "name": "Prote.in",
+        "restorantLogo": "assets/restaurants/protein.jpg",
+        "description": "Ukoliko želiš da se hraniš zdravo, počni od nas. Sveža, prirodna hrana je ono što zaslužuješ i što ćemo ti mi obezbediti. ",
+        "mark": 4.5,
+        "address": "Francuska 11"
+    },
+    {
+        "restaurantId": 8,
+        "name": "Mandala",
+        "restorantLogo": "assets/restaurants/mandala.jpg",
+        "description": "Obroci koji će nahraniti vašu dušu.",
+        "mark": 4.7,
+        "address": "Kosančićev venac 9"
+    },
+    {
+        "restaurantId": 9,
+        "name": "Ćevap kod Dekija",
+        "restorantLogo": "assets/restaurants/ćevap_kod_dekija.jpg",
+        "description": "",
+        "mark": 4.5,
+        "address": "Strahinjića Bana 71"
+    },
+    {
+        "restaurantId": 10,
+        "name": "Garden food",
+        "restorantLogo": "assets/restaurants/garden_food.jpg",
+        "description": "",
+        "mark": 4.6,
+        "address": "Kosovska 18"
+    },
+    {
+        "restaurantId": 11,
+        "name": "Restoran Istok",
+        "restorantLogo": "assets/restaurants/restoran_istok.jpg",
+        "description": "Vijetnamska kuhinja u centru Beograda. Naša hrana je jedinstveno orijentalno iskustvo koje ti je nedostajalo. ",
+        "mark": 4.4,
+        "address": "Gospodar Jevremova 50"
+    },
+    {
+        "restaurantId": 12,
+        "name": "Cafe Lavash",
+        "restorantLogo": "assets/restaurants/cafe_lavash.jpg",
+        "description": "Gastronomski atlas najsočnijih destinacija sa Balkana i Bliskog istoka je tu da probudi vaš apetit",
+        "mark": 4.4,
+        "address": "Karađorđeva 2-4"
+    },
+    {
+        "restaurantId": 13,
+        "name": "Submarine Burger",
+        "restorantLogo": "assets/restaurants/submarine_burger.jpg",
+        "description": "Naši burgeri su napravljeni od prirodnih, organskih i domaćih sastojaka, pripremljenih na stari, provereni način.\n",
+        "mark": 4.5,
+        "address": "Kralja Petra 20A"
+    },
+    {
+        "restaurantId": 14,
+        "name": "Iva New Balkan Cuisine",
+        "restorantLogo": "assets/restaurants/iva_new_balkan_cuisine.jpg",
+        "description": "Meni je baziran na New Balkan Cuisine filozofiji – kombinaciji naših kultura i tradicija, lokalnih namirnica, i modernih tehnologija i trendova.",
+        "mark": 4.8,
+        "address": "Knjeginje Ljubice 11"
+    },
+    {
+        "restaurantId": 15,
+        "name": "Holy Smokes",
+        "restorantLogo": "assets/restaurants/holy_smokes.jpg",
+        "description": "Ovaj jedinstveni, teksaški roštilj je mnogo više od roštilja. Brisket, svinjski vrat, drpano prase ili pileći bataci se pripremaju u specijalno izrađenoj peći na drva, smokeru, i to, do čak 12 sati! ",
+        "mark": 4.6,
+        "address": "Cetinjska 15a"
+    },
+    {
+        "restaurantId": 16,
+        "name": "Street pasta bar Slavija",
+        "restorantLogo": "assets/restaurants/street_pasta_bar_slavija.jpg",
+        "description": "Vrhunske italijanske testenine čekaju da odabereš sos koji najviše prija tvom nepcu",
+        "mark": 4.5,
+        "address": "Kralja Milana 52"
+    },
+    {
+        "restaurantId": 17,
+        "name": "Mayka",
+        "restorantLogo": "assets/restaurants/mayka.jpg",
+        "description": "Zdravlje dolazi iznutra! Mesto zdrave hrane u jednom od najlepših delova grada.",
+        "mark": 4.5,
+        "address": "Nikole Spasića 5"
+    },
+    {
+        "restaurantId": 18,
+        "name": "Gyropolis",
+        "restorantLogo": "assets/restaurants/gyropolis.jpg",
+        "description": "Kada more ne može da stigne do tebe, autentična grčka hrana može. Da li je to giros ili suvlaki, Gyropolis je tu za tebe.",
+        "mark": 4.4,
+        "address": "Makedonska 5"
+    },
+    {
+        "restaurantId": 19,
+        "name": "Zuwar",
+        "restorantLogo": "assets/restaurants/zuwar.jpg",
+        "description": "Nudimo ono najbolje od bliskoistočne kuhinje. Dođi i uveri se!",
+        "mark": 4.5,
+        "address": "Đure Jakšića 3 "
+    },
+    {
+        "restaurantId": 20,
+        "name": "Kafana SFRJ",
+        "restorantLogo": "assets/restaurants/kafana_sfrj.jpg",
+        "description": "Za sve Jugo-nostalgičare i one koje žele učiti o istoriji\n",
+        "mark": 4.6,
+        "address": "Velike stepenice 1"
+    }
+]

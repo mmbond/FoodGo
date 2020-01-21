@@ -1,0 +1,108 @@
+[
+    {
+        "orderId": 1,
+        "restaurant": {
+            "restaurantId": 1,
+            "name": "KFC",
+            "restorantLogo": "assets/logo/kfc.png",
+            "description": "KFC Restoran je jedan od najboljih restorana koji imaju piletinu",
+            "mark": 2.5,
+            "address": "Studentski trg 12"
+        },
+        "status": "FINISHED",
+        "meals": [
+            {
+                "mealId": 1,
+                "name": "Burger",
+                "mealPicture": "assets/logo/kfc.png",
+                "description": " best burger in town",
+                "category": "burgeri",
+                "price": 500,
+                "ingredients": []
+            }
+        ],
+        "comment": "prva porudzbina",
+        "orderDate": "2020-01-03T18:25:43.511Z",
+        "price": 500,
+        "note": "Sa kecapom, bez luka :D"
+    },
+    {
+        "orderId": 1123123,
+        "restaurant": {
+            "restaurantId": 2,
+            "name": "McDonald",
+            "restorantLogo": "assets/logo/mcdonalds.png",
+            "description": "McDonald Restoran ukus amerike, pravi burgeri i stvar bez koje tesko mozete",
+            "mark": 3.5,
+            "address": "Studentski trg 5"
+        },
+        "status": "CURRENT",
+        "meals": [
+            {
+                "mealId": 1,
+                "name": "Burger",
+                "mealPicture": "assets/logo/kfc.png",
+                "description": " best burger in town",
+                "category": "burgeri",
+                "price": 500,
+                "ingredients": []
+            },
+            {
+                "mealId": 2,
+                "name": "Hamburger",
+                "mealPicture": "assets/logo/kfc.png",
+                "description": " best burger in town",
+                "category": "burgeri",
+                "price": 520,
+                "ingredients": []
+            }
+        ],
+        "comment": "druga porudzbina",
+        "orderDate": "2020-01-03T20:25:43.511Z",
+        "price": 1020,
+        "note": null
+    },
+    {
+        "orderId": 32313,
+        "restaurant": {
+            "restaurantId": 1,
+            "name": "KFC",
+            "restorantLogo": "assets/logo/kfc.png",
+            "description": "KFC Restoran je jedan od najboljih restorana koji imaju piletinu",
+            "mark": 2.5,
+            "address": "Studentski trg 12"
+        },
+        "status": "FINISHED",
+        "meals": [
+            {
+                "mealId": 1,
+                "name": "Burger",
+                "mealPicture": "assets/logo/kfc.png",
+                "description": " best burger in town",
+                "category": "burgeri",
+                "price": 500,
+                "ingredients": []
+            }, {
+                "mealId": 1,
+                "name": "Burger",
+                "mealPicture": "assets/logo/kfc.png",
+                "description": " best burger in town",
+                "category": "burgeri",
+                "price": 500,
+                "ingredients": []
+            }, {
+                "mealId": 1,
+                "name": "Burger",
+                "mealPicture": "assets/logo/kfc.png",
+                "description": " best burger in town",
+                "category": "burgeri",
+                "price": 500,
+                "ingredients": []
+            }
+        ],
+        "comment": null,
+        "orderDate": "2020-01-05T18:25:43.511Z",
+        "price": 1500,
+        "note": "Mmmmm burgeri :D"
+    }
+]
