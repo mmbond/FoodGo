@@ -1,0 +1,15 @@
+{
+    "customer": {
+        "address": "Neswto 123",
+        "customerId": 1,
+        "email": "marko@marko.com",
+        "favoriteMeals": [
+            "pizza",
+            "chicken",
+            "tortilja"
+        ],
+        "firstName": "Marko",
+        "lastName": "Milic",
+        "phone": "0648979549"
+    }
+}
