@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-05 22:46:07
+Date: 2020-01-22 02:00:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,15 +25,17 @@ CREATE TABLE `customers` (
   `lastName` char(30) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(15) DEFAULT NULL,
-  `addresses` json NOT NULL,
+  `addresses` varchar(255) NOT NULL,
   `password` varchar(64) NOT NULL,
   `fav_food` varchar(255) DEFAULT NULL,
+  `fav_restaurants` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
+INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Paunova 25', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'pica, piletina, pasta', null);
 
 -- ----------------------------
 -- Table structure for ingredients
@@ -121,13 +123,13 @@ CREATE TABLE `orders` (
 DROP TABLE IF EXISTS `restaurants`;
 CREATE TABLE `restaurants` (
   `restaurantId` int(4) NOT NULL AUTO_INCREMENT,
-  `restaurantName` varchar(50) NOT NULL,
-  `restaurantCategory` char(255) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `category` char(255) DEFAULT NULL,
   `address` varchar(60) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `work_time` varchar(15) DEFAULT NULL,
-  `average_mark` decimal(3,2) DEFAULT NULL,
-  `restaurantImagePath` varchar(255) DEFAULT NULL,
+  `mark` decimal(3,2) DEFAULT NULL,
+  `restaurantLogo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`restaurantId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
