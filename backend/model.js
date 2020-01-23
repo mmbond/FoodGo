@@ -62,3 +62,14 @@ function getAllOrdersHistory(customerId){
     }
 }
 
+function getAddresses(customerId){
+    query = `SELECT addresses FROM customers`;
+    try {
+        result = queryDb(query);
+        let resultArray = result[0].split(",");
+        return resultArray;
+    } catch (error) {
+        console.log("Error:" + error);
+    }
+}
+
