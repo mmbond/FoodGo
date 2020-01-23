@@ -15,13 +15,13 @@ export class AddressComponent implements OnInit {
   constructor(private router: Router, private _customerService: CustomerService) { }
 
   ngOnInit() {
-    this._fetchCustomerAddresses(10);
+
+    this._fetchCustomerAddresses();
   }
 
-  private _fetchCustomerAddresses(limit: number = 1) {
-    this._customerService.getCustomerAddresses(limit).toPromise()
-      .then(response => this.addresses = response.addresses)
-      .catch(error => this.error = ErrorHelper.generateErrorObj(error));
+  private _fetchCustomerAddresses() {
+    let customer = localStorage.getItem("customer");
+    this.addresses = JSON.parse(customer).addresses;
   }
 
 

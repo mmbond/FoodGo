@@ -17,11 +17,13 @@ export class CommentComponent implements OnInit {
   constructor(private router: Router, private _historyService: HistoryService) { }
 
   ngOnInit() {
-    this._fetchOrders(10);
+    let customer = localStorage.getItem("customer");
+    let customerId = JSON.parse(customer).customerId;
+    this._fetchOrders(customerId);
   }
 
-  private _fetchOrders(limit: number = 1) {
-    this._historyService.getOrders(limit).toPromise()
+  private _fetchOrders(customerId: number) {
+    this._historyService.getOrders(customerId).toPromise()
       .then(response => this.orders = response)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }

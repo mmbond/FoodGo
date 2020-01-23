@@ -5,6 +5,7 @@ export var restaurant = {};
 export var meals = [];
 export var ordersHistory = [];
 export var addresses = [];
+export var customerData = [];
 
 
 function queryDb(query){
@@ -62,18 +63,8 @@ export function getAllOrdersHistory(customerId){
     WHERE customerId = ${customerId}`;
     try {
         result = queryDb(query);
-        // FALI JOS DA DODA SVAKI OBROK U NARUDZBINU
+        // FALI JOS DA DODA SVAKI OBROK U NARUDZBINU, I ZA SVAKI OBROK PRILOZI
         return result;
-    } catch (error) {
-        console.log("Error:" + error);
-    }
-}
-
-export function getAddresses(customerId){
-    query = `SELECT addresses FROM customers WHERE customerId = ${customerId}`;
-    try {
-        result = queryDb(query);
-        addresses = result[0].split(",");
     } catch (error) {
         console.log("Error:" + error);
     }

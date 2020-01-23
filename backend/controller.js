@@ -77,16 +77,6 @@ app.get('/api/history/all', function (req, res) {
   }
 })
 
-// addresses All GET METHOD
-app.get('/api/profile/getAddresses', function (req, res) {
-  if (req.body) {
-    if(model.addresses.length < 1){
-      model.getAddresses(req.query.customerId);
-    }
-    res.json(model.addresses);
-  }
-})
-
 // customer POST METHOD
 app.post('/api/profile/edit', function (req, res) {
   if (req.body) {

@@ -36,16 +36,4 @@ export class CustomerService {
         return throwError(error);
       });
   }
-
-  // get Customer addresses
-  getCustomerAddresses(limit: number = 1) {
-    const requestUrl = `${this._apiUrl}/profile/getAddresses`;
-    return this.http.get<ProfileAddressList>(requestUrl)
-      .pipe(map(response => {
-        return response;
-      }),
-        catchError(error => {
-          return throwError(error);
-        }));
-  }
 }
