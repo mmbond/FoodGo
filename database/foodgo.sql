@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-22 02:00:59
+Date: 2020-01-23 13:48:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,12 +30,13 @@ CREATE TABLE `customers` (
   `fav_food` varchar(255) DEFAULT NULL,
   `fav_restaurants` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
 INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Paunova 25', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'pica, piletina, pasta', null);
+INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'giros, burger, pasta', null);
 
 -- ----------------------------
 -- Table structure for ingredients

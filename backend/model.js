@@ -25,3 +25,40 @@ function getAllRestaurants(){
     }
 }
 
+function getRestaurantById(restaurantId){
+    query = "SELECT * FROM restaurants WHERE restaurantId =" + restaurantId;
+    try {
+        result = queryDb(query);
+        return result;
+    } catch (error) {
+        console.log("Error:" + error);
+    }
+}
+
+function getAllMeals(restaurantId){
+    query = `SELECT * FROM meals 
+    INNER JOIN meals_restaurants 
+    ON meals.mealId = meals_restaurants.mealId
+    WHERE meals_restaurants.restaurantId = ${restaurantId}`;
+    try {
+        result = queryDb(query);
+        return result;
+    } catch (error) {
+        console.log("Error:" + error);
+    }
+}
+
+function getAllOrdersHistory(customerId){
+    query = `SELECT * FROM orders
+    INNER JOIN restaurants 
+    ON orders.restaurantId = restaurants.restaurantId
+    WHERE customerId = ${customerId}`;
+    try {
+        result = queryDb(query);
+        // FALI JOS DA DODA SVAKI OBROK U NARUDZBINU
+        return result;
+    } catch (error) {
+        console.log("Error:" + error);
+    }
+}
+

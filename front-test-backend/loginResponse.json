@@ -1,16 +1,34 @@
-{
-    "customer": {
-        "address": "Paunova 25",
-        "customerId": 1,
-        "email": "marko@marko.com",
-        "password": "marko123",
-        "favoriteMeals": [
-            "pica",
-            "piletina",
-            "pasta"
-        ],
-        "firstName": "Marko",
-        "lastName": "Milic",
-        "phone": "0648979549"
+[
+    {
+        "customer": {
+            "address": "Paunova 25",
+            "customerId": 1,
+            "email": "marko@marko.com",
+            "password": "marko123",
+            "favoriteMeals": [
+                "pica",
+                "piletina",
+                "pasta"
+            ],
+            "firstName": "Marko",
+            "lastName": "Milic",
+            "phone": "0648979549"
+        }
+    },
+    {
+        "customer": {
+            "address": "Pozeska 69",
+            "customerId": 2,
+            "email": "toma.joksimovic@gmail.com",
+            "password": "spartanac97+",
+            "favoriteMeals": [
+                "giros",
+                "burger",
+                "pasta"
+            ],
+            "firstName": "Toma",
+            "lastName": "Joksimovic",
+            "phone": "065344744"
+        }
     }
-}
+]
