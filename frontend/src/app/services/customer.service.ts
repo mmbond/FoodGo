@@ -26,14 +26,8 @@ export class CustomerService {
   }
 
   // get Customer
-  getCustomer(limit: number = 1) {
-    const requestUrl = `${this._apiUrl}/profile/get`;
-    return this.http.get<CustomerProfile>(requestUrl)
-      .pipe(response => {
-        return response;
-      }),
-      catchError(error => {
-        return throwError(error);
-      });
+  getCustomer() {
+    let customer = localStorage.get("customer");
+    return JSON.parse(customer);
   }
 }

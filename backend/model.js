@@ -4,7 +4,6 @@ export var restaurants = [];
 export var restaurant = {};
 export var meals = [];
 export var ordersHistory = [];
-export var addresses = [];
 export var customerData = [];
 
 

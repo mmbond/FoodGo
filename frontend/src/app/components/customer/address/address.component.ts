@@ -21,7 +21,7 @@ export class AddressComponent implements OnInit {
 
   private _fetchCustomerAddresses() {
     let customer = localStorage.getItem("customer");
-    this.addresses = JSON.parse(customer).addresses;
+    this.addresses = JSON.parse(customer).addresses.split(",");
   }
 
 
