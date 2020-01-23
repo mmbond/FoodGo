@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-23 18:27:52
+Date: 2020-01-23 19:54:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `customers` (
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
-INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Paunova 25', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'pica, piletina, pasta', null);
+INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Bulevar oslobodjenja 110, Danijelova 32, Bulevar Patrijarha Pavla 23', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'pica, piletina, pasta', null);
 INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'giros, burger, pasta', null);
 
 -- ----------------------------
@@ -2025,7 +2025,7 @@ CREATE TABLE `orders` (
   `orderId` int(11) NOT NULL AUTO_INCREMENT,
   `customerId` int(11) NOT NULL,
   `restaurantId` int(4) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   `meals_ids` varchar(255) NOT NULL,
   `comment` varchar(255) DEFAULT NULL,
@@ -2038,11 +2038,14 @@ CREATE TABLE `orders` (
   KEY `FK_RESTAURANT` (`restaurantId`),
   CONSTRAINT `FK_CUSTOMER` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_RESTAURANT` FOREIGN KEY (`restaurantId`) REFERENCES `restaurants` (`restaurantId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES ('1', '1', '1', '345', '2020-01-16 19:10:27', '1', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
+INSERT INTO `orders` VALUES ('2', '1', '2', '685', '2020-01-17 19:22:17', '41, 43', 'druga porudzbina', 'in progress', '1, 1', null, '3');
+INSERT INTO `orders` VALUES ('3', '2', '2', '1460', '2020-01-18 19:49:58', '42, 52', null, 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
 
 -- ----------------------------
 -- Table structure for restaurants

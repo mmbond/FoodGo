@@ -1,19 +1,8 @@
-/*
-var http = require('http');
-
-const port = 8888;
-
-// Testing server
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end();
-}).listen(port);
-*/
-
 'use strict';
 const express = require('express')
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const model = require('./model.js');
 
 // Use express and port 8888
 const app = express();
@@ -24,29 +13,33 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Listen on port 300
+// Listen on port 8888
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
 
 
 // restaurant All GET METHOD
 app.get('/api/restaurant/all', function (req, res) {
-  let restaurant = require('./restaurants.json');
-  res.json(restaurant);
+  if(model.restaurants.length < 1){
+    model.getAllRestaurants();
+  }
+  res.json(model.restaurants);
 })
 
 // restaurant GET METHOD
 app.get('/api/restaurant/id', function (req, res) {
   if (req.body) {
-    let restaurant = require('./restaurants.json');
-    res.json(restaurant[req.query.restaurantId - 1]);
+    model.getRestaurantById(req.query.restaurantId);
+    res.json(model.restaurant);
   }
 })
 
 // meal All GET METHOD
 app.get('/api/meal/all', function (req, res) {
   if (req.body) {
-    let meal = require('./meals.json');
-    res.json(meal[[req.query.restaurantId - 1]]);
+    if(model.meals.length < 1){
+      model.getAllMeals(req.query.restaurantId);
+    }
+    res.json(model.meals);
   }
 })
 
@@ -74,16 +67,24 @@ app.post('/api/administration/register', function (req, res) {
   }
 })
 
-// order All GET METHOD
+// orders history All GET METHOD
 app.get('/api/history/all', function (req, res) {
-  let orders = require('./orders.json');
-  res.json(orders);
+  if (req.body) {
+    if(model.ordersHistory.length < 1){
+      model.getAllOrdersHistory(req.query.customerId);
+    }
+    res.json(model.ordersHistory);
+  }
 })
 
 // addresses All GET METHOD
 app.get('/api/profile/getAddresses', function (req, res) {
-  let addresses = require('./addresses.json');
-  res.json(addresses);
+  if (req.body) {
+    if(model.addresses.length < 1){
+      model.getAddresses(req.query.customerId);
+    }
+    res.json(model.addresses);
+  }
 })
 
 // customer POST METHOD

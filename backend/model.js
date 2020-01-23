@@ -1,5 +1,12 @@
 var connecton = require('./db_connection.js');
 
+export var restaurants = [];
+export var restaurant = {};
+export var meals = [];
+export var ordersHistory = [];
+export var addresses = [];
+
+
 function queryDb(query){
     try {
         if(connecton.connectToDb()){
@@ -15,40 +22,40 @@ function queryDb(query){
     }
 }
 
-function getAllRestaurants(){
+export function getAllRestaurants(){
     query = "SELECT * FROM restaurants";
     try {
         result = queryDb(query);
-        return result;
+        restaurants = result;
     } catch (error) {
         console.log("Error:" + error);
     }
 }
 
-function getRestaurantById(restaurantId){
-    query = "SELECT * FROM restaurants WHERE restaurantId =" + restaurantId;
+export function getRestaurantById(restaurantId){
+    query = `SELECT * FROM restaurants WHERE restaurantId = ${restaurantId}`;
     try {
         result = queryDb(query);
-        return result;
+        restaurant = result[0];
     } catch (error) {
         console.log("Error:" + error);
     }
 }
 
-function getAllMeals(restaurantId){
+export function getAllMeals(restaurantId){
     query = `SELECT * FROM meals 
     INNER JOIN meals_restaurants 
     ON meals.mealId = meals_restaurants.mealId
     WHERE meals_restaurants.restaurantId = ${restaurantId}`;
     try {
         result = queryDb(query);
-        return result;
+        meals = result;
     } catch (error) {
         console.log("Error:" + error);
     }
 }
 
-function getAllOrdersHistory(customerId){
+export function getAllOrdersHistory(customerId){
     query = `SELECT * FROM orders
     INNER JOIN restaurants 
     ON orders.restaurantId = restaurants.restaurantId
@@ -62,12 +69,11 @@ function getAllOrdersHistory(customerId){
     }
 }
 
-function getAddresses(customerId){
-    query = `SELECT addresses FROM customers`;
+export function getAddresses(customerId){
+    query = `SELECT addresses FROM customers WHERE customerId = ${customerId}`;
     try {
         result = queryDb(query);
-        let resultArray = result[0].split(",");
-        return resultArray;
+        addresses = result[0].split(",");
     } catch (error) {
         console.log("Error:" + error);
     }
