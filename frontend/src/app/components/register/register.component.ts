@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, Valid
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { first } from 'rxjs/operators';
+import { sha256 } from 'js-sha256';
 
 @Component({
   selector: 'app-register',
@@ -52,7 +53,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.customer.email = this.f.email.value;
-    this.customer.password = this.f.password.value;
+    this.customer.password =  sha256(this.f.password.value);
     this.customer.firstName = this.f.name.value;
     this.customer.lastName = this.f.lastname.value;
     this.customer.phone = this.f.phone.value;
