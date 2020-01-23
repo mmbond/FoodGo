@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `meals`;
 CREATE TABLE `meals` (
   `mealId` int(11) NOT NULL AUTO_INCREMENT,
   `mealName` varchar(100) DEFAULT NULL,
-  `mealCategory` varchar(20) DEFAULT NULL,
+  `mealCategory` varchar(40) DEFAULT NULL,
   `mealImagePath` varchar(255) DEFAULT NULL,
   `meal_description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`mealId`)
