@@ -19,16 +19,16 @@ app.listen(port, () => console.log(`Hello world app listening on port ${port}!`)
 
 // restaurant All GET METHOD
 app.get('/api/restaurant/all', function (req, res) {
-  if(model.restaurants.length < 1){
-    model.getAllRestaurants();
-  }
+  model.getAllRestaurants();
   res.json(model.restaurants);
 })
 
 // restaurant GET METHOD
 app.get('/api/restaurant/id', function (req, res) {
   if (req.body) {
-    model.getRestaurantById(req.query.restaurantId);
+    if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
+      model.getRestaurantById(req.query.restaurantId);
+    }
     res.json(model.restaurant);
   }
 })
@@ -36,7 +36,7 @@ app.get('/api/restaurant/id', function (req, res) {
 // meal All GET METHOD
 app.get('/api/meal/all', function (req, res) {
   if (req.body) {
-    if(model.meals.length < 1){
+    if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
       model.getAllMeals(req.query.restaurantId);
     }
     res.json(model.meals);
@@ -45,16 +45,21 @@ app.get('/api/meal/all', function (req, res) {
 
 // login POST METHOD
 app.post('/api/administration/login', function (req, res) {
-  if (req.body) {
-    let loginResponse = require('./loginResponse.json');
-    res.json(loginResponse);
-  }
+    if (req.body) {
+      model.getCustomerIfExists(req.body);
+    }
+    res.json(model.customerData);
 })
 
 // logout POST METHOD
 app.post('/api/administration/logout', function (req, res) {
   console.log('pogodjen');
   if (req.body) {
+    model.restaurants = [];
+    model.restaurant = {};
+    model.meals = [];
+    model.ordersHistory = [];
+    model.customerData = {};
     res.send(true);
   }
 })
@@ -62,8 +67,18 @@ app.post('/api/administration/logout', function (req, res) {
 // register POST METHOD
 app.post('/api/administration/register', function (req, res) {
   if (req.body) {
-    let loginResponse = require('./loginResponse.json');
-    res.json(loginResponse);
+    let emailAndPass = {};
+    emailAndPass.email = req.body.email;
+    emailAndPass.password = req.body.password;
+    model.getCustomerIfExists(emailAndPass);
+    if(model.isEmpty(model.customerData)){
+      model.insertCustomer(req.body);
+      model.getCustomerIfExists(emailAndPass);
+      res.json(model.customerData);
+    } else {
+      model.customerData = {};
+      res.send(false);
+    }
   }
 })
 

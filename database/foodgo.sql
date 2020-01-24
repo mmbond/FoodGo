@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-23 23:22:06
+Date: 2020-01-24 22:06:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,19 +24,19 @@ CREATE TABLE `customers` (
   `firstName` char(20) NOT NULL,
   `lastName` char(30) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `phone` varchar(15) DEFAULT NULL,
+  `phone` varchar(15) NOT NULL,
   `addresses` varchar(255) NOT NULL,
   `password` varchar(64) NOT NULL,
   `fav_food` varchar(255) DEFAULT NULL,
-  `fav_restaurants` varchar(255) DEFAULT NULL,
+  `fav_restaurants_ids` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
-INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Bulevar Oslobodjenja 110, Danijelova 32, Bulevar Patrijarha Pavla 23', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'pica, piletina, pasta', null);
-INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'giros, burger, pasta', null);
+INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Bulevar Oslobodjenja 110, Danijelova 32, Bulevar Patrijarha Pavla 23', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'STEKOVI, KOLAČI, PICE', null);
+INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'BURGERI, SUŠI, MESA', null);
 
 -- ----------------------------
 -- Table structure for ingredients
@@ -2029,7 +2029,7 @@ CREATE TABLE `orders` (
   `price` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   `meals_ids` varchar(255) NOT NULL,
-  `meal_ingredients_ids` varchar(255) DEFAULT NULL,
+  `meal_ingredients_ids` json DEFAULT NULL,
   `comment` varchar(255) DEFAULT NULL,
   `status` set('finished','in progress','canceled') NOT NULL DEFAULT 'in progress',
   `meal_count` varchar(255) NOT NULL,
@@ -2045,9 +2045,9 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-01-23 23:21:41', '1', '1: []', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
-INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-01-23 23:21:42', '41, 43', '41: []; 43: []', 'druga porudzbina', 'in progress', '1, 1', null, '3');
-INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-01-23 23:21:53', '42, 52', '42: [], []; 52: []', null, 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
+INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-01-24 21:35:02', '1', '{\"1\": [[]]}', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
+INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-01-24 21:34:50', '41, 43', '{\"41\": [[]], \"43\": [[]]}', 'druga porudzbina', 'in progress', '1, 1', null, '3');
+INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-01-24 21:34:33', '42, 52', '{\"42\": [[], []], \"52\": [[]]}', null, 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
 
 -- ----------------------------
 -- Table structure for restaurants

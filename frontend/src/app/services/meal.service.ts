@@ -4,7 +4,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { Restaurant } from '../models/restaurant.model';
 
 @Injectable({
   providedIn: 'root'

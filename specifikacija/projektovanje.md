@@ -16,11 +16,6 @@
 | phone          | String         |
 | password       | String(SHA256) |
 
-## ProfileAddressList
-| Naziv atributa | Tip            |
-|----------------|----------------|
-| addresses      | List< String > |
-
 ## LoginResponse
 | Naziv atributa | Tip                                 |
 |----------------|-------------------------------------|
@@ -29,10 +24,10 @@
 ## CustomerProfile
 | Naziv atributa | Tip            |
 |----------------|----------------|
-| address        | String         |
+| addresses      | List<String>   |
 | customerId     | Long           |
 | email          | String         |
-| favoriteMeals  | List< String > |
+| favoriteMeals  | List<String>   |
 | firstName      | String         |
 | lastName       | String         |
 | phone          | String         |
@@ -88,6 +83,7 @@
 | Sandwich     |
 | Burrito      |
 | Taco         |
+
 ## Status
 | Vrednosti   |
 |-------------|

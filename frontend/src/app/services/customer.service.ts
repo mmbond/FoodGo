@@ -4,7 +4,6 @@ import { CustomerProfile } from '../models/customer-profile.model';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { ProfileAddressList } from '../models/profile-address-list.model';
 
 @Injectable({
   providedIn: 'root'

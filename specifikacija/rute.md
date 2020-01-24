@@ -15,8 +15,6 @@
 |--------------|--------|-------------------|--------------------|
 | edit         | POST   | CustomerProfile   |                    |
 | get          | GET    | CustomerId (long) | CustomerProfile    |
-| getAddresses | GET    | CustomerId (long) | ProfileAddressList |
-
 
 ## Restaurant
 > rute počinju sa `api/restaurant/`
