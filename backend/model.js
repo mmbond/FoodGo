@@ -69,7 +69,8 @@ export function getRestaurantById(restaurantId){
 
 // Get all meals by restaurant Id.
 export function getAllMeals(restaurantId){
-    query = `SELECT * FROM meals 
+    query = `
+    SELECT * FROM meals 
     INNER JOIN meals_restaurants 
     ON meals.mealId = meals_restaurants.mealId
     WHERE meals_restaurants.restaurantId = ${restaurantId}`;
@@ -83,7 +84,8 @@ export function getAllMeals(restaurantId){
 
 // Get orders history for one customer.
 export function getAllOrdersHistory(customerId){
-    query = `SELECT * FROM orders
+    query = `
+    SELECT * FROM orders
     INNER JOIN restaurants 
     ON orders.restaurantId = restaurants.restaurantId
     WHERE customerId = ${customerId}`;
@@ -134,8 +136,9 @@ export function getAllOrdersHistory(customerId){
 
 // Insert customer after registration.
 export function insertCustomer(customer){
-    query = `INSERT INTO customers (firstName, lastName, email, phone, addresses, password)
-     VALUES ('${customer.firstName}', '${customer.lastName}', '${customer.email}', '${customer.phone}', '${customer.address}', '${customer.password}' )`;
+    query = `
+    INSERT INTO customers (firstName, lastName, email, phone, addresses, password)
+    VALUES ('${customer.firstName}', '${customer.lastName}', '${customer.email}', '${customer.phone}', '${customer.address}', '${customer.password}' )`;
     try {
         queryDb(query);
         return true;
@@ -147,7 +150,8 @@ export function insertCustomer(customer){
 
 // Get customer if exists.
 export function getCustomerIfExists(customer){
-    query = `SELECT * FROM customers
+    query = `
+    SELECT * FROM customers
     WHERE email = '${customer.email}' AND password = '${customer.password}'`;
     try {
         result = queryDb(query);
@@ -168,6 +172,25 @@ export function getCustomerIfExists(customer){
         }
     } catch (error) {
         console.log("Error:" + error);
+    }
+}
+
+export function updateCustomer(customerEdited){
+    customerData.customer.firstName = customerEdited.firstName;
+    customerData.customer.lastName = customerEdited.lastName;
+    customerData.customer.email = customerEdited.email;
+    customerData.customer.phone = customerEdited.phone;
+    query = `
+    UPDATE customers 
+    SET firstName = '${customerEdited.firstName}', lastName = '${customerEdited.lastName}', email = '${customerEdited.email}', phone = '${customerEdited.phone}'
+    WHERE email = '${customerEdited.email}' AND password = '${customerData.customer.password}'`;
+    try {
+        queryDb(query);
+        console.log(result.affectedRows + " record(s) updated");
+        return true;
+    } catch (error) {
+        console.log("Error:" + error);
+        return false;
     }
 }
 

@@ -75,6 +75,7 @@ app.post('/api/administration/register', function (req, res) {
       model.insertCustomer(req.body);
       model.getCustomerIfExists(emailAndPass);
       res.json(model.customerData);
+      res.send(true);
     } else {
       model.customerData = {};
       res.send(false);
@@ -95,6 +96,12 @@ app.get('/api/history/all', function (req, res) {
 // customer POST METHOD
 app.post('/api/profile/edit', function (req, res) {
   if (req.body) {
-    res.send(true);
+    if(model.updateCustomer(req.body)){
+      res.json(model.customerData);
+      res.send(true);
+    } else {
+      res.send(false);
+    }
+    
   }
 })
