@@ -99,8 +99,8 @@ export function getAllOrdersHistory(customerId){
                 let meal_id = parseInt(row.meals_ids[i]);
                 query = `SELECT * FROM meals WHERE mealId = ${meal_id}`;
                 try {
-                    result = queryDb(query);
-                    let meal = result[0];
+                    let result1 = queryDb(query);
+                    let meal = result1[0];
 
                     // Push same meal by count in order
                     for(let j = 1; j <= row.meal_count[i]; j++){
@@ -112,8 +112,8 @@ export function getAllOrdersHistory(customerId){
                             let ingredient_id = parseInt(row.meals_ingredients_ids[mealIdKey][j][k]);
                             query = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id}`;
                             try {
-                                result = queryDb(query);
-                                let ingredient = result[0];
+                                let result2 = queryDb(query);
+                                let ingredient = result2[0];
                                 meal.ingredients.push(ingredient);
                             } catch (error) {
                                 console.log("Error:" + error);
@@ -126,7 +126,7 @@ export function getAllOrdersHistory(customerId){
                 }
             }
         });
-        return result;
+        ordersHistory = result;
     } catch (error) {
         console.log("Error:" + error);
     }
