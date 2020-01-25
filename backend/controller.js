@@ -59,7 +59,7 @@ app.post('/api/administration/logout', function (req, res) {
     model.restaurant = {};
     model.meals = [];
     model.ordersHistory = [];
-    model.customerData = {};
+    model.customerData = {"customer": {}};
     res.send(true);
   }
 })

@@ -4,7 +4,8 @@ export var connectionData = {
     host: "localhost",
     user: "root",
     password: "spartanac97+",
-    database: "foodgo"
+    database: "foodgo",
+    port: 3306
   }
 
 export var con = mysql.createConnection(connectionData);

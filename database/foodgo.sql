@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-24 23:36:49
+Date: 2020-01-25 15:37:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,13 +30,14 @@ CREATE TABLE `customers` (
   `fav_food` varchar(255) DEFAULT NULL,
   `fav_restaurants_ids` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
 INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Bulevar Oslobodjenja 110, Danijelova 32, Bulevar Patrijarha Pavla 23', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'STEKOVI, KOLAČI, PICE', null);
-INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'BURGERI, SUŠI, MESA', null);
+INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'BURGERI, SUŠI, MESA', 'Burger House, Sakura');
+INSERT INTO `customers` VALUES ('3', 'Jovan', 'Gucevski', 'jovan.gucevski', '064567890', 'Bulevar Oslobodjenja 128', 'b4622ba7bb55e3c7504f9cf9c4522cc7481ee0d59bf9697145b888ec2198cad5', 'BURGERI, TOPLA PREDJELA', null);
 
 -- ----------------------------
 -- Table structure for ingredients

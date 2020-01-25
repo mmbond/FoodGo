@@ -4,7 +4,7 @@ export var restaurants = [];
 export var restaurant = {};
 export var meals = [];
 export var ordersHistory = [];
-export var customerData = {};
+export var customerData = {"customer": {}};
 
 
 // Query function.
@@ -16,6 +16,7 @@ function queryDb(query){
                 if (err) throw err;
                 queryResult = result;
             });
+            connecton.con.end();
             return queryResult;
         }
     } catch(error) {
@@ -47,9 +48,9 @@ export function splitSeparatedDataInArray(stringWithDelimiter, delimiter){
 
 // Get all restaurants.
 export function getAllRestaurants(){
-    query = "SELECT * FROM restaurants";
+    let query = "SELECT * FROM restaurants";
     try {
-        result = queryDb(query);
+        let result = queryDb(query);
         restaurants = result;
     } catch (error) {
         console.log("Error:" + error);
@@ -58,9 +59,9 @@ export function getAllRestaurants(){
 
 // Get restaurant by id.
 export function getRestaurantById(restaurantId){
-    query = `SELECT * FROM restaurants WHERE restaurantId = ${restaurantId}`;
+    let query = `SELECT * FROM restaurants WHERE restaurantId = ${restaurantId}`;
     try {
-        result = queryDb(query);
+        let result = queryDb(query);
         restaurant = result[0];
     } catch (error) {
         console.log("Error:" + error);
@@ -69,13 +70,13 @@ export function getRestaurantById(restaurantId){
 
 // Get all meals by restaurant Id.
 export function getAllMeals(restaurantId){
-    query = `
+    let query = `
     SELECT * FROM meals 
     INNER JOIN meals_restaurants 
     ON meals.mealId = meals_restaurants.mealId
     WHERE meals_restaurants.restaurantId = ${restaurantId}`;
     try {
-        result = queryDb(query);
+        let result = queryDb(query);
         meals = result;
     } catch (error) {
         console.log("Error:" + error);
@@ -84,13 +85,13 @@ export function getAllMeals(restaurantId){
 
 // Get orders history for one customer.
 export function getAllOrdersHistory(customerId){
-    query = `
+    let query = `
     SELECT * FROM orders
     INNER JOIN restaurants 
     ON orders.restaurantId = restaurants.restaurantId
     WHERE customerId = ${customerId}`;
     try {
-        result = queryDb(query);
+        let result = queryDb(query);
         result.forEach(function(row){
             row.meals_ids = splitSeparatedDataInArray(row.meals_ids, ", ");
             row.meal_count = splitSeparatedDataInArray(row.meal_count, ", ");
@@ -136,7 +137,7 @@ export function getAllOrdersHistory(customerId){
 
 // Insert customer after registration.
 export function insertCustomer(customer){
-    query = `
+    let query = `
     INSERT INTO customers (firstName, lastName, email, phone, addresses, password)
     VALUES ('${customer.firstName}', '${customer.lastName}', '${customer.email}', '${customer.phone}', '${customer.address}', '${customer.password}' )`;
     try {
@@ -150,11 +151,11 @@ export function insertCustomer(customer){
 
 // Get customer if exists.
 export function getCustomerIfExists(customer){
-    query = `
+    let query = `
     SELECT * FROM customers
     WHERE email = '${customer.email}' AND password = '${customer.password}'`;
     try {
-        result = queryDb(query);
+        let result = queryDb(query);
         if(result[0]){
             result[0].addresses = splitSeparatedDataInArray(result[0].addresses, ", ");
             result[0].fav_food = splitSeparatedDataInArray(result[0].fav_food, ", ");
@@ -180,7 +181,7 @@ export function updateCustomer(customerEdited){
     customerData.customer.lastName = customerEdited.lastName;
     customerData.customer.email = customerEdited.email;
     customerData.customer.phone = customerEdited.phone;
-    query = `
+    let query = `
     UPDATE customers 
     SET firstName = '${customerEdited.firstName}', lastName = '${customerEdited.lastName}', email = '${customerEdited.email}', phone = '${customerEdited.phone}'
     WHERE email = '${customerEdited.email}' AND password = '${customerData.customer.password}'`;
