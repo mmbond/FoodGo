@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 
-export var connectionData = {
+var connectionData = {
     host: "localhost",
     user: "root",
     password: "spartanac97+",
@@ -8,12 +8,12 @@ export var connectionData = {
     port: 3306
   }
 
-export var con = mysql.createConnection(connectionData);
+ export var con = mysql.createPool(connectionData);
 
-export function connectToDb(){
-    con.connect(function(error) {
-        if (error) throw error;
-        console.log("Connected!");
-        return true
-    });
-}
+ export function connectToDb(){
+     con.getConnection(function(error) {
+         if (error) throw error;
+         console.log("Connected!");
+         return true
+     });
+ }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-25 15:37:41
+Date: 2020-01-26 21:25:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `customers` (
   `addresses` varchar(255) NOT NULL,
   `password` varchar(64) NOT NULL,
   `fav_food` varchar(255) DEFAULT NULL,
-  `fav_restaurants_ids` varchar(255) DEFAULT NULL,
+  `fav_restaurants` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 

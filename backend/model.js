@@ -11,12 +11,14 @@ export var customerData = {"customer": {}};
 function queryDb(query){
     try {
         if(connecton.connectToDb()){
+            console.log("aaaaaaa");
             var queryResult = [];
             connecton.con.query(query, function (err, result, fields) {
                 if (err) throw err;
                 queryResult = result;
             });
-            connecton.con.end();
+            connecton.con.releaseConnection();
+            console.log("Result" + queryResult);
             return queryResult;
         }
     } catch(error) {
@@ -159,12 +161,12 @@ export function getCustomerIfExists(customer){
         if(result[0]){
             result[0].addresses = splitSeparatedDataInArray(result[0].addresses, ", ");
             result[0].fav_food = splitSeparatedDataInArray(result[0].fav_food, ", ");
-            result[0].fav_restaurants_ids = splitSeparatedDataInArray(result[0].fav_restaurants_ids, ", ");
-            result[0].fav_restaurants = [];
-            query = `SELECT * FROM restaurants WHERE restaurantId in (` + fav_restaurants_ids + `)`;
+            result[0].fav_restaurants = splitSeparatedDataInArray(result[0].fav_restaurants, ", ");
+            result[0].fav_restaurants_result = [];
+            query = `SELECT * FROM restaurants WHERE name in (` + fav_restaurants + `)`;
             try {
                 result = queryDb(query);
-                result[0].fav_restaurants = result;
+                result[0].fav_restaurants_result = result;
 
             } catch (error) {
                 console.log("Error:" + error);
@@ -176,6 +178,8 @@ export function getCustomerIfExists(customer){
     }
 }
 
+
+// Update customer data.
 export function updateCustomer(customerEdited){
     customerData.customer.firstName = customerEdited.firstName;
     customerData.customer.lastName = customerEdited.lastName;
@@ -194,4 +198,40 @@ export function updateCustomer(customerEdited){
         return false;
     }
 }
+
+// Add new order.
+export function createOrder(startOrderData){
+
+}
+
+// Modify order data.
+export function changeOrderData(orderData){
+
+}
+
+// Modify order to finish.
+export function finishOrderData(orderData){
+
+}
+
+// Modify order to canceled.
+export function cancelOrder(orderData){
+
+}
+
+// Add, change or removed address.
+export function modifyAddresses(customerWithModifiedAddresses){
+
+}
+
+// Add or removed favourite food.
+export function modifyFavouriteFood(customerWithModifiedFavouriteFood){
+
+}
+
+// Add or removed favourite restaurants.
+export function modifyFavouriteRestaurants(customerWithModifiedFavouriteRestaurants){
+
+}
+
 
