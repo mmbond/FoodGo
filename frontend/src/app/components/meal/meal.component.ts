@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MealService } from 'src/app/services/meal.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
@@ -6,6 +6,7 @@ import { Meal } from 'src/app/models/meal.model';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Ingredients } from 'src/app/models/ingredients.model';
 
 @Component({
   selector: 'app-meal',
@@ -15,11 +16,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class MealComponent implements OnInit {
   @Input() meals: Array<Meal>;
   @Input() restaurant: Restaurant;
-  orderMeals : Array<Meal> = [];
+  @ViewChild('closeOrderModal', { static: true }) closeOrderModal: ElementRef;
+  orderMeals: Array<Meal> = [];
   activeCategory: string;
   error: any;
   favorite = false;
-  constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute,public sanitizer:DomSanitizer) { }
+  chosedMeal: Meal;
+  ingredients: Array<Ingredients>;
+  constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -49,39 +53,45 @@ export class MealComponent implements OnInit {
     return categories;
   }
 
-  private addToOrder(mealName:string) {
-    this.orderMeals.push(this.meals.find(meal => meal.name == mealName));
+  private chooseMealToOrder(id) {
+    this.chosedMeal = this.meals[id];
+    this.ingredients = this.meals[id].ingredients;
   }
 
-  private isFavorite(restaurantName : string) {
+  private addToOrder() {
+    this.orderMeals.push(this.chosedMeal);
+    this.closeOrderModal.nativeElement.click();
+  }
+
+  private isFavorite(restaurantName: string) {
     // TODO Implement this
     this.favorite = !this.favorite;
   }
 
-  private scrollToCategory(category : string) {
+  private scrollToCategory(category: string) {
     this.activeCategory = category;
     document.getElementById(category).scrollIntoView();
   }
 
-  private hasOrders() : boolean {
-    if (this.orderMeals == undefined || this.orderMeals.length==0) {
+  private hasOrders(): boolean {
+    if (this.orderMeals == undefined || this.orderMeals.length == 0) {
       return false;
-      
+
     }
     return true;
   }
 
-  private isActive(category : string): boolean {
+  private isActive(category: string): boolean {
     return this.activeCategory == category;
   }
 
-  private firstCategory(category : string, index: number): boolean {
-    var first =  this.meals.findIndex(meal => meal.category==category);
-    return first==index;
+  private firstCategory(category: string, index: number): boolean {
+    var first = this.meals.findIndex(meal => meal.category == category);
+    return first == index;
   }
 
   private getMapUrl() {
-    let url = "https://maps.google.com/maps?q="+this.restaurant.address.replace(/ /gi,"+")+","+this.restaurant.name.replace(/ /gi,"+")+"&output=embed";
+    let url = "https://maps.google.com/maps?q=" + this.restaurant.address.replace(/ /gi, "+") + "," + this.restaurant.name.replace(/ /gi, "+") + "&output=embed";
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

@@ -1,4 +1,3 @@
-<!-- <div *ngIf=rateOrder(currentRate)> -->
 <ng-template #t let-fill="fill">
   <span class="star" [class.full]="fill === 100">
     <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
@@ -9,4 +8,3 @@
   <pre>Ocena: <b>{{currentRate}}</b></pre>
   <button *ngIf='currentRate>0' (click)="rateOrder(currentRate)" class="btn btn-warning">Pošalji ocenu</button>
 </div>
-<!-- </div> -->
