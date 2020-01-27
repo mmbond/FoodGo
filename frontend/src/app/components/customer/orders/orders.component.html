@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor='let order of orders'>
+      <tr *ngFor='let order of orders; let i = index'>
         <th scope="row">{{order.orderId}}</th>
         <td>{{order.status}}</td>
         <td>
@@ -26,7 +26,9 @@
         <td>{{order.price}} RSD</td>
         <td>{{order.note}}</td>
         <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa vise informacija-->
-        <td><button class="btn btn-warning">Klikni</button></td>
+        <!-- TODO opcija ocene kako da znam kad je ocenjen neka porudzbina?-->
+        <td><app-rating *ngIf="order.status=='FINISHED'" [restaurant]=order.restaurant [read]=false [currentRate]=0></app-rating>
+          <button *ngIf="order.status=='CURRENT'" (click)="cancelOrder(i)" class="btn btn-warning">ODUSTANITE</button> </td>
       </tr>
     </tbody>
   </table>

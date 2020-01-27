@@ -39,9 +39,10 @@
 ## Order
 > rute počinju sa `api/order/`
 
-| Ruta | Metoda | In    | Out     |
-|------|--------|-------|---------|
-| send | POST   | Order | boolean |
+| Ruta   | Metoda | In    | Out     |
+|--------|--------|-------|---------|
+| send   | POST   | Order | boolean |
+| cancel | POST   | Order |         |
 
 
 ## History
@@ -51,6 +52,6 @@
 |-------------------|--------|------------|--------------------|
 | all               | GET    | CustomerId | List< Order >      |
 | addComment        | POST   | Order      |                    |
-| rateOrder         | POST   | Restoran   |                    |
+| rateOrder         | POST   | Restaurant |                    |
 | getFavRestaurants | GET    | CustomerId | List< Restaurant > |
 | getFavMeals       | GET    | CustomerId | List< Meal >       |

@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Meal } from 'src/app/models/meal.model';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/order.model';
-import { Status } from 'src/app/models/status.model';
 import { Restaurant } from 'src/app/models/restaurant.model';
 
 @Component({
@@ -79,7 +78,7 @@ export class OrderComponent implements OnInit {
     let order : Order = {
       orderId: null,
       restaurant: this.restaurantOrder,
-      status: Status.IN_PROGRESS,
+      status: 'IN_PROGRESS',
       meals: this.mealOrder,
       comment: null, // TODO pregled spec za razliku comment note
       orderDate: new Date(), // definisati foramt data koji se salje backendu
