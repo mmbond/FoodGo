@@ -15,9 +15,9 @@
 |--------------|--------|-------------------|--------------------|
 | edit         | POST   | CustomerProfile   | CustomerProfile    |
 | get          | GET    | CustomerId (long) | CustomerProfile    |
-| modAddresses | POST   | CustomerProfile   | CustomerProfile    |
-| modFavFood   | POST   | CustomerProfile   | CustomerProfile    |
-| modFavRest   | POST   | CustomerProfile   | CustomerProfile    |
+| modAddresses | POST   | addresses         | CustomerProfile    |
+| modFavFood   | POST   | favFood           | CustomerProfile    |
+| modFavRest   | POST   | favRestaurants    | CustomerProfile    |
 
 ## Restaurant
 > rute počinju sa `api/restaurant/`

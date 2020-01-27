@@ -16,7 +16,7 @@ const pool = mysql.createPool({
 });
 
 // Query function.
-async function queryDb(queryDb, param){
+async function queryDb(queryDb){
     try {
         const queryResult = pool.query(queryDb);
         return queryResult;
@@ -79,6 +79,12 @@ export function getAllMeals(restaurantId){
     WHERE meals_restaurants.restaurantId = ${restaurantId};`;
     try {
         let result = queryDb(query);
+        result.forEach(function(meal){
+            meal.ingredients = [];
+            query = `SELECT * FROM ingredients WHERE mealId = ${meal.mealId};`;
+            let resultIngredients = queryDb(query);
+            meal.ingredients = resultIngredients;
+        });
         meals = result;
     } catch (error) {
         console.error(error);
@@ -188,7 +194,7 @@ export function updateCustomer(customerEdited){
     let query = `
     UPDATE customers 
     SET firstName = '${customerEdited.firstName}', lastName = '${customerEdited.lastName}', email = '${customerEdited.email}', phone = '${customerEdited.phone}'
-    WHERE email = '${customerEdited.email}' AND password = '${customerData.customer.password}';`;
+    WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
         queryDb(query);
         console.log(result.affectedRows + " record(s) updated");
@@ -201,27 +207,96 @@ export function updateCustomer(customerEdited){
 
 // Add new order.
 export function createOrder(startOrderData){
+    let query = `
+    INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, comment, meal_count, note)
+    VALUES (${startOrderData.customerId}, ${startOrderData.restaurantId}, '${startOrderData.address}', ${startOrderData.price}, '${startOrderData.timestamp}',
+    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.comment}', '${startOrderData.meal_count}', '${startOrderData.note}');`;
+    try {
+        queryDb(query);
+        Object.keys(startOrderData).forEach(function(key){
+            currentOrder[key] = startOrderData[key];
+        });
 
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
-// Change order data, finish order or cancel order
+// Change order data, finish order or cancel order.
 export function modifyOrderData(orderData){
+    let query = `
+    UPDATE orders 
+    SET`;
+    // Update current order.
+    Object.keys(orderData).forEach(function(key){
+        if(currentOrder[key] != orderData[key]){
+            currentOrder[key] = orderData[key];
+            query += `${key} = '${orderData[key]}'`;
+        }
+    });
+    query += `WHERE customerId = '${currentOrder.customerId}' AND restaurantId = '${currentOrder.restaurantId}';`;
+    try {
+        queryDb(query);
+        console.log(result.affectedRows + " record(s) updated");
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 
 }
 
-// Add, change or removed address.
-export function modifyAddresses(customerWithModifiedAddresses){
-
+// Add or remove address.
+export function modifyAddresses(modAddresses){
+    customerData.customer.addresses = modAddresses;
+    let query = `
+    UPDATE customers 
+    SET addresses = '${modAddresses}'
+    WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
+    try {
+        queryDb(query);
+        console.log(result.affectedRows + " record(s) updated");
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
-// Add or removed favourite food.
-export function modifyFavouriteFood(customerWithModifiedFavouriteFood){
-
+// Add or remove favourite food.
+export function modifyFavouriteFood(modFavFood){
+    customerData.customer.fav_food = modFavFood;
+    let query = `
+    UPDATE customers 
+    SET fav_food = '${modFavFood}'
+    WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
+    try {
+        queryDb(query);
+        console.log(result.affectedRows + " record(s) updated");
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
-// Add or removed favourite restaurants.
-export function modifyFavouriteRestaurants(customerWithModifiedFavouriteRestaurants){
-
+// Add or remove favourite restaurants.
+export function modifyFavouriteRestaurants(modFavRestaurants){
+    customerData.customer.fav_restaurants = modFavRestaurants;
+    let query = `
+    UPDATE customers 
+    SET fav_restaurants = '${modFavRestaurants}'
+    WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
+    try {
+        queryDb(query);
+        console.log(result.affectedRows + " record(s) updated");
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
 

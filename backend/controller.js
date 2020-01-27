@@ -102,41 +102,64 @@ app.post('/api/profile/edit', function (req, res) {
     } else {
       res.send(false);
     }
-    
   }
 })
 
 // Customer modify addresses POST METHOD
 app.post('/api/profile/modAddresses', function (req, res) {
   if (req.body) {
-    
+    if(model.modifyAddresses(req.body)){
+      res.json(model.customerData);
+      res.send(true);
+    } else {
+      res.send(false);
+    }
   }
 })
 
 // Customer modify favourite food POST METHOD
 app.post('/api/profile/modFavFood', function (req, res) {
   if (req.body) {
-    
+    if(model.modifyFavouriteFood(req.body)){
+      res.json(model.customerData);
+      res.send(true);
+    } else {
+      res.send(false);
+    }
   }
 })
 
 // Customer modify favourite food POST METHOD
 app.post('/api/profile/modFavRest', function (req, res) {
   if (req.body) {
-    
+    if(model.modifyFavouriteRestaurants(req.body)){
+      res.json(model.customerData);
+      res.send(true);
+    } else {
+      res.send(false);
+    }
   }
 })
 
 // Order create POST METHOD
 app.post('/api/order/send', function (req, res) {
   if (req.body) {
-    
+    if(model.createOrder(req.body)){
+      res.send(true);
+    } else {
+      res.send(false);
+    }
   }
 })
 
 // Order edit POST METHOD
 app.post('/api/order/edit', function (req, res) {
   if (req.body) {
-    
+    if(model.modifyOrderData(req.body)){
+      res.json(model.currentOrder);
+      res.send(true);
+    } else {
+      res.send(false);
+    }
   }
 })
