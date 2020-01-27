@@ -81,8 +81,15 @@ app.post('/api/profile/edit', function (req, res) {
   }
 })
 
-// favRestaurant All GET METHOD
+// favRestaurants All GET METHOD
 app.get('/api/history/getFavRestaurants', function (req, res) {
   let favRestaurants = require('./favRestaurants.json');
+  res.json(favRestaurants);
+})
+
+
+// favMeals All GET METHOD
+app.get('/api/history/getFavMeals', function (req, res) {
+  let favRestaurants = require('./favMeals.json');
   res.json(favRestaurants);
 })

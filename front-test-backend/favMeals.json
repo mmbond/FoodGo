@@ -1,0 +1,56 @@
+[
+    {
+        "mealId": 1,
+        "name": "Big burger",
+        "mealPicture": "assets/meals/burger_house/big_burger.jpg",
+        "description": "Srednje pečeni burger od 100% premium junećeg mesa (200g), ajsberg salata, kiseli krastavac, paradajz, malo luka,  Burger House sos  u Burger House zemički",
+        "price": 465,
+        "category": "BURGERI",
+        "ingredients": []
+    },
+    {
+        "mealId": 1,
+        "name": "Crispy Chicken",
+        "mealPicture": "assets/meals/burger_house/crispy_chicken.jpg",
+        "description": "Pohovana piletina sa panko prezlama, čedar sirom, ajsbergom i BH majonezom u BH zemički ",
+        "price": 445,
+        "category": "SENDVIČI",
+        "ingredients": []
+    },
+    {
+        "mealId": 1,
+        "name": "Domaći pomfrit",
+        "mealPicture": "assets/meals/burger_house/domaći_pomfrit.jpg",
+        "description": "Naš neljušteni, duplo prženi domaći krompir koji služimo sa Heinz\nkečapom",
+        "price": 195,
+        "category": "PRILOZI",
+        "ingredients": []
+    },
+    {
+        "mealId": 1,
+        "name": "Kolutići luka",
+        "mealPicture": "assets/meals/burger_house/kolutići_luka.jpg",
+        "description": "Deset kolutića luka koje služimo sa našim domaćim Tony Soprano sosom",
+        "price": 255,
+        "category": "PRILOZI",
+        "ingredients": []
+    },
+    {
+        "mealId": 1,
+        "name": "Pola-pola",
+        "mealPicture": "assets/meals/burger_house/pola-pola.jpg",
+        "description": "Ako ne možete da se odlučite između našeg ukusog pomfrita i kolutića luka, ovo je varijanta za vas",
+        "price": 225,
+        "category": "PRILOZI",
+        "ingredients": []
+    },
+    {
+        "mealId": 1,
+        "name": "Mocarela štapići",
+        "mealPicture": "assets/meals/burger_house/mocarela_štapići.jpg",
+        "description": "Domaći mocarela štapići koje služimo sa našim domaćim Tony Soprano sosom",
+        "price": 175,
+        "category": "PRILOZI",
+        "ingredients": []
+    }
+]

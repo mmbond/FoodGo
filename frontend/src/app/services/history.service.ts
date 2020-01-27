@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Restaurant } from '../models/restaurant.model';
+import { Meal } from '../models/meal.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class HistoryService {
       console.log(_order);
     }
 
-     // get Customer favourite Restaurants
+    // get Customer favourite Restaurants
     getFavRestaurants(limit: number = 1) {
     const requestUrl = `${this._apiUrl}/history/getFavRestaurants`;
     return this.http.get<Restaurant[]>(requestUrl)
@@ -44,4 +45,16 @@ export class HistoryService {
           return throwError(error);
         }));
   }
+
+    // get Customer favourite Restaurants
+    getFavMeals(limit: number = 1) {
+      const requestUrl = `${this._apiUrl}/history/getFavMeals`;
+      return this.http.get<Meal[]>(requestUrl)
+        .pipe(map(response => {
+          return response;
+        }),
+          catchError(error => {
+            return throwError(error);
+          }));
+    }
 }

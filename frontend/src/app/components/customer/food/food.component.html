@@ -4,12 +4,19 @@
     <table *ngIf='showFavourite()' class="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Hrana</th>
-          <th scope="col">Opcija</th>
+          <th scope="col"></th>
+          <th scope="col">Jelo</th>
+          <th scope="col">Opis</th>
         </tr>
       </thead>
       <tbody>
+        <tr *ngFor='let favMeal of favMeals; index as i'>
+          <th scope="row"><img class="card-img-top" alt="{{favMeal.name}}"
+              style="height: 50px; width: 50px; display: block;" src="{{favMeal.mealPicture}}"
+              data-holder-rendered="true"></th>
+          <td>{{favMeal.name}}</td>
+          <td>{{favMeal.description}}</td>
+        </tr>
       </tbody>
     </table>
     <div *ngIf='!showFavourite()'>

@@ -14,10 +14,10 @@ export class FavouriteComponent implements OnInit {
   constructor( private _historyService: HistoryService) { }
 
   ngOnInit() {
-    this._fetchFavouriteRestraurant(10);
+    this._fetchFavouriteRestraurants(10);
   }
 
-  private _fetchFavouriteRestraurant(limit: number = 1) {
+  private _fetchFavouriteRestraurants(limit: number = 1) {
     this._historyService.getFavRestaurants(limit).toPromise()
       .then(response => this.favRestaurants = response)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
