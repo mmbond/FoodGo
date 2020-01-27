@@ -13,8 +13,11 @@
 
 | Ruta         | Metoda | In                | Out                |
 |--------------|--------|-------------------|--------------------|
-| edit         | POST   | CustomerProfile   |                    |
+| edit         | POST   | CustomerProfile   | CustomerProfile    |
 | get          | GET    | CustomerId (long) | CustomerProfile    |
+| modAddresses | POST   | CustomerProfile   | CustomerProfile    |
+| modFavFood   | POST   | CustomerProfile   | CustomerProfile    |
+| modFavRest   | POST   | CustomerProfile   | CustomerProfile    |
 
 ## Restaurant
 > rute počinju sa `api/restaurant/`
@@ -40,6 +43,8 @@
 | Ruta | Metoda | In                  | Out        |
 |------|--------|---------------------|------------|
 | send | POST   | Order               | boolean    |
+| edit | POST   | Order               | Order      |
+
 <!-- | id   | GET    | RestaurantId (long) | Restaurant | -->
 
 

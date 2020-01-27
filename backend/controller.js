@@ -93,7 +93,7 @@ app.get('/api/history/all', function (req, res) {
   }
 })
 
-// customer POST METHOD
+// Customer edit POST METHOD
 app.post('/api/profile/edit', function (req, res) {
   if (req.body) {
     if(model.updateCustomer(req.body)){
@@ -102,6 +102,41 @@ app.post('/api/profile/edit', function (req, res) {
     } else {
       res.send(false);
     }
+    
+  }
+})
+
+// Customer modify addresses POST METHOD
+app.post('/api/profile/modAddresses', function (req, res) {
+  if (req.body) {
+    
+  }
+})
+
+// Customer modify favourite food POST METHOD
+app.post('/api/profile/modFavFood', function (req, res) {
+  if (req.body) {
+    
+  }
+})
+
+// Customer modify favourite food POST METHOD
+app.post('/api/profile/modFavRest', function (req, res) {
+  if (req.body) {
+    
+  }
+})
+
+// Order create POST METHOD
+app.post('/api/order/send', function (req, res) {
+  if (req.body) {
+    
+  }
+})
+
+// Order edit POST METHOD
+app.post('/api/order/edit', function (req, res) {
+  if (req.body) {
     
   }
 })
