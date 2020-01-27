@@ -1,0 +1,34 @@
+[
+    {
+        "restaurantId": 1,
+        "name": "Burger House ",
+        "restorantLogo": "assets/restaurants/burger_house.jpg",
+        "description": "Naš meni je kombinacija premijum burgera, domaćeg pomfrita, soseva i sendviča sa originalnim sastojcima. ",
+        "mark": 4.6,
+        "address": "Nikole Spasića 3"
+    },
+    {
+        "restaurantId": 3,
+        "name": "KFC - Studentski Trg",
+        "restorantLogo": "assets/restaurants/kfc_-_studentski_trg.jpg",
+        "description": "Dobro, prste da poližeš!",
+        "mark": 4.6,
+        "address": "Vase Čarapića 24"
+    },
+    {
+        "restaurantId": 19,
+        "name": "Zuwar",
+        "restorantLogo": "assets/restaurants/zuwar.jpg",
+        "description": "Nudimo ono najbolje od bliskoistočne kuhinje. Dođi i uveri se!",
+        "mark": 4.5,
+        "address": "Đure Jakšića 3 "
+    },
+    {
+        "restaurantId": 20,
+        "name": "Kafana SFRJ",
+        "restorantLogo": "assets/restaurants/kafana_sfrj.jpg",
+        "description": "Za sve Jugo-nostalgičare i one koje žele učiti o istoriji\n",
+        "mark": 4.6,
+        "address": "Velike stepenice 1"
+    }
+]

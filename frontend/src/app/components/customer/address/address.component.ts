@@ -32,6 +32,7 @@ export class AddressComponent implements OnInit {
       .then(response => this.addresses = response.addresses)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
+  
   private updateAddresses(removeAddress: string) {
     var index = this.addresses.findIndex(address => address == removeAddress);
     this.addresses.splice(index, 1);
@@ -43,7 +44,6 @@ export class AddressComponent implements OnInit {
   public showAddresses(): boolean {
     return this.addresses != undefined && this.addresses.length != 0;
   }
-
 
   // convenience getter for easy access to form fields
   get f() { return this.addressForm.controls; }

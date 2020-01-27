@@ -80,3 +80,9 @@ app.post('/api/profile/edit', function (req, res) {
     res.send(true);
   }
 })
+
+// favRestaurant All GET METHOD
+app.get('/api/history/getFavRestaurants', function (req, res) {
+  let favRestaurants = require('./favRestaurants.json');
+  res.json(favRestaurants);
+})

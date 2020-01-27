@@ -4,6 +4,7 @@ import { Order } from '../models/order.model';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { Restaurant } from '../models/restaurant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +32,16 @@ export class HistoryService {
       this.http.post(requestUrl, _order);
       console.log(_order);
     }
+
+     // get Customer favourite Restaurants
+    getFavRestaurants(limit: number = 1) {
+    const requestUrl = `${this._apiUrl}/history/getFavRestaurants`;
+    return this.http.get<Restaurant[]>(requestUrl)
+      .pipe(map(response => {
+        return response;
+      }),
+        catchError(error => {
+          return throwError(error);
+        }));
+  }
 }
