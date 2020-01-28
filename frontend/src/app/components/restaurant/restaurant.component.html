@@ -3,14 +3,32 @@
   <section class="jumbotron text-center section-bg">
     <div class="container">
       <h1 class="jumbotron-heading">FoodGo</h1>
-      <p class="lead text-white">Dobijanje omiljene hrane više je nego što vam je život olakšan. Kada naručujete preko FoodGo-a,<br/>
-         uštedeli ste energiju i vreme i ujedno pomažete restoranima i kuririma da unaprede svoje usluge.</p>
+      <p class="lead text-white">Dobijanje omiljene hrane više je nego što vam je život olakšan. Kada naručujete preko
+        FoodGo-a,<br />
+        uštedeli ste energiju i vreme i ujedno pomažete restoranima i kuririma da unaprede svoje usluge.</p>
     </div>
   </section>
 
   <div class="py-2 bg-light">
     <div class="container">
-      <h3 class="py-3">Restorani</h3>
+      <div class="form-group row">
+        <h3 for="inputPassword" class="col-sm-2">Restorani</h3>
+        <div class="col-sm-10">
+          <input (keyup)="pretraga($event)" class="form-control" type="text" placeholder="Pretražite Restorane" aria-label="Search">
+          <div class="card" *ngIf="visibleRestaurants!=undefined" id="searchBox">
+            <div *ngFor="let restaurant of visibleRestaurants">
+              <a href="restaurant/{{restaurant.restaurantId}}" class="link">
+            <div class="card-body">
+              {{restaurant.name}}
+            </div>
+            </a>
+          </div>
+               <div *ngIf="visibleRestaurants!=undefined && visibleRestaurants==0"class="card-body">
+              <h3>Nema traženog restorana</h3>
+            </div> 
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-4" *ngFor="let restaurant of restaurants">
           <a href="restaurant/{{restaurant.restaurantId}}" class="link">
@@ -34,6 +52,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
 </main>

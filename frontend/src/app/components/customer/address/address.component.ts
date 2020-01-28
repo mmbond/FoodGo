@@ -14,7 +14,7 @@ export class AddressComponent implements OnInit {
   @ViewChild('closeAddressModal', { static: true }) closeAddressModal: ElementRef;
   addresses: Array<string>;
   addressPattern = "^([A-z]+\\s)+([1-9]|[1-9][0-9]{1,2})[a-z]{0,1}$";
-  addressForm: FormGroup
+  addressForm: FormGroup;
   submitted = false;
   hide = true;
   error: any;
