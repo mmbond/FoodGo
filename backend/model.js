@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const window = require('window');
 
 export var restaurants = [];
 export var restaurant = {};
@@ -16,14 +17,18 @@ const pool = mysql.createPool({
 });
 
 // Query function.
-async function queryDb(queryDb){
+function queryDb(queryDb){
+    let queryResult = [];
     try {
-        const queryResult = pool.query(queryDb);
-        return queryResult;
+        pool.query(queryDb, function (err, rows) {
+            if(err) throw err;
+            window.queryResult = JSON.parse(JSON.stringify(rows));
+        });
+        queryResult = window.queryResult;
     } catch(error) {
         console.error(error);
     }
-
+    return queryResult;
 }
 
 // Check if object is empty.
@@ -164,16 +169,16 @@ export function getCustomerIfExists(customer){
     WHERE email = '${customer.email}' AND password = '${customer.password}';`;
     try {
         let result = queryDb(query);
+        console.log(result);
         if(result[0]){
             result[0].addresses = splitSeparatedDataInArray(result[0].addresses, ", ");
             result[0].fav_food = splitSeparatedDataInArray(result[0].fav_food, ", ");
             result[0].fav_restaurants = splitSeparatedDataInArray(result[0].fav_restaurants, ", ");
             result[0].fav_restaurants_result = [];
             query = `SELECT * FROM restaurants WHERE name in (` + fav_restaurants + `);`;
-            try {
-                result = queryDb(query);
-                result[0].fav_restaurants_result = result;
-
+            try {  
+                let result1 = queryDb(query);
+                result[0].fav_restaurants_result = result1;
             } catch (error) {
                 console.error(error);
             }
