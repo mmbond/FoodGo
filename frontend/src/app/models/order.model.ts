@@ -11,4 +11,5 @@ export class Order {
     orderDate: Date;
     price: number;
     note: string;
+    mark: number;
 }

@@ -54,7 +54,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <p class="card-text">{{meal.description}}</p>
                   <div class="btn-group">
-                    <button data-toggle="modal" (click)="chooseMealToOrder(i)" data-target="#orderModal"
+                    <button data-toggle="modal" (click)="chooseMealToOrder(i)" data-target="#mealModal"
                       class="btn btn-warning">Dodajte</button>
                   </div>
                 </div>
@@ -76,13 +76,13 @@
   </div>
 
 </main>
-<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+<div class="modal fade" id="mealModal" tabindex="-1" role="dialog" aria-labelledby="mealModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="orderModalLabel">Dodajte u korpu</h5>
-        <button type="button" class="close" #closeOrderModal data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="mealModalLabel">Dodajte u korpu</h5>
+        <button type="button" class="close" #closeMealModal data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

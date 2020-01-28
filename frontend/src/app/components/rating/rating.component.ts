@@ -22,8 +22,7 @@ export class RatingComponent implements OnInit {
     if (rate==0) {
       return true;
     }
-    this.order.restaurant.mark = rate;
-    this.order.status = Status.RATED;
+    this.order.mark = rate;
     this._historyService.rateOrder(this.order);
     return false;
   }

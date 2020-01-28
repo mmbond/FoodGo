@@ -72,6 +72,7 @@
 | orderDate      | Date                      |
 | price          | Long                      |
 | note           | String                    |
+| mark           | Integer                   |
 
 ## Ingredients
 | Naziv atributa | Tip    |
@@ -93,6 +94,5 @@
 | Naziv atributa | Tip    | Vrednosti   |
 |----------------|--------|-------------|
 | FINISHED       | String | finished    |
-| RATED          | String | rated       |
 | IN PROGRESS    | String | in progress |
 | CANCELED       | String | canceled    |

@@ -25,9 +25,7 @@
         <td *ngIf="getPageLimit(i)">{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
         <td *ngIf="getPageLimit(i)">{{order.price}} RSD</td>
         <td *ngIf="getPageLimit(i)">{{order.note}}</td>
-        <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa vise informacija-->
-        <!-- TODO opcija ocene kako da znam kad je ocenjen neka porudzbina?-->
-        <td *ngIf="getPageLimit(i)"><app-rating *ngIf="order.status.toUpperCase()=='FINISHED'" [order]=order [read]=false [currentRate]=0></app-rating>
+        <td *ngIf="getPageLimit(i)"><app-rating *ngIf="order.mark==undefined && order.status.toUpperCase()=='FINISHED'" [order]=order [read]=false [currentRate]=0></app-rating>
           <button *ngIf="order.status.toUpperCase()=='IN PROGRESS'" (click)="cancelOrder(i)" class="btn btn-warning">ODUSTANITE</button> </td>
       </tr>
     </tbody>

@@ -16,7 +16,7 @@ import { Ingredients } from 'src/app/models/ingredients.model';
 export class MealComponent implements OnInit {
   @Input() meals: Array<Meal>;
   @Input() restaurant: Restaurant;
-  @ViewChild('closeOrderModal', { static: true }) closeOrderModal: ElementRef;
+  @ViewChild('closeMealModal', { static: true }) closeMealModal: ElementRef;
   orderMeals: Array<Meal> = [];
   activeCategory: string;
   error: any;
@@ -60,7 +60,7 @@ export class MealComponent implements OnInit {
 
   private addToOrder() {
     this.orderMeals.push(this.chosedMeal);
-    this.closeOrderModal.nativeElement.click();
+    this.closeMealModal.nativeElement.click();
   }
 
   private isFavorite(restaurantName: string) {
