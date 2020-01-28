@@ -14,12 +14,13 @@
     </thead>
     <tbody>
       <tr *ngFor='let address of addresses; index as i'>
-        <th scope="row">{{i+1}}</th>
-        <td>{{address}}</td>
-        <td><button (click)="updateAddresses(address)" class="btn btn-warning">Uklonite adresu</button></td>
+        <th *ngIf="getPageLimit(i)" scope="row">{{i+1}}</th>
+        <td *ngIf="getPageLimit(i)" style="width: 50%">{{address}}</td>
+        <td *ngIf="getPageLimit(i)"><button (click)="updateAddresses(i)" class="btn btn-warning">Uklonite adresu</button></td>
       </tr>
     </tbody>
   </table>
+  <app-pagination *ngIf='showAddresses()' (currentPageEvent)="receiveCurrentPage($event)" [total]='total' [current]='current'></app-pagination>
   <div *ngIf="!showAddresses()">
     <div class="mx-auto text-center" style="width: 50%;">
       <img class="mt-3" src="/assets/icons/address.png" alt="No address">

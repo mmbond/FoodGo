@@ -11,14 +11,15 @@
       </thead>
       <tbody>
         <tr *ngFor='let favMeal of favMeals; index as i'>
-          <th scope="row"><img class="card-img-top" alt="{{favMeal.name}}"
+          <th *ngIf="getPageLimit(i)" scope="row"><img class="card-img-top" alt="{{favMeal.name}}"
               style="height: 50px; width: 50px; display: block;" src="{{favMeal.mealPicture}}"
               data-holder-rendered="true"></th>
-          <td>{{favMeal.name}}</td>
-          <td>{{favMeal.description}}</td>
+          <td *ngIf="getPageLimit(i)">{{favMeal.name}}</td>
+          <td *ngIf="getPageLimit(i)">{{favMeal.description}}</td>
         </tr>
       </tbody>
     </table>
+    <app-pagination *ngIf='showFavourite()' (currentPageEvent)="receiveCurrentPage($event)" [total]='total' [current]='current'></app-pagination>
     <div *ngIf='!showFavourite()'>
     <div class="mx-auto text-center" style="width: 50%;">
       <img class="mt-3" src="/assets/icons/favourite.png" alt="No favourite">

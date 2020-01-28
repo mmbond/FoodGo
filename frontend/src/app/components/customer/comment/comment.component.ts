@@ -17,7 +17,9 @@ export class CommentComponent implements OnInit {
   error: any;
   commentForm: FormGroup;
   submitted = false;
-
+  total: Array<number>;
+  current: number;
+  limit = 5; 
   constructor(private router: Router, private _historyService: HistoryService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -29,7 +31,7 @@ export class CommentComponent implements OnInit {
 
   private _fetchOrders(limit: number = 1) {
     this._historyService.getOrders(limit).toPromise()
-      .then(response => this.orders = response)
+      .then(response => { this.orders = response; this.total = Array(Math.ceil(response.length / this.limit)); this.current = 1; })
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
 
@@ -65,5 +67,14 @@ export class CommentComponent implements OnInit {
   resetForm() {
     this.submitted = false;
     this.closeCommentModal.nativeElement.click();
+  }
+  
+  public receiveCurrentPage($event) {
+    this.current = $event;
+    console.log($event);
+  }
+
+  public getPageLimit(id: number) {
+    return (((this.current - 1) * this.limit) <= id) && (id < (this.current * this.limit));
   }
 }

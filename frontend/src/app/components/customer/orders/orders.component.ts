@@ -17,6 +17,9 @@ export class OrdersComponent implements OnInit {
   orders: Array<Order>;
   error: any;
   currentRate = 0;
+  total: Array<number>;
+  current: number;
+  limit = 5; 
   constructor(private router: Router, private _orderService: OrderService, private _historyService: HistoryService) { }
 
   ngOnInit() {
@@ -25,7 +28,7 @@ export class OrdersComponent implements OnInit {
 
   private _fetchOrders(limit: number = 1) {
     this._historyService.getOrders(limit).toPromise()
-      .then(response => this.orders = response)
+      .then(response => {this.orders = response; this.total = Array(Math.ceil(response.length/this.limit)); this.current = 1;})
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
 
@@ -55,4 +58,13 @@ export class OrdersComponent implements OnInit {
     }, {});
     return Object.keys(data).map(key => ({name: String(key), count: data[key]}));
   }
+
+  public receiveCurrentPage($event) {
+    this.current = $event;
+  }
+
+  public getPageLimit(id: number) {
+    return (((this.current - 1) * this.limit) <= id) && (id < (this.current * this.limit));
+  }
+
 }

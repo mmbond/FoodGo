@@ -23,6 +23,7 @@ import { CommentComponent } from './components/customer/comment/comment.componen
 import { OrdersComponent } from './components/customer/orders/orders.component';
 import { FoodComponent } from './components/customer/food/food.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ChatComponent } from './components/chat/chat.component';
     OrdersComponent,
     FoodComponent,
     ChatComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

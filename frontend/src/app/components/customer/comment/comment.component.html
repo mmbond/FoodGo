@@ -13,11 +13,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor='let order of orders'>
-        <th scope="row">{{order.orderId}}</th>
-        <td>{{order.status}}</td>
-        <td>{{order.restaurant.name}}</td>
-        <td>{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
+      <tr *ngFor='let order of orders; index as i'>
+        <th *ngIf="getPageLimit(i)" scope="row">{{order.orderId}}</th>
+        <td *ngIf="getPageLimit(i)">{{order.status}}</td>
+        <td *ngIf="getPageLimit(i)">{{order.restaurant.name}}</td>
+        <td *ngIf="getPageLimit(i)">{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
         <td *ngIf='order.comment!=undefined'>{{order.comment}}</td>
         <td *ngIf='order.comment==undefined'>Nema komentara</td>
         <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa input text area i unosi se utisak-->
@@ -26,6 +26,7 @@
       </tr>
     </tbody>
   </table>
+  <app-pagination *ngIf='showComments()' (currentPageEvent)="receiveCurrentPage($event)" [total]='total' [current]='current'></app-pagination>
   <div *ngIf='!showComments()'>
     <div class="mx-auto text-center" style="width: 50%;">
       <img class="mt-3" src="/assets/icons/comment.png" alt="No comment">

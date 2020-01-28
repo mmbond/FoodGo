@@ -1,0 +1,13 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination pg-blue justify-content-center">
+        <li class="page-item" [ngClass]='{"disabled":current==1}'>
+            <a  (click)="prevPage()"class="page-link" tabindex="-1">Nazad</a>
+        </li>
+        <div *ngFor='let id of total; let i = index'>
+            <li (click)="sendCurrentPage(i+1)" class="page-item" [ngClass]="{'active':current==i+1}"><span class="page-link">{{i+1}}</span></li>
+        </div>
+        <li class="page-item" [ngClass]='{"disabled":current==total.length}'>
+            <a (click)="nextPage()" class="page-link">Napred</a>
+        </li>
+    </ul>
+</nav>
