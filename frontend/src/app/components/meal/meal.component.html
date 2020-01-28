@@ -1,4 +1,4 @@
-<main role="main">
+<main *ngIf='restaurant!=undefined' role="main">
   <section class="jumbotron text-center meal-bg" [ngStyle]="{'background-image': getRestaurantImage()}">
     <div class="container">
       <h1 class="jumbotron-heading text-white title">{{restaurant.name}}</h1>
@@ -16,7 +16,7 @@
               ngbTooltip="Dodajte/Sklonite omiljene restorane" tooltipClass="foodgo-tooltip"
               class="btn btn-sm btn-outline-secondary"><i [class.fav]='favorite' class="fa fa-heart fa-2x"></i></button>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" *ngIf="restaurant!=undefined">
             <app-rating [read]=true [currentRate]=restaurant.mark></app-rating>
           </div>
         </div>
@@ -106,8 +106,8 @@
           <div *ngIf='ingredients!=undefined && ingredients.length==0' class="m-3">
             Nema dodataka za ovo jelo
           </div>
-          <textarea formControlName="note"
-              class="form-control" rows="5" placeholder="Unesite posebne zahteve-beleške"></textarea>
+          <!-- <textarea formControlName="note" -->
+            <textarea class="form-control" rows="5" placeholder="Unesite posebne zahteve-beleške"></textarea>
         </form>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvorite</button>
