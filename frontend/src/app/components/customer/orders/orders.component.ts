@@ -4,7 +4,8 @@ import { Order } from 'src/app/models/order.model';
 import { HistoryService } from 'src/app/services/history.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { OrderService } from 'src/app/services/order.service';
-import { Status } from 'src/app/models/status.model';
+import { Status} from 'src/app/models/status.model';
+import { Meal } from 'src/app/models/meal.model';
 
 @Component({
   selector: 'app-orders',
@@ -38,9 +39,20 @@ export class OrdersComponent implements OnInit {
   }
 
   private cancelOrder(id : number) {
-    // TODO srediti ovo
-    this.orders[id].status = 'CANCELED';
+    this.orders[id].status = Status.CANCELED;
     this._orderService.cancel(this.orders[id]);
+  }
+
+  private mealList(meals: Array<Meal>) {
+    let data = meals.map(meal => meal.name).reduce(function (acc, curr) {
+      if (typeof acc[curr] == 'undefined') {
+        acc[curr] = 1;
+      } else {
+        acc[curr] += 1;
+      }
     
+      return acc;
+    }, {});
+    return Object.keys(data).map(key => ({name: String(key), count: data[key]}));
   }
 }

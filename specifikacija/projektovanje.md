@@ -90,8 +90,9 @@
 | Taco         |
 
 ## Status
-| Vrednosti   |
-|-------------|
-| Finished    |
-| In progress |
-| Canceled    |
+| Naziv atributa | Tip    | Vrednosti   |
+|----------------|--------|-------------|
+| FINISHED       | String | finished    |
+| RATED          | String | rated       |
+| IN PROGRESS    | String | in progress |
+| CANCELED       | String | canceled    |

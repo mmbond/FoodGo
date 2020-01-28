@@ -59,8 +59,9 @@ export class HistoryService {
   }
 
   // add Rating Order
-  rateOrder(_restaurant: Restaurant) {
+  rateOrder(_order: Order) {
     const requestUrl = `${this._apiUrl}/history/rateOrder`;
-    this.http.post(requestUrl, _restaurant);
+    console.log(_order);
+    this.http.post(requestUrl, _order);
   }
 }

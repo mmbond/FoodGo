@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { HistoryService } from 'src/app/services/history.service';
-import { Restaurant } from 'src/app/models/restaurant.model';
+import { Status } from 'src/app/models/status.model';
+import { Order } from 'src/app/models/order.model';
 
 @Component({
   selector: 'app-rating',
@@ -10,7 +11,7 @@ import { Restaurant } from 'src/app/models/restaurant.model';
 export class RatingComponent implements OnInit {
   @Input() currentRate: number;
   @Input() read: boolean;
-  @Input() restaurant: Restaurant;
+  @Input() order: Order;
 
   constructor( private _historyService: HistoryService) { }
 
@@ -21,9 +22,9 @@ export class RatingComponent implements OnInit {
     if (rate==0) {
       return true;
     }
-    var restaurant = this.restaurant;
-    restaurant.mark = rate;
-    this._historyService.rateOrder(restaurant);
+    this.order.restaurant.mark = rate;
+    this.order.status = Status.RATED;
+    this._historyService.rateOrder(this.order);
     return false;
   }
 }

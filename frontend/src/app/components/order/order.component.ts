@@ -3,6 +3,7 @@ import { Meal } from 'src/app/models/meal.model';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/order.model';
 import { Restaurant } from 'src/app/models/restaurant.model';
+import { Status } from 'src/app/models/status.model';
 
 @Component({
   selector: 'app-order',
@@ -78,7 +79,7 @@ export class OrderComponent implements OnInit {
     let order : Order = {
       orderId: null,
       restaurant: this.restaurantOrder,
-      status: 'IN_PROGRESS',
+      status: Status.IN_PROGRESS,// vratiEnumZaString("in progress"),
       meals: this.mealOrder,
       comment: null, // TODO pregled spec za razliku comment note
       orderDate: new Date(), // definisati foramt data koji se salje backendu

@@ -52,6 +52,6 @@
 |-------------------|--------|------------|--------------------|
 | all               | GET    | CustomerId | List< Order >      |
 | addComment        | POST   | Order      |                    |
-| rateOrder         | POST   | Restaurant |                    |
+| rateOrder         | POST   | Order      |                    |
 | getFavRestaurants | GET    | CustomerId | List< Restaurant > |
 | getFavMeals       | GET    | CustomerId | List< Meal >       |
