@@ -67,6 +67,7 @@
 | orderDate      | Date                      |
 | price          | Long                      |
 | note           | String                    |
+| mark           | double                    |
 
 ## Ingredients
 | Naziv atributa | Tip    |

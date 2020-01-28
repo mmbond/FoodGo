@@ -239,6 +239,18 @@ export function modifyOrderData(orderData){
         if(currentOrder[key] != orderData[key]){
             currentOrder[key] = orderData[key];
             query += `${key} = '${orderData[key]}'`;
+            if(key == 'mark'){
+                let query1 = `
+                UPDATE restaurants 
+                SET mark = (
+                    SELECT AVG(mark) 
+                    FROM orders 
+                    WHERE restaurantId = ${currentOrder.restaurantId};
+                    ) 
+                WHERE restaurantId = ${currentOrder.restaurantId};`;
+                queryDb(query1);
+                console.log(result.affectedRows + " record(s) updated");
+            }
         }
     });
     query += `WHERE customerId = '${currentOrder.customerId}' AND restaurantId = '${currentOrder.restaurantId}';`;
