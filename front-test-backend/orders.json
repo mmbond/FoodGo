@@ -36,7 +36,7 @@
             "mark": 3.5,
             "address": "Studentski trg 5"
         },
-        "status": "CURRENT",
+        "status": "IN PROGRESS",
         "meals": [
             {
                 "mealId": 1,
@@ -66,7 +66,7 @@
         "orderId": 32313,
         "restaurant": {
             "restaurantId": 1,
-            "name": "KFC",
+            "name": "RANDOM",
             "restorantLogo": "assets/logo/kfc.png",
             "description": "KFC Restoran je jedan od najboljih restorana koji imaju piletinu",
             "mark": 2.5,

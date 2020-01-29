@@ -11,12 +11,12 @@
 ## Profil
 > rute počinju sa `api/profile/`
 
-| Ruta         | Metoda | In                | Out                |
-|--------------|--------|-------------------|--------------------|
-| edit         | POST   | CustomerProfile   |                    |
-| get          | GET    | CustomerId (long) | CustomerProfile    |
-| getAddresses | GET    | CustomerId (long) | ProfileAddressList |
-
+| Ruta            | Metoda | In                 | Out                |
+|-----------------|--------|--------------------|--------------------|
+| edit            | POST   | CustomerProfile    |                    |
+| get             | GET    | CustomerId (long)  | CustomerProfile    |
+| getAddresses    | GET    | CustomerId (long)  | ProfileAddressList |
+| updateAddresses | POST   | ProfileAddressList |                    |
 
 ## Restaurant
 > rute počinju sa `api/restaurant/`
@@ -39,16 +39,19 @@
 ## Order
 > rute počinju sa `api/order/`
 
-| Ruta | Metoda | In                  | Out        |
-|------|--------|---------------------|------------|
-| send | POST   | Order               | boolean    |
-<!-- | id   | GET    | RestaurantId (long) | Restaurant | -->
+| Ruta   | Metoda | In    | Out     |
+|--------|--------|-------|---------|
+| send   | POST   | Order | boolean |
+| cancel | POST   | Order |         |
 
 
 ## History
 > rute počinju sa `api/history/`
 
-| Ruta | Metoda | In                  | Out           |
-|------|--------|---------------------|---------------|
-| all  | GET    | CustomerId          | List< Order > |
-<!-- | id   | GET    | RestaurantId (long) | Restaurant    | -->
+| Ruta              | Metoda | In         | Out                |
+|-------------------|--------|------------|--------------------|
+| all               | GET    | CustomerId | List< Order >      |
+| addComment        | POST   | Order      |                    |
+| rateOrder         | POST   | Order      |                    |
+| getFavRestaurants | GET    | CustomerId | List< Restaurant > |
+| getFavMeals       | GET    | CustomerId | List< Meal >       |

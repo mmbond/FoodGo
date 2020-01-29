@@ -48,4 +48,11 @@ export class CustomerService {
           return throwError(error);
         }));
   }
+
+  // update Customer address
+  updateCustomerAddresses(_customerAddresses : ProfileAddressList) {
+    const requestUrl = `${this._apiUrl}/profile/updateAddresses`;
+    this.http.post(requestUrl, _customerAddresses);
+    console.log(_customerAddresses);
+  }
 }

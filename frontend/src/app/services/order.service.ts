@@ -21,4 +21,13 @@ export class OrderService {
         return orderRecieved;
       }));
   }
+  
+  cancel(_order: Order) {
+    // register user 
+    console.log(_order);
+    return this.http.post<boolean>(`${this._apiUrl}/order/cancel`, _order)
+      .pipe(map(orderRecieved => {
+        return orderRecieved;
+      }));
+  }
 }

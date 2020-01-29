@@ -72,6 +72,7 @@
 | orderDate      | Date                      |
 | price          | Long                      |
 | note           | String                    |
+| mark           | Integer                   |
 
 ## Ingredients
 | Naziv atributa | Tip    |
@@ -88,9 +89,10 @@
 | Sandwich     |
 | Burrito      |
 | Taco         |
+
 ## Status
-| Vrednosti   |
-|-------------|
-| Finished    |
-| In progress |
-| Canceled    |
+| Naziv atributa | Tip    | Vrednosti   |
+|----------------|--------|-------------|
+| FINISHED       | String | finished    |
+| IN PROGRESS    | String | in progress |
+| CANCELED       | String | canceled    |

@@ -1,7 +1,8 @@
 <div class="container">
   <h5 class="font-weight-normal">Vaše adrese</h5>
   <p class="text-muted">Šta želite da jedete? Da li biste želeli šolju kafe? Mi imamo rešenje! Jedino što nam treba od
-    vas je vaša adresa.<button class="btn btn-warning float-right mr-2">Dodajte adresu</button></p>
+    vas je vaša adresa.<button *ngIf="showAddresses()" data-toggle="modal" data-target="#addressModal"
+      class="btn btn-warning float-right mr-2">Dodajte adresu</button></p>
   <!-- TODO srediti projektovanje, za vise adresa i uraditi njihov prikaz -->
   <table *ngIf='showAddresses()' class="table">
     <thead class="thead-dark">
@@ -13,18 +14,50 @@
     </thead>
     <tbody>
       <tr *ngFor='let address of addresses; index as i'>
-        <th scope="row">{{i+1}}</th>
-        <td>{{address}}</td>
-        <td><button class="btn btn-warning">Klikni</button><button class="btn btn-warning">Ukloni adresu</button></td>
+        <th *ngIf="getPageLimit(i)" scope="row">{{i+1}}</th>
+        <td *ngIf="getPageLimit(i)" style="width: 50%">{{address}}</td>
+        <td *ngIf="getPageLimit(i)"><button (click)="updateAddresses(i)" class="btn btn-warning">Uklonite adresu</button></td>
       </tr>
     </tbody>
   </table>
+  <app-pagination *ngIf='showAddresses()' (currentPageEvent)="receiveCurrentPage($event)" [total]='total' [current]='current'></app-pagination>
   <div *ngIf="!showAddresses()">
     <div class="mx-auto text-center" style="width: 50%;">
       <img class="mt-3" src="/assets/icons/address.png" alt="No address">
       <h3>Nema Sačuvanih Adresa</h3>
       <p class="text-muted">Dodajte svoju adresu i učinite svoju narudžbinu još bržom i jednostavnijom.</p>
-      <button (click)='addAddress()' class="btn btn-warning">Dodajte novu adresu</button>
+      <button data-toggle="modal" data-target="#addressModal" class="btn btn-warning">Dodajte novu adresu</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addressModalLabel">Dodajte Vašu Novu Adresu</h5>
+        <button type="button" class="close" #closeAddressModal data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-address" [formGroup]="addressForm" (ngSubmit)="addAddress()">
+          <div class="form-group">
+            <label for="address" class="sr-only">Unesite Vašu Adresu</label>
+            <input type="text" formControlName="address" class="form-control" [pattern]="addressPattern"
+              [ngClass]="{ 'is-invalid': submitted && f.address.errors }" placeholder="Unesite Vašu Adresu" required/>
+            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+              <div *ngIf="f.address.errors.required">Polje ne sme biti prazno</div>
+              <div *ngIf="f.address.errors.pattern">Adresa nije dobrog formata</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvorite</button>
+            <button type="submit" class="btn btn-warning">Dodajte</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
