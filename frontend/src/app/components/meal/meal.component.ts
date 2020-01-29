@@ -67,6 +67,11 @@ export class MealComponent implements OnInit {
     // TODO Implement this
     this.favorite = !this.favorite;
   }
+  private isFavoriteFood(mealName: string) {
+    // TODO Implement this
+    console.log(mealName);
+    this.favorite = !this.favorite;
+  }
 
   private scrollToCategory(category: string) {
     this.activeCategory = category;
