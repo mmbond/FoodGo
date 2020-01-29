@@ -7,6 +7,7 @@ export var meals = [];
 export var ordersHistory = [];
 export var customerData = {"customer": {}};
 export var currentOrder = {};
+var queryResult = [];
 
 const pool = mysql.createPool({
     host: "localhost",
@@ -18,17 +19,18 @@ const pool = mysql.createPool({
 
 // Query function.
 function queryDb(queryDb){
-    var queryResult = [];
     try {
         pool.query(queryDb, function (err, rows) {
             if(err) throw err;
-            window.queryResult = JSON.parse(JSON.stringify(rows));
+             callbackDB(JSON.stringify(rows));
         });
-        queryResult = window.queryResult;
     } catch(error) {
         console.error(error);
     }
-    return queryResult;
+}
+
+function callbackDB(result){
+    queryResult = JSON.parse(result);
 }
 
 // Check if object is empty.
@@ -57,8 +59,8 @@ export function splitSeparatedDataInArray(stringWithDelimiter, delimiter){
 export function getAllRestaurants(){
     let query = "SELECT * FROM restaurants;";
     try {
-        let result = queryDb(query);
-        restaurants = result;
+        queryDb(query);
+        restaurants = queryResult;
     } catch (error) {
         console.error(error);
     }
@@ -68,8 +70,8 @@ export function getAllRestaurants(){
 export function getRestaurantById(restaurantId){
     let query = `SELECT * FROM restaurants WHERE restaurantId = ${restaurantId};`;
     try {
-        let result = queryDb(query);
-        restaurant = result[0];
+        queryDb(query);
+        restaurant = queryResult[0];
     } catch (error) {
         console.error(error);
     }
@@ -83,14 +85,14 @@ export function getAllMeals(restaurantId){
     ON meals.mealId = meals_restaurants.mealId
     WHERE meals_restaurants.restaurantId = ${restaurantId};`;
     try {
-        let result = queryDb(query);
-        result.forEach(function(meal){
-            meal.ingredients = [];
-            query = `SELECT * FROM ingredients WHERE mealId = ${meal.mealId};`;
-            let resultIngredients = queryDb(query);
-            meal.ingredients = resultIngredients;
-        });
-        meals = result;
+        queryDb(query);
+        meals = queryResult;  
+        for(var i = 0; i < meals.length; i++){
+            meals[i].ingredients = [];
+            query = `SELECT * FROM ingredients WHERE mealId = ${meals[i].mealId};`;
+            queryDb(query);
+            if(queryResult.length > 0) meals[i].ingredients;
+        }
     } catch (error) {
         console.error(error);
     }
@@ -104,45 +106,45 @@ export function getAllOrdersHistory(customerId){
     ON orders.restaurantId = restaurants.restaurantId
     WHERE customerId = ${customerId};`;
     try {
-        let result = queryDb(query);
-        result.forEach(function(row){
-            row.meals_ids = splitSeparatedDataInArray(row.meals_ids, ", ");
-            row.meal_count = splitSeparatedDataInArray(row.meal_count, ", ");
-            row.meals = [];
+        queryDb(query);
+        ordersHistory = queryResult;
+        for(var i = 0; i < ordersHistory.length; i++){
+            ordersHistory[i].meals_ids = splitSeparatedDataInArray(ordersHistory[i].meals_ids, ", ");
+            ordersHistory[i].meal_count = splitSeparatedDataInArray(ordersHistory[i].meal_count, ", ");
+            ordersHistory[i].meals = [];
 
             // for every distinct meal
-            for(let i = 0; i < row.meal_count.length; i++){
-                let meal_id = parseInt(row.meals_ids[i]);
+            for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
+                let meal_id = parseInt(ordersHistory[i].meals_ids[j]);
                 query = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
                 try {
-                    let result1 = queryDb(query);
-                    let meal = result1[0];
+                    queryDb(query);
+                    let meal = queryResult[0];
 
                     // Push same meal by count in order
-                    for(let j = 1; j <= row.meal_count[i]; j++){
+                    for(var k = 1; k <= ordersHistory[i].meal_count[j]; k++){
                         meal.ingredients = [];
                         let mealIdKey = toString(meal.mealId);
 
                         // Find all ingredients for specific meal and push in meal object
-                        for(let k = 0; k < row.meals_ingredients_ids[mealIdKey][j].length; k++){
-                            let ingredient_id = parseInt(row.meals_ingredients_ids[mealIdKey][j][k]);
+                        for(var x = 0; x < ordersHistory[i].meals_ingredients_ids[mealIdKey][k].length; x++){
+                            let ingredient_id = parseInt(ordersHistory[i].meals_ingredients_ids[mealIdKey][k][x]);
                             query = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
                             try {
-                                let result2 = queryDb(query);
-                                let ingredient = result2[0];
+                                queryDb(query);
+                                let ingredient = queryResult[0];
                                 meal.ingredients.push(ingredient);
                             } catch (error) {
                                 console.error(error);
                             }
                         }
-                        row.meals.push(meal);
+                        ordersHistory[i].meals.push(meal);
                     }
                 } catch (error) {
                     console.error(error);
                 }
             }
-        });
-        ordersHistory = result;
+        };
     } catch (error) {
         console.error(error);
     }
@@ -154,6 +156,7 @@ export function insertCustomer(customer){
     INSERT INTO customers (firstName, lastName, email, phone, addresses, password)
     VALUES ('${customer.firstName}', '${customer.lastName}', '${customer.email}', '${customer.phone}', '${customer.address}', '${customer.password}' );`;
     try {
+        console.log(query);
         queryDb(query);
         return true;
     } catch (error) {
@@ -168,13 +171,13 @@ export function getCustomerIfExists(customer){
     SELECT * FROM customers
     WHERE email = '${customer.email}' AND password = '${customer.password}';`;
     try {
-        var result = queryDb(query);
-        
-        if(result){
-            customerData.customer = result;
-            customerData.customer.addresses = splitSeparatedDataInArray(result[0].addresses, ", ");
-            customerData.customer.fav_food = splitSeparatedDataInArray(result[0].fav_food, ", ");
-            customerData.customer.fav_restaurants = splitSeparatedDataInArray(result[0].fav_restaurants, ", ");
+        queryDb(query);
+        if(queryResult[0]){
+            console.log(queryResult);
+            customerData.customer = queryResult[0];
+            customerData.customer.addresses = splitSeparatedDataInArray(customerData.customer.addresses, ", ");
+            customerData.customer.fav_food = splitSeparatedDataInArray(customerData.customer.fav_food, ", ");
+            customerData.customer.fav_restaurants = splitSeparatedDataInArray(customerData.customer.fav_restaurants, ", ");
 
             if(customerData.customer.fav_restaurants.length > 0){
                 customerData.customer.fav_restaurants_result = [];
@@ -185,8 +188,8 @@ export function getCustomerIfExists(customer){
                 query += `);`;
             } 
             try {  
-                var result1 = queryDb(query);
-                customerData.customer.fav_restaurants_result = result1;
+                queryDb(query);
+                customerData.customer.fav_restaurants_result = queryResult;
             } catch (error) {
                 console.error(error);
             }
@@ -229,7 +232,6 @@ export function createOrder(startOrderData){
         Object.keys(startOrderData).forEach(function(key){
             currentOrder[key] = startOrderData[key];
         });
-
         return true;
     } catch (error) {
         console.error(error);
@@ -244,7 +246,7 @@ export function modifyOrderData(orderData){
     SET`;
     // Update current order.
     Object.keys(orderData).forEach(function(key){
-        if(currentOrder[key] != orderData[key]){
+        if(currentOrder[key] != orderData[key]){ // update if they are not same (both in cache and in db)
             currentOrder[key] = orderData[key];
             query += `${key} = '${orderData[key]}'`;
             if(key == 'mark'){
