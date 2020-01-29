@@ -19,8 +19,10 @@ app.listen(port, () => console.log(`Backend app listening on port ${port}!`));
 
 // restaurant All GET METHOD
 app.get('/api/restaurant/all', function (req, res) {
-  model.getAllRestaurants();
-  res.json(model.restaurants);
+  model.getAllRestaurants().then(function() {
+    res.json(model.restaurants);
+  });
+  ;
 })
 
 // restaurant GET METHOD
@@ -32,13 +34,18 @@ app.get('/api/restaurant/id', function (req, res) {
         if(foundRestaurant != undefined){
           model.restaurant = foundRestaurant;
         } else {
-          model.getRestaurantById(parseInt(req.query.restaurantId));
+          model.getRestaurantById(parseInt(req.query.restaurantId)).then(function() {
+            res.json(model.restaurant);
+          });
         }
       } else {
-        model.getRestaurantById(parseInt(req.query.restaurantId));
+        model.getRestaurantById(parseInt(req.query.restaurantId)).then(function() {
+          res.json(model.restaurant);
+        });
       }
+    } else {
+      res.json(model.restaurant);
     }
-    res.json(model.restaurant);
   }
 })
 
@@ -46,23 +53,26 @@ app.get('/api/restaurant/id', function (req, res) {
 app.get('/api/meal/all', function (req, res) {
   if (req.body) {
     if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
-      model.getAllMeals(req.query.restaurantId);
+      model.getAllMeals(req.query.restaurantId).then(function() {
+        res.json(model.meals);
+      });
+    } else {
+      res.json(model.meals);
     }
-    res.json(model.meals);
   }
 })
 
 // login POST METHOD
 app.post('/api/administration/login', function (req, res) {
     if (req.body) {
-      model.getCustomerIfExists(req.body);
+      model.getCustomerIfExists(req.body).then(function() {
+        res.json(model.customerData);
+      });
     }
-    res.json(model.customerData);
 })
 
 // logout POST METHOD
 app.post('/api/administration/logout', function (req, res) {
-  console.log('pogodjen');
   if (req.body) {
     model.restaurants = [];
     model.restaurant = {};
@@ -76,19 +86,21 @@ app.post('/api/administration/logout', function (req, res) {
 // register POST METHOD
 app.post('/api/administration/register', function (req, res) {
   if (req.body) {
-    let emailAndPass = {};
+    var emailAndPass = {};
     emailAndPass.email = req.body.email;
     emailAndPass.password = req.body.password;
-    model.getCustomerIfExists(emailAndPass);
-    if(model.isEmpty(model.customerData)){
-      model.insertCustomer(req.body);
-      model.getCustomerIfExists(emailAndPass);
-      res.json(model.customerData);
-      res.send(true);
-    } else {
-      model.customerData = {"customer": {}};
-      res.send(false);
-    }
+    model.getCustomerIfExists(emailAndPass).then(function() {
+      if(model.isEmpty(model.customerData)){
+        model.insertCustomer(req.body).then(function() {
+          model.getCustomerIfExists(emailAndPass).then(function() {
+            res.json(model.customerData);
+          });
+        });
+      } else {
+        res.json(model.customerData);
+      }
+    });
+    
   }
 })
 
@@ -96,79 +108,69 @@ app.post('/api/administration/register', function (req, res) {
 app.get('/api/history/all', function (req, res) {
   if (req.body) {
     if(model.ordersHistory.length < 1){
-      model.getAllOrdersHistory(req.query.customerId);
+      model.getAllOrdersHistory(req.query.customerId).then(function() {
+        res.json(model.ordersHistory);
+      });
+    } else {
+      res.json(model.ordersHistory);
     }
-    res.json(model.ordersHistory);
   }
 })
 
 // Customer edit POST METHOD
 app.post('/api/profile/edit', function (req, res) {
   if (req.body) {
-    if(model.updateCustomer(req.body)){
+    model.updateCustomer(req.body).then(function() {
       res.json(model.customerData);
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    });
   }
 })
 
 // Customer modify addresses POST METHOD
 app.post('/api/profile/modAddresses', function (req, res) {
   if (req.body) {
-    if(model.modifyAddresses(req.body)){
+    imodel.modifyAddresses(req.body).then(function() {
       res.json(model.customerData);
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    });
   }
 })
 
 // Customer modify favourite food POST METHOD
 app.post('/api/profile/modFavFood', function (req, res) {
   if (req.body) {
-    if(model.modifyFavouriteFood(req.body)){
+    model.modifyFavouriteFood(req.body).then(function() {
       res.json(model.customerData);
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    });
   }
 })
 
 // Customer modify favourite food POST METHOD
 app.post('/api/profile/modFavRest', function (req, res) {
   if (req.body) {
-    if(model.modifyFavouriteRestaurants(req.body)){
+    model.modifyFavouriteRestaurants(req.body).then(function() {
       res.json(model.customerData);
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    });
   }
 })
 
 // Order create POST METHOD
 app.post('/api/order/send', function (req, res) {
   if (req.body) {
-    if(model.createOrder(req.body)){
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    model.createOrder(req.body).then(function() {
+      if(model.addedOrder){
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    });
   }
 })
 
 // Order edit POST METHOD
 app.post('/api/order/edit', function (req, res) {
   if (req.body) {
-    if(model.modifyOrderData(req.body)){
+    model.modifyOrderData(req.body).then(function() {
       res.json(model.currentOrder);
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    });
   }
 })

@@ -42,7 +42,7 @@
 
 | Ruta | Metoda | In                  | Out        |
 |------|--------|---------------------|------------|
-| send | POST   | Order               | boolean    |
+| send | POST   | Order               | Boolean    |
 | edit | POST   | Order               | Order      |
 
 <!-- | id   | GET    | RestaurantId (long) | Restaurant | -->

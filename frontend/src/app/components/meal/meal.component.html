@@ -12,9 +12,9 @@
             {{restaurant.description}}
           </div>
           <div class="col-md-3 row justify-content-center">
-            <button type="button" (click)="isFavorite(restaurant.name)" [disabled]='!loggedIn()' placement="bottom"
+            <button type="button" (click)="isFavorite(restaurant.name)" placement="bottom"
               ngbTooltip="Dodajte/Sklonite omiljene restorane" tooltipClass="foodgo-tooltip"
-              class="btn btn-sm btn-outline-secondary"><i [class.fav]='favorite' class="fa fa-heart fa-2x"></i></button>
+              class="btn btn-sm btn-outline-secondary" [disabled]='!loggedIn()'><i [class.fav]='favorite' class="fa fa-heart fa-2x"></i></button>
           </div>
           <div class="col-md-3">
             <app-rating [currentRate]=restaurant.mark></app-rating>
