@@ -12,7 +12,7 @@
             {{restaurant.description}}
           </div>
           <div class="col-md-3 row justify-content-center">
-            <button type="button" (click)="isFavorite(restaurant.name)" placement="bottom"
+            <button type="button" (click)="isFavorite(restaurant.name)" [disabled]='!loggedIn()' placement="bottom"
               ngbTooltip="Dodajte/Sklonite omiljene restorane" tooltipClass="foodgo-tooltip"
               class="btn btn-sm btn-outline-secondary"><i [class.fav]='favorite' class="fa fa-heart fa-2x"></i></button>
           </div>
@@ -51,7 +51,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <p class="card-text">{{meal.description}}</p>
                   <div class="btn-group">
-                    <button class="btn btn-warning" (click)="addToOrder(meal.name)">Dodajte</button>
+                    <button class="btn btn-warning" (click)="addToOrder(meal.name)" [disabled]='!loggedIn()'>Dodajte</button>
                   </div>
                 </div>
               </div>

@@ -85,4 +85,12 @@ export class MealComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
+  private loggedIn(){
+    let customer = localStorage.getItem("customer");
+    if(customer != undefined || customer != ""){
+      return true;
+    }
+    return false;
+  }
+
 }

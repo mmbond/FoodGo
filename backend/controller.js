@@ -27,7 +27,16 @@ app.get('/api/restaurant/all', function (req, res) {
 app.get('/api/restaurant/id', function (req, res) {
   if (req.body) {
     if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
-      model.getRestaurantById(parseInt(req.query.restaurantId));
+      if(model.restaurants.length > 0){
+        const foundRestaurant = model.restaurants.find(restaurant => restaurant.restaurantId == req.query.restaurantId);
+        if(foundRestaurant != undefined){
+          model.restaurant = foundRestaurant;
+        } else {
+          model.getRestaurantById(parseInt(req.query.restaurantId));
+        }
+      } else {
+        model.getRestaurantById(parseInt(req.query.restaurantId));
+      }
     }
     res.json(model.restaurant);
   }
