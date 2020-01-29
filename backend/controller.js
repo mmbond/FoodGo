@@ -27,7 +27,7 @@ app.get('/api/restaurant/all', function (req, res) {
 app.get('/api/restaurant/id', function (req, res) {
   if (req.body) {
     if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
-      model.getRestaurantById(req.query.restaurantId);
+      model.getRestaurantById(parseInt(req.query.restaurantId));
     }
     res.json(model.restaurant);
   }
@@ -77,7 +77,7 @@ app.post('/api/administration/register', function (req, res) {
       res.json(model.customerData);
       res.send(true);
     } else {
-      model.customerData = {};
+      model.customerData = {"customer": {}};
       res.send(false);
     }
   }

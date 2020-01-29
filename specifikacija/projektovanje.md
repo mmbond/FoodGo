@@ -40,7 +40,7 @@
 |----------------|--------|
 | restaurantId   | Long   |
 | name           | String |
-| restorantLogo  | String |
+| restaurantLogo | String |
 | description    | String |
 | mark           | Long   |
 | address        | String |

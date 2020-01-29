@@ -2,7 +2,7 @@ export class Restaurant {
     
     restaurantId: number;
     name: string;
-    restorantLogo: string;
+    restaurantLogo: string;
     description: string;
     mark: number;
     address: string;

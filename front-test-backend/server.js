@@ -1,3 +1,4 @@
+/*
 'use strict';
 const express = require('express')
 const bodyParser = require('body-parser');
@@ -80,3 +81,4 @@ app.post('/api/profile/edit', function (req, res) {
     res.send(true);
   }
 })
+*/

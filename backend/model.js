@@ -18,7 +18,7 @@ const pool = mysql.createPool({
 
 // Query function.
 function queryDb(queryDb){
-    let queryResult = [];
+    var queryResult = [];
     try {
         pool.query(queryDb, function (err, rows) {
             if(err) throw err;
@@ -48,7 +48,7 @@ export function splitSeparatedDataInArray(stringWithDelimiter, delimiter){
     } else if(stringWithDelimiter.indexOf(delimiter) != -1){
         resultArr = stringWithDelimiter.split(delimiter);
     } else {
-        resultArr = [stringWithDelimiter];
+        resultArr.push(stringWithDelimiter);
     }
     return resultArr;
 }
@@ -164,26 +164,34 @@ export function insertCustomer(customer){
 
 // Get customer if exists.
 export function getCustomerIfExists(customer){
-    let query = `
+    var query = `
     SELECT * FROM customers
     WHERE email = '${customer.email}' AND password = '${customer.password}';`;
     try {
-        let result = queryDb(query);
-        console.log(result);
-        if(result[0]){
-            result[0].addresses = splitSeparatedDataInArray(result[0].addresses, ", ");
-            result[0].fav_food = splitSeparatedDataInArray(result[0].fav_food, ", ");
-            result[0].fav_restaurants = splitSeparatedDataInArray(result[0].fav_restaurants, ", ");
-            result[0].fav_restaurants_result = [];
-            query = `SELECT * FROM restaurants WHERE name in (` + fav_restaurants + `);`;
+        var result = queryDb(query);
+        
+        if(result){
+            customerData.customer = result;
+            customerData.customer.addresses = splitSeparatedDataInArray(result[0].addresses, ", ");
+            customerData.customer.fav_food = splitSeparatedDataInArray(result[0].fav_food, ", ");
+            customerData.customer.fav_restaurants = splitSeparatedDataInArray(result[0].fav_restaurants, ", ");
+
+            if(customerData.customer.fav_restaurants.length > 0){
+                customerData.customer.fav_restaurants_result = [];
+                query = `SELECT * FROM restaurants WHERE name in ('`+customerData.customer.fav_restaurants[0] + `'`;
+                for(var i = 1; i < customerData.customer.fav_restaurants.length; i++){
+                    query += `,'${customerData.customer.fav_restaurants[i]}'`
+                }
+                query += `);`;
+            } 
             try {  
-                let result1 = queryDb(query);
-                result[0].fav_restaurants_result = result1;
+                var result1 = queryDb(query);
+                customerData.customer.fav_restaurants_result = result1;
             } catch (error) {
                 console.error(error);
             }
-            customerData["customer"] = result[0];
-        }
+            //customerData["customer"] = result[0];
+        } 
     } catch (error) {
         console.error(error);
     }

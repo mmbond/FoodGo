@@ -14,7 +14,7 @@ export class RestaurantService {
   constructor(private http: HttpClient) { }
   
   // All restaurants
-  getRestaurants(limit: number = 1) {
+  getRestaurants() {
       const requestUrl = `${this._apiUrl}/restaurant/all`;
       return this.http.get<Restaurant[]>(requestUrl)
           .pipe(map(response => {
