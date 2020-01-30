@@ -21,4 +21,13 @@ export class OrderService {
         return orderRecieved;
       }));
   }
+  
+  edit(_order: Order) {
+    // register user 
+    console.log(_order);
+    return this.http.post<Order>(`${this._apiUrl}/order/edit`, _order)
+      .pipe(map(orderRecieved => {
+        return orderRecieved;
+      }));
+  }
 }

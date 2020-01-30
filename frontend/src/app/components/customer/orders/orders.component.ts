@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { Order } from 'src/app/models/order.model';
 import { HistoryService } from 'src/app/services/history.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
+import { OrderService } from 'src/app/services/order.service';
+import { Status} from 'src/app/models/status.model';
+import { Meal } from 'src/app/models/meal.model';
 
 @Component({
   selector: 'app-orders',
@@ -13,7 +16,11 @@ export class OrdersComponent implements OnInit {
 
   orders: Array<Order>;
   error: any;
-  constructor(private router: Router, private _historyService: HistoryService) { }
+  currentRate = 0;
+  total: Array<number>;
+  current: number;
+  limit = 5; 
+  constructor(private router: Router, private _orderService: OrderService, private _historyService: HistoryService) { }
 
   ngOnInit() {
     this._fetchOrders(10);
@@ -21,7 +28,7 @@ export class OrdersComponent implements OnInit {
 
   private _fetchOrders(limit: number = 1) {
     this._historyService.getOrders(limit).toPromise()
-      .then(response => this.orders = response)
+      .then(response => {this.orders = response; this.total = Array(Math.ceil(response.length/this.limit)); this.current = 1;})
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
 
@@ -33,4 +40,31 @@ export class OrdersComponent implements OnInit {
   private restaurant() {
     this.router.navigate(['/']);
   }
+
+  private cancelOrder(id : number) {
+    this.orders[id].status = Status.CANCELED;
+    this._orderService.edit(this.orders[id]);
+  }
+
+  private mealList(meals: Array<Meal>) {
+    let data = meals.map(meal => meal.name).reduce(function (acc, curr) {
+      if (typeof acc[curr] == 'undefined') {
+        acc[curr] = 1;
+      } else {
+        acc[curr] += 1;
+      }
+    
+      return acc;
+    }, {});
+    return Object.keys(data).map(key => ({name: String(key), count: data[key]}));
+  }
+
+  public receiveCurrentPage($event) {
+    this.current = $event;
+  }
+
+  public getPageLimit(id: number) {
+    return (((this.current - 1) * this.limit) <= id) && (id < (this.current * this.limit));
+  }
+
 }

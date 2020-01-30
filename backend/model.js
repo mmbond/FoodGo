@@ -36,7 +36,7 @@ class Database {
 var database = new Database({
     host: "localhost",
     user: "root",
-    password: "spartanac97+",
+    password: "spartanac97+", // za drugu bazu ""
     database: "foodgo",
     port: 3306
 });

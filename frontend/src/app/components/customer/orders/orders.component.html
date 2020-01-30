@@ -10,26 +10,27 @@
         <th scope="col">Datum</th>
         <th scope="col">Cena</th>
         <th scope="col">Beleška</th>
-        <th scope="col">Opcija</th>
+        <th scope="col">Ocenite/Odustanite</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor='let order of orders'>
-        <th scope="row">{{order.orderId}}</th>
-        <td>{{order.status}}</td>
-        <td>
-          <p *ngFor='let meal of order.meals'>
-            {{meal.name}}
+      <tr *ngFor='let order of orders; let i = index'>
+        <th *ngIf="getPageLimit(i)"scope="row">{{order.orderId}}</th>
+        <td *ngIf="getPageLimit(i)">{{order.status.toUpperCase()}}</td>
+        <td *ngIf="getPageLimit(i)">
+          <p *ngFor='let meal of mealList(order.meals)'>
+            {{meal.count}} x {{meal.name}}
           </p>
           </td>
-        <td>{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
-        <td>{{order.price}} RSD</td>
-        <td>{{order.note}}</td>
-        <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa vise informacija-->
-        <td><button class="btn btn-warning">Klikni</button></td>
+        <td *ngIf="getPageLimit(i)">{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
+        <td *ngIf="getPageLimit(i)">{{order.price}} RSD</td>
+        <td *ngIf="getPageLimit(i)">{{order.note}}</td>
+        <td *ngIf="getPageLimit(i)"><app-rating *ngIf="order.mark==undefined && order.status.toUpperCase()=='FINISHED'" [order]=order [read]=false [currentRate]=0></app-rating>
+          <button *ngIf="order.status.toUpperCase()=='IN PROGRESS'" (click)="cancelOrder(i)" class="btn btn-warning">ODUSTANITE</button> </td>
       </tr>
     </tbody>
   </table>
+  <app-pagination *ngIf='showOrders()' (currentPageEvent)="receiveCurrentPage($event)" [total]='total' [current]='current'></app-pagination>
   <div *ngIf='!showOrders()'>
     <div class="mx-auto text-center" style="width: 50%;">
       <img class="mt-3" src="/assets/icons/orders.png" alt="No orders">

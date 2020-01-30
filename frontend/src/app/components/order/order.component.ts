@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { Meal } from 'src/app/models/meal.model';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/order.model';
-import { Status } from 'src/app/models/status.model';
 import { Restaurant } from 'src/app/models/restaurant.model';
+import { Status } from 'src/app/models/status.model';
 
 @Component({
   selector: 'app-order',
@@ -13,6 +13,7 @@ import { Restaurant } from 'src/app/models/restaurant.model';
 export class OrderComponent implements OnInit {
   @Input()
   mealOrder: Array<Meal>;
+  @ViewChild('closeOrderModal', { static: true }) closeOrderModal: ElementRef;
   @Output() mealOrderChange = new EventEmitter();
   @Input()
   restaurantOrder: Restaurant;
@@ -79,12 +80,13 @@ export class OrderComponent implements OnInit {
     let order : Order = {
       orderId: null,
       restaurant: this.restaurantOrder,
-      status: Status.IN_PROGRESS,
+      status: Status.IN_PROGRESS,// vratiEnumZaString("in progress"),
       meals: this.mealOrder,
       comment: null, // TODO pregled spec za razliku comment note
       orderDate: new Date(), // definisati foramt data koji se salje backendu
       price: this.orderPrice,
-      note: null // TDOO add note
+      note: null, // TDOO add note
+      mark: null
     }
     //console.log(order);
     let orderRecieved = this.orderService.send(order);
@@ -92,6 +94,7 @@ export class OrderComponent implements OnInit {
       // TODO mozda neki dijalog se pojavljuje
       this.clearOrder();
     }
+    this.closeOrderModal.nativeElement.click();
   }
 
 }

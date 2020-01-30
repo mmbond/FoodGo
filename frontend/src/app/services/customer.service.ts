@@ -29,4 +29,35 @@ export class CustomerService {
     let customer = localStorage.get("customer");
     return JSON.parse(customer);
   }
+
+  // update Customer address
+  updateCustomerAddresses(_customerAddresses : Array<String>) {
+    const requestUrl = `${this._apiUrl}/profile/modAddresses`;
+    this.http.post(requestUrl, _customerAddresses);
+    console.log(_customerAddresses);
+  }
+
+   // get Customer favourite Restaurants
+  updateFavRestaurants(_favRestaurants: Array<String>) {
+    const requestUrl = `${this._apiUrl}/profile/modFavRest`;
+    return this.http.post(requestUrl, _favRestaurants)
+      .pipe(response => {
+        return response;
+      }),
+        catchError(error => {
+          return throwError(error);
+        });
+  }
+
+  // get Customer favourite Meals
+  updateFavMeals(_favMeals: Array<String>) {
+    const requestUrl = `${this._apiUrl}/profile/modFavFood`;
+    return this.http.post(requestUrl, _favMeals)
+      .pipe(response => {
+        return response;
+      }),
+        catchError(error => {
+          return throwError(error);
+        });
+  }
 }

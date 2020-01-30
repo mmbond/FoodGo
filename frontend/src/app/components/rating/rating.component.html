@@ -1,8 +1,10 @@
 <ng-template #t let-fill="fill">
-    <span class="star" [class.full]="fill === 100">
-      <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
-    </span>
-  </ng-template>
-  <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
-  <!-- <hr>
-  <pre>Rate: <b>{{currentRate}}</b></pre> -->
+  <span class="star" [class.full]="fill === 100">
+    <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+  </span>
+</ng-template>
+<ngb-rating [(rate)]="currentRate" [starTemplate]="t" [(readonly)]="read" max="5"></ngb-rating>
+<div *ngIf=!read>
+  <pre>Ocena: <b>{{currentRate}}</b></pre>
+  <button *ngIf='currentRate>0' (click)="rateOrder(currentRate)" class="btn btn-warning">Pošalji ocenu</button>
+</div>

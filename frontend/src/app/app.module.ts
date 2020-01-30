@@ -21,7 +21,9 @@ import { AddressComponent } from './components/customer/address/address.componen
 import { FavouriteComponent } from './components/customer/favourite/favourite.component';
 import { CommentComponent } from './components/customer/comment/comment.component';
 import { OrdersComponent } from './components/customer/orders/orders.component';
+import { FoodComponent } from './components/customer/food/food.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { ChatComponent } from './components/chat/chat.component';
     FavouriteComponent,
     CommentComponent,
     OrdersComponent,
+    FoodComponent,
     ChatComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

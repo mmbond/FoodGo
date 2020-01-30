@@ -1,31 +1,36 @@
 <div class="container">
-    <h5 class="font-weight-normal">Vaši omiljeni restorani</h5>
-    <p class="text-muted">Neki restorani imaju posebno mesto u Vašem srcu. Prikupite ih ovde da biste ih lako i brzo pronašli kada vam je potrebno da naručite.</p>
-    <table *ngIf='showFavourite()' class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Restoran</th>
-          <th scope="col">Opcija</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- TODO srediti projektovanje, za vise restorana ili hrane omiljene malo bolji prikaz -->
-        <!-- <tr *ngFor='let restaurant of restaurants'> -->
-        <tr>
-          <th scope="row">3</th>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <!-- </tr> -->
-      </tbody>
-    </table>
-    <div *ngIf='!showFavourite()'>
+  <h5 class="font-weight-normal">Vaši omiljeni restorani</h5>
+  <p class="text-muted">Neki restorani imaju posebno mesto u Vašem srcu. Prikupite ih ovde da biste ih lako i brzo
+    pronašli kada vam je potrebno da naručite.</p>
+  <table *ngIf='showFavourite()' class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Restoran</th>
+        <th scope="col">Adresa</th>
+        <th scope="col">Opcija</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let favRestaurant of favRestaurants; index as i'>
+        <th *ngIf="getPageLimit(i)" scope="row"><img class="card-img-top" alt="{{favRestaurant.name}}"
+            style="height: 50px; width: 50px; display: block;" src="{{favRestaurant.restorantLogo}}"
+            data-holder-rendered="true"></th>
+        <td *ngIf="getPageLimit(i)">{{favRestaurant.name}}</td>
+        <td *ngIf="getPageLimit(i)">{{favRestaurant.address}}</td>
+        <td *ngIf="getPageLimit(i)"><a href="restaurant/{{favRestaurant.restaurantId}}" class="btn btn-warning">Idite na
+            omiljeni restoran</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <app-pagination *ngIf='showFavourite()' (currentPageEvent)="receiveCurrentPage($event)" [total]='total'
+    [current]='current'></app-pagination>
+  <div *ngIf='!showFavourite()'>
     <div class="mx-auto text-center" style="width: 50%;">
       <img class="mt-3" src="/assets/icons/favourite.png" alt="No favourite">
       <h3>Nema Restorana u Vašim Omiljenim</h3>
       <p class="text-muted">Dodajte svoje omiljene restorane i učinite svoju narudžbinu još bržom i jednostavnijom</p>
       <button (click)='addFavourites()' class="btn btn-warning">Dodajte omiljene restorane</button>
     </div>
-    </div>
   </div>
+</div>

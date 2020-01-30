@@ -7,7 +7,11 @@
             "description": "Srednje pečeni burger od 100% premium junećeg mesa (110g), ajsberg salata, kiseli krastavac, paradajz, malo luka, Burger House sos u Burger House zemički",
             "price": 345,
             "category": "BURGERI",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            }]
         },
         {
             "mealId": 1,
@@ -16,7 +20,11 @@
             "description": "Srednje pečeni burger od 100% premium junećeg mesa (150g), ajsberg salata, kiseli krastavac, paradajz, malo luka, Burger House sos u Burger House zemički",
             "price": 395,
             "category": "BURGERI",
-            "ingredients": []
+            "ingredients": [ {
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            }]
         },
         {
             "mealId": 1,
@@ -25,7 +33,11 @@
             "description": "Srednje pečeni burger od 100% premium junećeg mesa (200g), ajsberg salata, kiseli krastavac, paradajz, malo luka,  Burger House sos  u Burger House zemički",
             "price": 465,
             "category": "BURGERI",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            }]
         },
         {
             "mealId": 1,
@@ -52,7 +64,23 @@
             "description": "2 komada pohovanih pilećih štapića sa panko prezlama i sosom po želji",
             "price": 225,
             "category": "SENDVIČI",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "senf",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "kecap",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "salata",
+                "price": 100
+            }]
         },
         {
             "mealId": 1,
@@ -387,7 +415,23 @@
             "description": "Pesto, paradajz, mocarela, rukola, pršuta, maslinovo ulje",
             "price": 390,
             "category": "SENDVIČI",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "senf",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "kecap",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "salata",
+                "price": 100
+            }]
         },
         {
             "mealId": 2,
@@ -441,7 +485,23 @@
             "description": "Pelat, beli luk, inćuni, kapar, origano, maslinovo ulje",
             "price": 590,
             "category": "PICE",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "senf",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "kecap",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "salata",
+                "price": 100
+            }]
         },
         {
             "mealId": 2,
@@ -477,7 +537,23 @@
             "description": "Maslinovo ulje, mocarela, brie, gorgonzola, grana padano, ruzmarin, maslinovo ulje",
             "price": 795,
             "category": "PICE",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "senf",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "kecap",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "salata",
+                "price": 100
+            }]
         },
         {
             "mealId": 2,
@@ -513,7 +589,23 @@
             "description": "Mocarela, šunka, šampinjoni, vlašac, maslinovo ulje",
             "price": 740,
             "category": "PICE",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "senf",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "kecap",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "salata",
+                "price": 100
+            }]
         },
         {
             "mealId": 2,
@@ -522,7 +614,23 @@
             "description": "Pelat, mocarela, sušeni paradajz, pasta od plavog patlidžana i paprike, pecorino, maslinovo ulje",
             "price": 760,
             "category": "PICE",
-            "ingredients": []
+            "ingredients": [{
+                "ingridientsId": 1,
+                "name": "pavlaka",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "senf",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "kecap",
+                "price": 100
+            },{
+                "ingridientsId": 1,
+                "name": "salata",
+                "price": 100
+            }]
         },
         {
             "mealId": 2,
