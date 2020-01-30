@@ -20,6 +20,7 @@ export class MealComponent implements OnInit {
   @Input() restaurant: Restaurant;
   @ViewChild('closeMealModal', { static: true }) closeMealModal: ElementRef;
   orderMeals: Array<Meal> = [];
+  visibleMeals: Array<Meal>;
   activeCategory: string;
   error: any;
   favorite = false;
@@ -123,6 +124,19 @@ export class MealComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  private pretraga(event: any) {
+    if (event.target.value == '') {
+      this.visibleMeals = undefined;
+      return;
+    }
+    this.visibleMeals = this.meals.filter(meal=>meal.name.toLowerCase().includes(event.target.value.toLowerCase())).slice(0,5);
+  }
+
+  private scrollToMeal(meal: Meal) {
+    this.activeCategory = meal.category;
+    document.getElementById(meal.name).scrollIntoView();
   }
 
 }

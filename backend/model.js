@@ -137,7 +137,7 @@ export function getAllOrdersHistory(customerId){
                                                 var query3 = `SELECT * FROM restaurants WHERE restaurantId = ${ordersHistory[i].restaurantId};`;
                                                 try {
                                                     return database.query(query3).then(function(rows) {
-                                                        ordersHistory[i].restaurants = JSON.parse(JSON.stringify(rows[0]));
+                                                        ordersHistory[i].restaurant = JSON.parse(JSON.stringify(rows[0]));
                                                     });
                                                 } catch (error) {
                                                     console.error(error);

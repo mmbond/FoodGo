@@ -25,7 +25,24 @@
   </div>
   <div class="py-2 bg-light">
     <div class="container">
-      <h3 class="py-3">Meni</h3>
+      <div class="form-group row">
+        <h3 class="py-3">Meni</h3>
+        <div class="col-sm-10">
+          <input (keyup)="pretraga($event)" class="form-control" type="text" placeholder="Pretražite Obroke" aria-label="Search">
+          <div class="card" *ngIf="visibleMeals!=undefined" id="searchBox">
+            <div *ngFor="let meal of visibleMeals">
+              <a (click)="scrollToMeal(meal)" class="link">
+            <div class="card-body">
+              {{meal.name}}
+            </div>
+            </a>
+          </div>
+              <div *ngIf="visibleMeals!=undefined && visibleMeals==0"class="card-body">
+              <h3>Nema traženog obroka</h3>
+            </div> 
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-3">
           <ul class="nav flex-column card sticky-top p-3">
@@ -41,7 +58,7 @@
         <div class="col-md-6">
           <div class="row" *ngFor="let meal of meals; let i = index">
             <h3 *ngIf="firstCategory(meal.category,i)" [attr.id]="meal.category">{{meal.category}}</h3>
-            <div class="card mb-4 box-shadow">
+            <div class="card mb-4 box-shadow" [attr.id]="meal.name">
               <img class="card-img-top" [attr.alt]="meal.name" style="height: 280px; width: 100%; display: block;"
                 [attr.src]="meal.mealPicture" data-holder-rendered="true">
               <div class="card-body">
