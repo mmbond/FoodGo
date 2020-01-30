@@ -6,6 +6,7 @@ import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { OrderService } from 'src/app/services/order.service';
 import { Status} from 'src/app/models/status.model';
 import { Meal } from 'src/app/models/meal.model';
+import { CustomerProfile } from 'src/app/models/customer-profile.model';
 
 @Component({
   selector: 'app-orders',
@@ -23,15 +24,14 @@ export class OrdersComponent implements OnInit {
   constructor(private router: Router, private _orderService: OrderService, private _historyService: HistoryService) { }
 
   ngOnInit() {
-    this._fetchOrders(10);
+    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    this._fetchOrders(customer.customerId);
   }
 
-  private _fetchOrders(limit: number = 1) {
-    this._historyService.getOrders(limit).toPromise()
+  private _fetchOrders(customerId: number) {
+    this._historyService.getOrders(customerId).toPromise()
       .then(response => {this.orders = response; this.total = Array(Math.ceil(response.length/this.limit)); this.current = 1;})
-      .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
-
 
   public showOrders(): boolean {
     return this.orders != undefined;

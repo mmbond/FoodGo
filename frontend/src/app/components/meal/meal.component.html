@@ -67,9 +67,9 @@
                     <h5 class="card-text">{{meal.name}}</h5>
                     <p class="text-muted">Cena: {{meal.price}} RSD</p>
                   </div>
-                  <button (click)="isFavoriteFood(meal.name)"
-                  ngbTooltip="Dodajte/Sklonite omiljenu hranu" tooltipClass="foodgo-tooltip"
-                  class="btn btn-sm"><i [class.fav]='favorite' class="fa fa-heart"></i></button>
+                  <button (click)="sendFavoriteMeal(meal)"
+                  ngbTooltip="Dodajte/Sklonite omiljenu hranu" tooltipClass="foodgo-tooltip" [disabled]='!loggedIn()'
+                  class="btn btn-sm"><i [class.fav]='isFavoriteMeal(meal.name)' class="fa fa-heart"></i></button>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <p class="card-text">{{meal.description}}</p>

@@ -79,14 +79,19 @@ export class OrderComponent implements OnInit {
     // TODO saljem preko apija
     let order : Order = {
       orderId: null,
+      customerId: null,
+      address: null,
       restaurant: this.restaurantOrder,
       status: Status.IN_PROGRESS,// vratiEnumZaString("in progress"),
       meals: this.mealOrder,
       comment: null, // TODO pregled spec za razliku comment note
-      orderDate: new Date(), // definisati foramt data koji se salje backendu
+      timestamp: new Date(), // definisati foramt data koji se salje backendu
       price: this.orderPrice,
       note: null, // TDOO add note
-      mark: null
+      mark: null,
+      meal_ids: null, 
+      meal_ingredients_ids: null,  
+      meal_count: null
     }
     //console.log(order);
     let orderRecieved = this.orderService.send(order);

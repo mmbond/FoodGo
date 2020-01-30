@@ -19,7 +19,6 @@ export class HistoryService {
     let params = new HttpParams().set("customerId", customerId.toString());
     return this.http.get<Order[]>(requestUrl, { params: params })
       .pipe(map(response => {
-        console.log(response);
         return response;
       }),
         catchError(error => {

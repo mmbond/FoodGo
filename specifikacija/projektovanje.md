@@ -61,17 +61,23 @@
 | ingredients    | List([Ingredients](#ingredients)) |
 
 ## Order
-| Naziv atributa | Tip                       |
-|----------------|---------------------------|
-| orderId        | Long                      |
-| restaurant     | [Restaurant](#restaurant) |
-| status         | [Status](#status)         |
-| meals          | List< [Meal](#meal) >     |
-| comment        | String                    |
-| orderDate      | Date                      |
-| price          | Long                      |
-| note           | String                    |
-| mark           | Integer                   |
+| Naziv atributa       | Tip                   |
+|----------------------|-----------------------|
+| orderId              | Long                  |
+| customerId           | Long                  |
+| restaurantId         | Long                  |
+| address              | String                |
+| status               | [Status](#status)     |
+| meals                | List< [Meal](#meal) > |
+| comment              | String                |
+| timestamp            | Date                  |
+| price                | Long                  |
+| note                 | String                |
+| mark                 | Integer               |
+| meals_ids            | List<Long>            |
+| meal_ingredients_ids | ???                   |
+| meal_count           | List<Long>            |
+
 
 ## Ingredients
 | Naziv atributa | Tip    |
@@ -79,15 +85,11 @@
 | ingridientsId  | Long   |
 | name           | String |
 | price          | Long   |
-<<<<<<< HEAD
-| mealId         | Long   |
-=======
 
 ## Category
 | Vrednosti    |
 |--------------|
 # TODO srediti ovo
->>>>>>> 34393624598bee0e56c6b45d895d072a020ab6d2
 
 ## Status
 | Naziv atributa | Tip    | Vrednosti   |
