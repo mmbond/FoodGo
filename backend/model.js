@@ -335,12 +335,12 @@ export function modifyAddresses(modAddresses){
 }
 
 // Add or remove favourite food.
-export function modifyFavouriteFood(modFavFood){
-    modFavFood = modFavFood.join(', ');
-    customerData.customer.fav_food = modFavFood;
+export function modifyFavouriteFood(modFavMeals){
+    modFavMeals = modFavMeals.join(', ');
+    customerData.customer.fav_meals = modFavMeals;
     var query = `
     UPDATE customers 
-    SET fav_food = '${modFavFood}'
+    SET fav_meals = '${modFavMeals}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
         return database.query(query).then(function(rows) {
