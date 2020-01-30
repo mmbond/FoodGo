@@ -76,8 +76,8 @@ export function getRestaurantById(restaurantId){
 // Get all meals by restaurant Id.
 export function getAllMeals(restaurantId){
     var query = `
-    SELECT meals.*, meals_restaurants.price as "price"  FROM meals 
-    INNER JOIN meals_restaurants 
+    SELECT meals.mealId as "mealId", meals.name as "name", meals.category as "category", meals.mealPicture as "mealPicture", meals.description as "description", meals_restaurants.price as "price"
+    FROM meals INNER JOIN meals_restaurants 
     ON meals.mealId = meals_restaurants.mealId
     WHERE meals_restaurants.restaurantId = ${restaurantId};`;
     try {
@@ -185,45 +185,55 @@ export function getCustomerIfExists(customer){
         return database.query(query).then(function(rows) {
             if(rows[0]){
                 customerData.customer = JSON.parse(JSON.stringify(rows))[0];
-                customerData.customer.addresses = customerData.customer.addresses.split(", ");
-                customerData.customer.fav_meals = customerData.customer.fav_food.split(", ");
-                customerData.customer.fav_restaurants = customerData.customer.fav_restaurants.split(", ");
-                if(customerData.customer.fav_restaurants.length > 0){
-                    customerData.customer.fav_restaurants_result = [];
-                    var query1 = `SELECT * FROM restaurants WHERE name in ('`;
-                    for(var i = 0; i < customerData.customer.fav_restaurants.length; i++){
-                        query1 += `'${customerData.customer.fav_restaurants[i]}'`;
-                        if(i < customerData.customer.fav_restaurants.length - 1){
-                            query1 += `,`;
+                if(customerData.customer.addresses != null && customerData.customer.addresses != undefined){
+                    customerData.customer.addresses = customerData.customer.addresses.split(", ");
+                }
+                if(customerData.customer.fav_restaurants != null && customerData.customer.fav_meals != undefined){
+                    customerData.customer.fav_restaurants = customerData.customer.fav_restaurants.split(", ");
+                    if(customerData.customer.fav_restaurants.length > 0){
+                        customerData.customer.fav_restaurants_result = [];
+                        var query1 = `SELECT * FROM restaurants WHERE name in (`;
+                        for(var i = 0; i < customerData.customer.fav_restaurants.length; i++){
+                            query1 += `'${customerData.customer.fav_restaurants[i]}'`;
+                            if(i < customerData.customer.fav_restaurants.length - 1){
+                                query1 += `, `;
+                            }
                         }
-                    }
-                    query1 += `);`;
-                    try {  
-                        return database.query(query1).then(function(rows) {
-                            customerData.customer.fav_restaurants_result = JSON.parse(JSON.stringify(rows));
-                            if(customerData.customer.fav_meals.length > 0){
-                                customerData.customer.fav_meals_result = [];
-                                var query2 = `SELECT * FROM meals WHERE name in ('`;
-                                for(var j = 0; j < customerData.customer.fav_meals.length; j++){
-                                    query2 += `'${customerData.customer.fav_meals[j]}'`;
-                                    if(j < customerData.customer.fav_meals.length - 1){
-                                        query2 += `,`;
+                        query1 += `);`;
+                        try {  
+                            return database.query(query1).then(function(rows) {
+                                customerData.customer.fav_restaurants_result = JSON.parse(JSON.stringify(rows));
+                                if(customerData.customer.fav_meals != null && customerData.customer.fav_meals != undefined){
+                                    customerData.customer.fav_meals = customerData.customer.fav_meals.split(", ");
+                                    if(customerData.customer.fav_meals.length > 0){
+                                        customerData.customer.fav_meals_result = [];
+                                        var query2 = `SELECT * FROM meals WHERE name in (`;
+                                        for(var j = 0; j < customerData.customer.fav_meals.length; j++){
+                                            query2 += `'${customerData.customer.fav_meals[j]}'`;
+                                            if(j < customerData.customer.fav_meals.length - 1){
+                                                query2 += `, `;
+                                            }
+                                        }
+                                        query2 += `);`;
+                                        try {  
+                                            return database.query(query2).then(function(rows) {
+                                                customerData.customer.fav_meals_result = JSON.parse(JSON.stringify(rows));
+                                            });    
+                                        } catch (error) {
+                                            console.error(error);
+                                        }
                                     }
                                 }
-                                query2 += `);`;
-                                try {  
-                                    return database.query(query2).then(function(rows) {
-                                        customerData.customer.fav_meals_result = JSON.parse(JSON.stringify(rows));
-                                    });    
-                                } catch (error) {
-                                    console.error(error);
-                                }
-                            }
-                        });    
-                    } catch (error) {
-                        console.error(error);
+                            });    
+                        } catch (error) {
+                            console.error(error);
+                        }
                     }
                 }
+                
+                
+                
+                
             } 
         });       
     } catch (error) {
