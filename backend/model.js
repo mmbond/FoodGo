@@ -76,7 +76,7 @@ export function getRestaurantById(restaurantId){
 // Get all meals by restaurant Id.
 export function getAllMeals(restaurantId){
     var query = `
-    SELECT * FROM meals 
+    SELECT meals.*, meals_restaurants.price as "price"  FROM meals 
     INNER JOIN meals_restaurants 
     ON meals.mealId = meals_restaurants.mealId
     WHERE meals_restaurants.restaurantId = ${restaurantId};`;
@@ -134,7 +134,15 @@ export function getAllOrdersHistory(customerId){
                                             return database.query(query2).then(function(rows) {
                                                 let ingredient = JSON.parse(JSON.stringify(rows[0]));
                                                 meal.ingredients.push(ingredient);
-                                            });
+                                                var query3 = `SELECT * FROM restaurants WHERE restaurantId = ${ordersHistory[i].restaurantId};`;
+                                                try {
+                                                    return database.query(query3).then(function(rows) {
+                                                        ordersHistory[i].restaurants = JSON.parse(JSON.stringify(rows[0]));
+                                                    });
+                                                } catch (error) {
+                                                    console.error(error);
+                                                }
+                                            }); 
                                         } catch (error) {
                                             console.error(error);
                                         }
@@ -160,7 +168,7 @@ export function insertCustomer(customer){
     INSERT INTO customers (firstName, lastName, email, phone, addresses, password)
     VALUES ('${customer.firstName}', '${customer.lastName}', '${customer.email}', '${customer.phone}', '${customer.address}', '${customer.password}' );`;
     try {
-        return database.query(query).then(function() {
+        return database.query(query).then(function(rows) {
             console.log("Record inserted");
         });   
     } catch (error) {

@@ -22,15 +22,16 @@
 | customer       | [CustomerProfile](#customerprofile) |
 
 ## CustomerProfile
-| Naziv atributa | Tip            |
-|----------------|----------------|
-| addresses      | List<String>   |
-| customerId     | Long           |
-| email          | String         |
-| favoriteMeals  | List<String>   |
-| firstName      | String         |
-| lastName       | String         |
-| phone          | String         |
+| Naziv atributa | Tip                             |
+|----------------|---------------------------------|
+| addresses      | List<String>                    |
+| customerId     | Long                            |
+| email          | String                          |
+| fav_meals      | List([Meal](#Meal))             |
+| fav_restaurants| List([Restaurant](#Restaurant)) |
+| firstName      | String                          |
+| lastName       | String                          |
+| phone          | String                          |
 
 # Operativni rad aplikacije
 
@@ -41,6 +42,7 @@
 | name           | String |
 | restaurantLogo | String |
 | description    | String |
+| work_time      | String |
 | mark           | Long   |
 | address        | String |
 
@@ -51,7 +53,7 @@
 | name           | String                            |
 | mealPicture    | String                            |
 | description    | String                            |
-| category       | [Category](#category)             |
+| category       | String                            |
 | price          | Long                              |
 | ingredients    | List([Ingredients](#ingredients)) |
 
@@ -74,15 +76,7 @@
 | ingridientsId  | Long   |
 | name           | String |
 | price          | Long   |
-
-## Category
-| Vrednosti    |
-|--------------|
-| Hamburger    |
-| Cheeseburger |
-| Sandwich     |
-| Burrito      |
-| Taco         |
+| mealId         | Long   |
 
 ## Status
 | Naziv atributa | Tip    | Vrednosti   |

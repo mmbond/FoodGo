@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-30 01:55:43
+Date: 2020-01-30 16:21:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,7 @@ CREATE TABLE `customers` (
   `phone` varchar(15) NOT NULL,
   `addresses` varchar(255) NOT NULL,
   `password` varchar(64) NOT NULL,
-  `fav_food` varchar(255) DEFAULT NULL,
+  `fav_meals` varchar(255) DEFAULT NULL,
   `fav_restaurants` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -35,9 +35,9 @@ CREATE TABLE `customers` (
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
-INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Bulevar Oslobodjenja 110, Danijelova 32, Bulevar Patrijarha Pavla 23', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'STEKOVI, KOLAČI, PICE', null);
-INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'BURGERI, SUŠI, MESA', 'Burger House, Sakura');
-INSERT INTO `customers` VALUES ('3', 'Jovan', 'Gucevski', 'jovan.gucevski@gmail.com', '064567890', 'Bulevar Oslobodjenja 128', 'b4622ba7bb55e3c7504f9cf9c4522cc7481ee0d59bf9697145b888ec2198cad5', 'BURGERI, TOPLA PREDJELA', null);
+INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Bulevar Oslobodjenja 110, Danijelova 32, Bulevar Patrijarha Pavla 23', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'Dečji Meni, Soprano, Nocciolatta', 'KFC - Studentski Trg, Majstor i Margarita');
+INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'Big burger, Salmone, Grander Meni', 'Burger House, KFC - Studentski Trg');
+INSERT INTO `customers` VALUES ('3', 'Jovan', 'Gucevski', 'jovan.gucevski@gmail.com', '064567890', 'Bulevar Oslobodjenja 128', 'b4622ba7bb55e3c7504f9cf9c4522cc7481ee0d59bf9697145b888ec2198cad5', 'Standard burger, Rainbow', 'Mayka');
 
 -- ----------------------------
 -- Table structure for ingredients
@@ -2057,7 +2057,6 @@ DROP TABLE IF EXISTS `restaurants`;
 CREATE TABLE `restaurants` (
   `restaurantId` int(4) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `category` char(255) DEFAULT NULL,
   `address` varchar(60) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `work_time` varchar(15) DEFAULT NULL,
@@ -2069,23 +2068,23 @@ CREATE TABLE `restaurants` (
 -- ----------------------------
 -- Records of restaurants
 -- ----------------------------
-INSERT INTO `restaurants` VALUES ('1', 'Burger House ', '', 'Nikole Spasića 3', 'Naš meni je kombinacija premijum burgera, domaćeg pomfrita, soseva i sendviča sa originalnim sastojcima. ', '8-11', '4.6', 'assets/restaurants/burger_house.jpg');
-INSERT INTO `restaurants` VALUES ('2', 'Majstor i Margarita', '', 'Balkanska 16', 'Mesto gde se prijatelji i porodica rado okupljaju oko majstorskih ukusa prave italijanske pice', '8-11', '4.6', 'assets/restaurants/majstor_i_margarita.jpg');
-INSERT INTO `restaurants` VALUES ('3', 'KFC - Studentski Trg', '', 'Vase Čarapića 24', 'Dobro, prste da poližeš!', '8-11', '4.6', 'assets/restaurants/kfc_-_studentski_trg.jpg');
-INSERT INTO `restaurants` VALUES ('4', 'Smokvica - Jovanova', '', 'Gospodar Jovanova 45a ', 'Naši restorani su poznati u Beogradu, kao i u celom regionu. Naša misija je poznata od samog početka: da služimo najbolju hranu i pića i ništa manje od toga.', '8-11', '4.6', 'assets/restaurants/smokvica_-_jovanova.jpg');
-INSERT INTO `restaurants` VALUES ('5', 'Pomodoro', '', 'Hilandarska 32', 'Pomodoro je malo toplo mesto u starom delu Beograda, gde smo se okupili 2005. godine kako bismo podelili ljubav, znanje i iskustvo, koje smo godinama sakupljali od velikih majstora i zaljubljenika u italijansku kuhinju i tradiciju.', '8-11', '4.5', 'assets/restaurants/pomodoro.jpg');
-INSERT INTO `restaurants` VALUES ('6', 'Sakura', '', 'Karađorđeva 2-4', 'Pravo savršenstvo kada je u pitanju japanska kuhinja, suši i azijski specijaliteti.', '8-11', '4.4', 'assets/restaurants/sakura.jpg');
-INSERT INTO `restaurants` VALUES ('7', 'Prote.in', '', 'Francuska 11', 'Ukoliko želiš da se hraniš zdravo, počni od nas. Sveža, prirodna hrana je ono što zaslužuješ i što ćemo ti mi obezbediti. ', '8-11', '4.5', 'assets/restaurants/protein.jpg');
-INSERT INTO `restaurants` VALUES ('8', 'Mandala', '', 'Kosančićev venac 9', 'Obroci koji će nahraniti vašu dušu.', '8-11', '4.7', 'assets/restaurants/mandala.jpg');
-INSERT INTO `restaurants` VALUES ('9', 'Ćevap kod Dekija', '', 'Strahinjića Bana 71', '', '8-11', '4.5', 'assets/restaurants/ćevap_kod_dekija.jpg');
-INSERT INTO `restaurants` VALUES ('10', 'Garden food', '', 'Kosovska 18', '', '8-11', '4.6', 'assets/restaurants/garden_food.jpg');
-INSERT INTO `restaurants` VALUES ('11', 'Restoran Istok', '', 'Gospodar Jevremova 50', 'Vijetnamska kuhinja u centru Beograda. Naša hrana je jedinstveno orijentalno iskustvo koje ti je nedostajalo. ', '8-11', '4.4', 'assets/restaurants/restoran_istok.jpg');
-INSERT INTO `restaurants` VALUES ('12', 'Cafe Lavash', '', 'Karađorđeva 2-4', 'Gastronomski atlas najsočnijih destinacija sa Balkana i Bliskog istoka je tu da probudi vaš apetit', '8-11', '4.4', 'assets/restaurants/cafe_lavash.jpg');
-INSERT INTO `restaurants` VALUES ('13', 'Submarine Burger', '', 'Kralja Petra 20A', 'Naši burgeri su napravljeni od prirodnih, organskih i domaćih sastojaka, pripremljenih na stari, provereni način.', '8-11', '4.5', 'assets/restaurants/submarine_burger.jpg');
-INSERT INTO `restaurants` VALUES ('14', 'Iva New Balkan Cuisine', '', 'Knjeginje Ljubice 11', 'Meni je baziran na New Balkan Cuisine filozofiji – kombinaciji naših kultura i tradicija, lokalnih namirnica, i modernih tehnologija i trendova.', '8-11', '4.8', 'assets/restaurants/iva_new_balkan_cuisine.jpg');
-INSERT INTO `restaurants` VALUES ('15', 'Holy Smokes', '', 'Cetinjska 15a', 'Ovaj jedinstveni, teksaški roštilj je mnogo više od roštilja. Brisket, svinjski vrat, drpano prase ili pileći bataci se pripremaju u specijalno izrađenoj peći na drva, smokeru, i to, do čak 12 sati! ', '8-11', '4.6', 'assets/restaurants/holy_smokes.jpg');
-INSERT INTO `restaurants` VALUES ('16', 'Street pasta bar Slavija', '', 'Kralja Milana 52', 'Vrhunske italijanske testenine čekaju da odabereš sos koji najviše prija tvom nepcu', '8-11', '4.5', 'assets/restaurants/street_pasta_bar_slavija.jpg');
-INSERT INTO `restaurants` VALUES ('17', 'Mayka', '', 'Nikole Spasića 5', 'Zdravlje dolazi iznutra! Mesto zdrave hrane u jednom od najlepših delova grada.', '8-11', '4.5', 'assets/restaurants/mayka.jpg');
-INSERT INTO `restaurants` VALUES ('18', 'Gyropolis', '', 'Makedonska 5', 'Kada more ne može da stigne do tebe, autentična grčka hrana može. Da li je to giros ili suvlaki, Gyropolis je tu za tebe.', '8-11', '4.4', 'assets/restaurants/gyropolis.jpg');
-INSERT INTO `restaurants` VALUES ('19', 'Zuwar', '', 'Đure Jakšića 3', 'Nudimo ono najbolje od bliskoistočne kuhinje. Dođi i uveri se!', '8-11', '4.5', 'assets/restaurants/zuwar.jpg');
-INSERT INTO `restaurants` VALUES ('20', 'Kafana SFRJ', '', 'Velike stepenice 1', 'Za sve Jugo-nostalgičare i one koje žele učiti o istoriji', '8-11', '4.6', 'assets/restaurants/kafana_sfrj.jpg');
+INSERT INTO `restaurants` VALUES ('1', 'Burger House ', 'Nikole Spasića 3', 'Naš meni je kombinacija premijum burgera, domaćeg pomfrita, soseva i sendviča sa originalnim sastojcima. ', '8-11', '4.6', 'assets/restaurants/burger_house.jpg');
+INSERT INTO `restaurants` VALUES ('2', 'Majstor i Margarita', 'Balkanska 16', 'Mesto gde se prijatelji i porodica rado okupljaju oko majstorskih ukusa prave italijanske pice', '8-11', '4.6', 'assets/restaurants/majstor_i_margarita.jpg');
+INSERT INTO `restaurants` VALUES ('3', 'KFC - Studentski Trg', 'Vase Čarapića 24', 'Dobro, prste da poližeš!', '8-11', '4.6', 'assets/restaurants/kfc_-_studentski_trg.jpg');
+INSERT INTO `restaurants` VALUES ('4', 'Smokvica - Jovanova', 'Gospodar Jovanova 45a ', 'Naši restorani su poznati u Beogradu, kao i u celom regionu. Naša misija je poznata od samog početka: da služimo najbolju hranu i pića i ništa manje od toga.', '8-11', '4.6', 'assets/restaurants/smokvica_-_jovanova.jpg');
+INSERT INTO `restaurants` VALUES ('5', 'Pomodoro', 'Hilandarska 32', 'Pomodoro je malo toplo mesto u starom delu Beograda, gde smo se okupili 2005. godine kako bismo podelili ljubav, znanje i iskustvo, koje smo godinama sakupljali od velikih majstora i zaljubljenika u italijansku kuhinju i tradiciju.', '8-11', '4.5', 'assets/restaurants/pomodoro.jpg');
+INSERT INTO `restaurants` VALUES ('6', 'Sakura', 'Karađorđeva 2-4', 'Pravo savršenstvo kada je u pitanju japanska kuhinja, suši i azijski specijaliteti.', '8-11', '4.4', 'assets/restaurants/sakura.jpg');
+INSERT INTO `restaurants` VALUES ('7', 'Prote.in', 'Francuska 11', 'Ukoliko želiš da se hraniš zdravo, počni od nas. Sveža, prirodna hrana je ono što zaslužuješ i što ćemo ti mi obezbediti. ', '8-11', '4.5', 'assets/restaurants/protein.jpg');
+INSERT INTO `restaurants` VALUES ('8', 'Mandala', 'Kosančićev venac 9', 'Obroci koji će nahraniti vašu dušu.', '8-11', '4.7', 'assets/restaurants/mandala.jpg');
+INSERT INTO `restaurants` VALUES ('9', 'Ćevap kod Dekija', 'Strahinjića Bana 71', '', '8-11', '4.5', 'assets/restaurants/ćevap_kod_dekija.jpg');
+INSERT INTO `restaurants` VALUES ('10', 'Garden food', 'Kosovska 18', '', '8-11', '4.6', 'assets/restaurants/garden_food.jpg');
+INSERT INTO `restaurants` VALUES ('11', 'Restoran Istok', 'Gospodar Jevremova 50', 'Vijetnamska kuhinja u centru Beograda. Naša hrana je jedinstveno orijentalno iskustvo koje ti je nedostajalo. ', '8-11', '4.4', 'assets/restaurants/restoran_istok.jpg');
+INSERT INTO `restaurants` VALUES ('12', 'Cafe Lavash', 'Karađorđeva 2-4', 'Gastronomski atlas najsočnijih destinacija sa Balkana i Bliskog istoka je tu da probudi vaš apetit', '8-11', '4.4', 'assets/restaurants/cafe_lavash.jpg');
+INSERT INTO `restaurants` VALUES ('13', 'Submarine Burger', 'Kralja Petra 20A', 'Naši burgeri su napravljeni od prirodnih, organskih i domaćih sastojaka, pripremljenih na stari, provereni način.', '8-11', '4.5', 'assets/restaurants/submarine_burger.jpg');
+INSERT INTO `restaurants` VALUES ('14', 'Iva New Balkan Cuisine', 'Knjeginje Ljubice 11', 'Meni je baziran na New Balkan Cuisine filozofiji – kombinaciji naših kultura i tradicija, lokalnih namirnica, i modernih tehnologija i trendova.', '8-11', '4.8', 'assets/restaurants/iva_new_balkan_cuisine.jpg');
+INSERT INTO `restaurants` VALUES ('15', 'Holy Smokes', 'Cetinjska 15a', 'Ovaj jedinstveni, teksaški roštilj je mnogo više od roštilja. Brisket, svinjski vrat, drpano prase ili pileći bataci se pripremaju u specijalno izrađenoj peći na drva, smokeru, i to, do čak 12 sati! ', '8-11', '4.6', 'assets/restaurants/holy_smokes.jpg');
+INSERT INTO `restaurants` VALUES ('16', 'Street pasta bar Slavija', 'Kralja Milana 52', 'Vrhunske italijanske testenine čekaju da odabereš sos koji najviše prija tvom nepcu', '8-11', '4.5', 'assets/restaurants/street_pasta_bar_slavija.jpg');
+INSERT INTO `restaurants` VALUES ('17', 'Mayka', 'Nikole Spasića 5', 'Zdravlje dolazi iznutra! Mesto zdrave hrane u jednom od najlepših delova grada.', '8-11', '4.5', 'assets/restaurants/mayka.jpg');
+INSERT INTO `restaurants` VALUES ('18', 'Gyropolis', 'Makedonska 5', 'Kada more ne može da stigne do tebe, autentična grčka hrana može. Da li je to giros ili suvlaki, Gyropolis je tu za tebe.', '8-11', '4.4', 'assets/restaurants/gyropolis.jpg');
+INSERT INTO `restaurants` VALUES ('19', 'Zuwar', 'Đure Jakšića 3', 'Nudimo ono najbolje od bliskoistočne kuhinje. Dođi i uveri se!', '8-11', '4.5', 'assets/restaurants/zuwar.jpg');
+INSERT INTO `restaurants` VALUES ('20', 'Kafana SFRJ', 'Velike stepenice 1', 'Za sve Jugo-nostalgičare i one koje žele učiti o istoriji', '8-11', '4.6', 'assets/restaurants/kafana_sfrj.jpg');
