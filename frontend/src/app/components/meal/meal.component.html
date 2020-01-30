@@ -1,4 +1,4 @@
-<main role="main">
+<main *ngIf='restaurant!=undefined' role="main">
   <section class="jumbotron text-center meal-bg" [ngStyle]="{'background-image': getRestaurantImage()}">
     <div class="container">
       <h1 class="jumbotron-heading text-white title">{{restaurant.name}}</h1>
@@ -16,8 +16,8 @@
               ngbTooltip="Dodajte/Sklonite omiljene restorane" tooltipClass="foodgo-tooltip"
               class="btn btn-sm btn-outline-secondary" [disabled]='!loggedIn()'><i [class.fav]='favorite' class="fa fa-heart fa-2x"></i></button>
           </div>
-          <div class="col-md-3">
-            <app-rating [currentRate]=restaurant.mark></app-rating>
+          <div class="col-md-3" *ngIf="restaurant!=undefined">
+            <app-rating [read]=true [currentRate]=restaurant.mark></app-rating>
           </div>
         </div>
       </div>
@@ -29,9 +29,12 @@
       <div class="row">
         <div class="col-md-3">
           <ul class="nav flex-column card sticky-top p-3">
-            <h5>Kategorije<hr></h5>
+            <h5>Kategorije
+              <hr>
+            </h5>
             <li class="nav-item" *ngFor="let category of getCategories()">
-              <a class="first after nav-link" [ngClass]="{'active':isActive(category)}" (click)="scrollToCategory(category)">{{category}}</a>
+              <a class="first after nav-link" [ngClass]="{'active':isActive(category)}"
+                (click)="scrollToCategory(category)">{{category}}</a>
             </li>
           </ul>
         </div>
@@ -47,11 +50,15 @@
                     <h5 class="card-text">{{meal.name}}</h5>
                     <p class="text-muted">Cena: {{meal.price}} RSD</p>
                   </div>
+                  <button (click)="isFavoriteFood(meal.name)"
+                  ngbTooltip="Dodajte/Sklonite omiljenu hranu" tooltipClass="foodgo-tooltip"
+                  class="btn btn-sm"><i [class.fav]='favorite' class="fa fa-heart"></i></button>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <p class="card-text">{{meal.description}}</p>
                   <div class="btn-group">
-                    <button class="btn btn-warning" (click)="addToOrder(meal.name)" [disabled]='!loggedIn()'>Dodajte</button>
+                    <button data-toggle="modal" (click)="chooseMealToOrder(i)" data-target="#mealModal" [disabled]='!loggedIn()'
+                      class="btn btn-warning">Dodajte</button>
                   </div>
                 </div>
               </div>
@@ -63,9 +70,7 @@
           <h6>Adresa</h6>
           <div class="text-muted mb-3">{{restaurant.address}}</div>
           <div id="map-container-google-1" class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item"
-            [src]="getMapUrl()" frameborder="1"
-              style="border:0"></iframe>
+            <iframe class="embed-responsive-item" [src]="getMapUrl()" frameborder="1" style="border:0"></iframe>
           </div>
           <app-order [(mealOrder)]=orderMeals [restaurantOrder]=restaurant class="p-3"></app-order>
         </div>
@@ -74,3 +79,44 @@
   </div>
 
 </main>
+<div class="modal fade" id="mealModal" tabindex="-1" role="dialog" aria-labelledby="mealModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mealModalLabel">Dodajte u korpu</h5>
+        <button type="button" class="close" #closeMealModal data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf='chosedMeal!=undefined'>
+        <div class="modal-title" class="d-flex justify-content-between">
+          <h5>{{chosedMeal.name}}</h5>
+          <p>{{chosedMeal.price}} RSD</p>
+        </div>
+        <p>{{chosedMeal.description}}</p>
+      </div>
+        <form>
+          <div *ngIf='ingredients!=undefined && ingredients.length>0'>
+            <h5>Odaberite priloge</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let ingredient of ingredients; let i = index">
+                <label><input type="checkbox" value="{{ingredient.price}}">{{ingredient.name}}, {{ingredient.price}} RSD</label>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf='ingredients!=undefined && ingredients.length==0' class="m-3">
+            Nema dodataka za ovo jelo
+          </div>
+          <!-- <textarea formControlName="note" -->
+            <textarea class="form-control" rows="5" placeholder="Unesite posebne zahteve-beleške"></textarea>
+        </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvorite</button>
+          <button class="btn btn-warning" (click)="addToOrder(mealName)">Dodajte</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

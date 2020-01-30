@@ -19,6 +19,7 @@
 | modFavFood   | POST   | favFood           | CustomerProfile    |
 | modFavRest   | POST   | favRestaurants    | CustomerProfile    |
 
+
 ## Restaurant
 > rute počinju sa `api/restaurant/`
 
@@ -45,13 +46,10 @@
 | send | POST   | Order               | Boolean    |
 | edit | POST   | Order               | Order      |
 
-<!-- | id   | GET    | RestaurantId (long) | Restaurant | -->
-
 
 ## History
 > rute počinju sa `api/history/`
 
-| Ruta | Metoda | In                  | Out           |
-|------|--------|---------------------|---------------|
-| all  | GET    | CustomerId          | List< Order > |
-<!-- | id   | GET    | RestaurantId (long) | Restaurant    | -->
+| Ruta              | Metoda | In         | Out                |
+|-------------------|--------|------------|--------------------|
+| all               | GET    | CustomerId | List< Order >      |

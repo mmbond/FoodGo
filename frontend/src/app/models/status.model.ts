@@ -1,5 +1,5 @@
 export enum Status {
-    FINISHED,
-    IN_PROGRESS,
-    CANCELED
+    FINISHED =  "finished",
+    IN_PROGRESS = "in progress",
+    CANCELED =  "canceled"
 }

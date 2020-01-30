@@ -1,5 +1,4 @@
 <div class="card sticky-top" style="width: 18rem;">
-    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
     <div class="card-body">
         <h5 class="card-title text-center">Vaša korpa</h5>
         <div *ngIf="!hasOrders()" class="card-text mx-auto text-center">
@@ -37,11 +36,31 @@
             <div class="d-flex justify-content-between m-3" *ngIf="hasOrders()" style="height: 30px">
                 <h4 >RAČUN</h4><h4>{{orderPrice}} RSD</h4>
             </div>
-            <button (click)="sendOrder()" type="button" class="btn btn-warning"
+            <button data-toggle="modal" data-target="#orderModal" type="button" class="btn btn-warning"
                 [disabled]='!hasOrders()'>Naručite</button>
         </div>
         <div class="card-body text-center" *ngIf="hasOrders()">
             <button (click)="clearOrder()" type="button" class="text-muted btn btn-light">Izbrišite sve</button>
         </div>
     </div>
+</div>
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Potvrda</h5>
+        <button type="button" class="close" #closeOrderModal data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>Da li ste sigurni u svoju porudžbinu?</h3>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ne</button>
+          <button class="btn btn-warning" (click)="sendOrder()">Da</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

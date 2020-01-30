@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'customer/profile', component: CustomerComponent, data : {tab : 'profile'}},
   { path: 'customer/address', component: CustomerComponent, data : {tab : 'address'}},
   { path: 'customer/favourite', component: CustomerComponent, data : {tab : 'favourite'}},
+  { path: 'customer/food', component: CustomerComponent, data : {tab : 'food'}},
   { path: 'customer/comment', component: CustomerComponent, data : {tab : 'comment'}},
   { path: 'customer/orders', component: CustomerComponent, data : {tab : 'orders'}},
   { path: 'restaurant/:restaurantId', component: MealComponent },
