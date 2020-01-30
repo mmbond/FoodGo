@@ -8,7 +8,6 @@ export var customerData = {"customer": {}};
 export var currentOrder = {};
 export var addedOrder = false;
 
-
 class Database {
     constructor( config ) {
         this.connection = mysql.createPool(config);
@@ -118,45 +117,48 @@ export function getAllOrdersHistory(customerId){
     ON orders.restaurantId = restaurants.restaurantId
     WHERE customerId = ${customerId};`;
     try {
-        queryDb(query);
-        ordersHistory = queryResult;
-        for(var i = 0; i < ordersHistory.length; i++){
-            ordersHistory[i].meals_ids = splitSeparatedDataInArray(ordersHistory[i].meals_ids, ", ");
-            ordersHistory[i].meal_count = splitSeparatedDataInArray(ordersHistory[i].meal_count, ", ");
-            ordersHistory[i].meals = [];
+        return database.query(query).then(function(rows) {
+            ordersHistory = rows;
+            for(var i = 0; i < ordersHistory.length; i++){
+                ordersHistory[i].meals_ids = splitSeparatedDataInArray(ordersHistory[i].meals_ids, ", ");
+                ordersHistory[i].meal_count = splitSeparatedDataInArray(ordersHistory[i].meal_count, ", ");
+                ordersHistory[i].meals = [];
 
-            // for every distinct meal
-            for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
-                let meal_id = parseInt(ordersHistory[i].meals_ids[j]);
-                query = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
-                try {
-                    queryDb(query);
-                    let meal = queryResult[0];
+                // for every distinct meal
+                for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
+                    let meal_id = parseInt(ordersHistory[i].meals_ids[j]);
+                    query = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
+                    try {
+                        return database.query(query).then(function(rows1) {
+                            let meal = rows1[0];
 
-                    // Push same meal by count in order
-                    for(var k = 1; k <= ordersHistory[i].meal_count[j]; k++){
-                        meal.ingredients = [];
-                        let mealIdKey = toString(meal.mealId);
+                            // Push same meal by count in order
+                            for(var k = 1; k <= ordersHistory[i].meal_count[j]; k++){
+                                meal.ingredients = [];
+                                let mealIdKey = toString(meal.mealId);
 
-                        // Find all ingredients for specific meal and push in meal object
-                        for(var x = 0; x < ordersHistory[i].meals_ingredients_ids[mealIdKey][k].length; x++){
-                            let ingredient_id = parseInt(ordersHistory[i].meals_ingredients_ids[mealIdKey][k][x]);
-                            query = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
-                            try {
-                                queryDb(query);
-                                let ingredient = queryResult[0];
-                                meal.ingredients.push(ingredient);
-                            } catch (error) {
-                                console.error(error);
+                                // Find all ingredients for specific meal and push in meal object
+                                for(var x = 0; x < ordersHistory[i].meals_ingredients_ids[mealIdKey][k].length; x++){
+                                    let ingredient_id = parseInt(ordersHistory[i].meals_ingredients_ids[mealIdKey][k][x]);
+                                    query = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
+                                    try {
+                                        return database.query(query).then(function(rows2) {
+                                            let ingredient = rows2[0];
+                                            meal.ingredients.push(ingredient);
+                                        });
+                                    } catch (error) {
+                                        console.error(error);
+                                    }
+                                }
+                                ordersHistory[i].meals.push(meal);
                             }
-                        }
-                        ordersHistory[i].meals.push(meal);
+                        });  
+                    } catch (error) {
+                        console.error(error);
                     }
-                } catch (error) {
-                    console.error(error);
                 }
             }
-        };
+        });
     } catch (error) {
         console.error(error);
     }
@@ -168,8 +170,8 @@ export function insertCustomer(customer){
     INSERT INTO customers (firstName, lastName, email, phone, addresses, password)
     VALUES ('${customer.firstName}', '${customer.lastName}', '${customer.email}', '${customer.phone}', '${customer.address}', '${customer.password}' );`;
     try {
-        return database.query(query).then(function(rows) {
-            console.log(rows.length + " record(s) inserted");
+        return database.query(query).then(function() {
+            console.log("Record inserted");
         });   
     } catch (error) {
         console.error(error);
@@ -222,8 +224,8 @@ export function updateCustomer(customerEdited){
     SET firstName = '${customerEdited.firstName}', lastName = '${customerEdited.lastName}', email = '${customerEdited.email}', phone = '${customerEdited.phone}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
-        return database.query(query).then(function(rows) {
-            console.log(rows.length + " record(s) updated");
+        return database.query(query).then(function() {
+            console.log("Record updated");
         });   
     } catch (error) {
         console.error(error);
@@ -237,8 +239,8 @@ export function createOrder(startOrderData){
     VALUES (${startOrderData.customerId}, ${startOrderData.restaurantId}, '${startOrderData.address}', ${startOrderData.price}, '${startOrderData.timestamp}',
     '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.comment}', '${startOrderData.meal_count}', '${startOrderData.note}');`;
     try {
-        return database.query(query).then(function(rows) {
-            console.log(rows.length + " record(s) inserted");
+        return database.query(query).then(function() {
+            console.log("Record inserted");
             Object.keys(startOrderData).forEach(function(key){
                 currentOrder[key] = startOrderData[key];
             });
@@ -259,9 +261,16 @@ export function modifyOrderData(orderData){
     Object.keys(orderData).forEach(function(key){
         if(currentOrder[key] != orderData[key]){ // update if they are not same (both in cache and in db)
             currentOrder[key] = orderData[key];
-            query += `${key} = '${orderData[key]}'`;
-            if(key == 'mark'){
-                let query1 = `
+            query += `${key} = '${orderData[key]}', `;
+        }
+    });
+    query = query.substring(0, query.length-1);
+    query += `WHERE customerId = '${currentOrder.customerId}' AND restaurantId = '${currentOrder.restaurantId}';`;
+    try {
+        return database.query(query).then(function() {
+            console.log("Record updated");
+            if(currentOrder["mark"] != orderData["mark"]){
+                var query1 = `
                 UPDATE restaurants 
                 SET mark = (
                     SELECT AVG(mark) 
@@ -269,19 +278,14 @@ export function modifyOrderData(orderData){
                     WHERE restaurantId = ${currentOrder.restaurantId};
                     ) 
                 WHERE restaurantId = ${currentOrder.restaurantId};`;
-                queryDb(query1);
-                console.log(result.affectedRows + " record(s) updated");
+                return database.query(query1).then(function() {
+                    console.log("Record updated");
+                });
             }
-        }
-    });
-    query += `WHERE customerId = '${currentOrder.customerId}' AND restaurantId = '${currentOrder.restaurantId}';`;
-    try {
-        queryDb(query);
-        console.log(result.affectedRows + " record(s) updated");
+        });
     } catch (error) {
         console.error(error);
     }
-
 }
 
 // Add or remove address.
@@ -292,8 +296,8 @@ export function modifyAddresses(modAddresses){
     SET addresses = '${modAddresses}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
-        return database.query(query).then(function(rows) {
-            console.log(rows.length + " record(s) updated");
+        return database.query(query).then(function() {
+            console.log("Record updated");
         });   
     } catch (error) {
         console.error(error);
@@ -308,8 +312,8 @@ export function modifyFavouriteFood(modFavFood){
     SET fav_food = '${modFavFood}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
-        return database.query(query).then(function(rows) {
-            console.log(rows.length + " record(s) updated");
+        return database.query(query).then(function() {
+            console.log("Record updated");
         });   
     } catch (error) {
         console.error(error);
@@ -324,8 +328,8 @@ export function modifyFavouriteRestaurants(modFavRestaurants){
     SET fav_restaurants = '${modFavRestaurants}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
-        return database.query(query).then(function(rows) {
-            console.log(rows.length + " record(s) updated");
+        return database.query(query).then(function() {
+            console.log("Record updated");
         });   
     } catch (error) {
         console.error(error);
