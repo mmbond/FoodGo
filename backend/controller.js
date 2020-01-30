@@ -130,7 +130,7 @@ app.post('/api/profile/edit', function (req, res) {
 // Customer modify addresses POST METHOD
 app.post('/api/profile/modAddresses', function (req, res) {
   if (req.body) {
-    imodel.modifyAddresses(req.body).then(function() {
+    model.modifyAddresses(req.body).then(function() {
       res.json(model.customerData);
     });
   }

@@ -69,8 +69,11 @@ export class MealComponent implements OnInit {
   }
 
   private isFavoriteRest(restaurantName: string) {
-    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
-    return customer.fav_restaurants.includes(restaurantName);
+    if(this.loggedIn()){
+      let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+      return customer.fav_restaurants.includes(restaurantName);
+    }
+    
   }
 
   private sendFavoriteRest(restaurantName: string) {
@@ -87,8 +90,10 @@ export class MealComponent implements OnInit {
   }
 
   private isFavoriteMeal(mealName: string) {
-    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
-    return customer.fav_meals.includes(mealName);
+    if(this.loggedIn()){
+      let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+      return customer.fav_meals.includes(mealName);
+    }
   }
 
   private sendFavoriteMeal(meal: Meal) {

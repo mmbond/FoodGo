@@ -45,7 +45,7 @@ export function isEmpty(obj) {
     return Object.entries(obj).length === 0
 }
 
-// Get all restaurants.
+// Get all restaurants. - RADI
 export function getAllRestaurants(){
     var query = "SELECT * FROM restaurants;";
     try {
@@ -57,7 +57,7 @@ export function getAllRestaurants(){
     }
 }
 
-// Get restaurant by id.
+// Get restaurant by id. - RADI
 export function getRestaurantById(restaurantId){
     var query = `SELECT * FROM restaurants WHERE restaurantId = ${restaurantId};`;
     try {
@@ -69,7 +69,7 @@ export function getRestaurantById(restaurantId){
     }
 }
 
-// Get all meals by restaurant Id.
+// Get all meals by restaurant Id. - RADI
 export function getAllMeals(restaurantId){
     var query = `
     SELECT meals.mealId as "mealId", meals.name as "name", meals.category as "category", meals.mealPicture as "mealPicture", meals.description as "description", meals_restaurants.price as "price"
@@ -158,7 +158,7 @@ export function getAllOrdersHistory(customerId){
     }
 }
 
-// Insert customer after registration.
+// Insert customer after registration. - RADI
 export function insertCustomer(customer){
     var query = `
     INSERT INTO customers (firstName, lastName, email, phone, addresses, password)
@@ -172,7 +172,7 @@ export function insertCustomer(customer){
     }
 }
 
-// Get customer if exists.
+// Get customer if exists. - RADI
 export function getCustomerIfExists(customer, flag = null){
     var query = `
     SELECT * FROM customers
@@ -229,11 +229,7 @@ export function getCustomerIfExists(customer, flag = null){
                             console.error(error);
                         }
                     }
-                }
-                
-                
-                
-                
+                }         
             } 
         });       
     } catch (error) {
@@ -242,7 +238,7 @@ export function getCustomerIfExists(customer, flag = null){
 }
 
 
-// Update customer data.
+// Update customer data. - RADI
 export function updateCustomer(customerEdited){
     customerData.customer.firstName = customerEdited.firstName;
     customerData.customer.lastName = customerEdited.lastName;
@@ -319,7 +315,7 @@ export function modifyOrderData(orderData){
     }
 }
 
-// Add or remove address.
+// Add or remove address. - RADI
 export function modifyAddresses(modAddresses){
     modAddresses = modAddresses.join(', ');
     customerData.customer.addresses = modAddresses;
@@ -336,7 +332,7 @@ export function modifyAddresses(modAddresses){
     }
 }
 
-// Add or remove favourite food.
+// Add or remove favourite food. - RADI
 export function modifyFavouriteFood(modFavMeals){
     modFavMeals = modFavMeals.join(', ');
     customerData.customer.fav_meals = modFavMeals;
@@ -353,7 +349,7 @@ export function modifyFavouriteFood(modFavMeals){
     }
 }
 
-// Add or remove favourite restaurants.
+// Add or remove favourite restaurants. - RADI
 export function modifyFavouriteRestaurants(modFavRestaurants){
     modFavRestaurants = modFavRestaurants.join(', ');
     customerData.customer.fav_restaurants = modFavRestaurants;
