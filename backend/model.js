@@ -49,19 +49,6 @@ export function isEmpty(obj) {
     return true;
 }
 
-// Split separated values by delimiter into array.
-export function splitSeparatedDataInArray(stringWithDelimiter, delimiter){
-    let resultArr = [];
-    if(stringWithDelimiter == undefined || stringWithDelimiter === ""){
-        return resultArr;
-    } else if(stringWithDelimiter.indexOf(delimiter) != -1){
-        resultArr = stringWithDelimiter.split(delimiter);
-    } else {
-        resultArr.push(stringWithDelimiter);
-    }
-    return resultArr;
-}
-
 // Get all restaurants.
 export function getAllRestaurants(){
     var query = "SELECT * FROM restaurants;";
@@ -95,12 +82,12 @@ export function getAllMeals(restaurantId){
     WHERE meals_restaurants.restaurantId = ${restaurantId};`;
     try {
         return database.query(query).then(function(rows) {
-            meals = rows;  
+            meals = JSON.parse(JSON.stringify(rows));  
             for(var i = 0; i < meals.length; i++){
                 meals[i].ingredients = [];
                 var query1 = `SELECT * FROM ingredients WHERE mealId = ${meals[i].mealId};`;
-                return database.query(query1).then(function(rows1) {
-                    if(rows1.length > 0) meals[i].ingredients = rows1;
+                return database.query(query1).then(function(rows) {
+                    if(rows.length > 0) meals[i].ingredients = JSON.parse(JSON.stringify(rows));
                 });
             }
         }); 
@@ -111,43 +98,46 @@ export function getAllMeals(restaurantId){
 
 // Get orders history for one customer.
 export function getAllOrdersHistory(customerId){
-    let query = `
+    var query = `
     SELECT * FROM orders
-    INNER JOIN restaurants 
-    ON orders.restaurantId = restaurants.restaurantId
     WHERE customerId = ${customerId};`;
     try {
         return database.query(query).then(function(rows) {
-            ordersHistory = rows;
+            ordersHistory = JSON.parse(JSON.stringify(rows));
             for(var i = 0; i < ordersHistory.length; i++){
-                ordersHistory[i].meals_ids = splitSeparatedDataInArray(ordersHistory[i].meals_ids, ", ");
-                ordersHistory[i].meal_count = splitSeparatedDataInArray(ordersHistory[i].meal_count, ", ");
+                ordersHistory[i].meals_ids = ordersHistory[i].meals_ids.split(", ");
+                ordersHistory[i].meal_count = ordersHistory[i].meal_count.split(", ");
+                ordersHistory[i].meal_ingredients_ids = JSON.parse(ordersHistory[i].meal_ingredients_ids);
+                ordersHistory[i].timestamp = ordersHistory[i].timestamp.replace("T", " ");
+                ordersHistory[i].timestamp = ordersHistory[i].timestamp.replace(".000Z", "");
                 ordersHistory[i].meals = [];
 
                 // for every distinct meal
                 for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
                     let meal_id = parseInt(ordersHistory[i].meals_ids[j]);
-                    query = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
+                    var query1 = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
                     try {
-                        return database.query(query).then(function(rows1) {
-                            let meal = rows1[0];
-
+                        return database.query(query1).then(function(rows) {
+                            let meal = JSON.parse(JSON.stringify(rows[0]));
                             // Push same meal by count in order
-                            for(var k = 1; k <= ordersHistory[i].meal_count[j]; k++){
+                            console.log(ordersHistory[i]);
+                            for(var k = 0; k < parseInt(ordersHistory[i].meal_count[j]); k++){
                                 meal.ingredients = [];
                                 let mealIdKey = toString(meal.mealId);
-
+                                
                                 // Find all ingredients for specific meal and push in meal object
-                                for(var x = 0; x < ordersHistory[i].meals_ingredients_ids[mealIdKey][k].length; x++){
-                                    let ingredient_id = parseInt(ordersHistory[i].meals_ingredients_ids[mealIdKey][k][x]);
-                                    query = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
-                                    try {
-                                        return database.query(query).then(function(rows2) {
-                                            let ingredient = rows2[0];
-                                            meal.ingredients.push(ingredient);
-                                        });
-                                    } catch (error) {
-                                        console.error(error);
+                                if(ordersHistory[i].meal_ingredients_ids.hasOwnProperty(mealIdKey) && ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length > 0){
+                                    for(var x = 0; x < ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length; x++){
+                                        let ingredient_id = parseInt(ordersHistory[i].meal_ingredients_ids[mealIdKey][k][x]);
+                                        var query2 = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
+                                        try {
+                                            return database.query(query2).then(function(rows) {
+                                                let ingredient = JSON.parse(JSON.stringify(rows[0]));
+                                                meal.ingredients.push(ingredient);
+                                            });
+                                        } catch (error) {
+                                            console.error(error);
+                                        }
                                     }
                                 }
                                 ordersHistory[i].meals.push(meal);
@@ -187,9 +177,9 @@ export function getCustomerIfExists(customer){
         return database.query(query).then(function(rows) {
             if(rows[0]){
                 customerData.customer = rows[0];
-                customerData.customer.addresses = splitSeparatedDataInArray(customerData.customer.addresses, ", ");
-                customerData.customer.fav_food = splitSeparatedDataInArray(customerData.customer.fav_food, ", ");
-                customerData.customer.fav_restaurants = splitSeparatedDataInArray(customerData.customer.fav_restaurants, ", ");
+                customerData.customer.addresses = customerData.customer.addresses.split(", ");
+                customerData.customer.fav_food = customerData.customer.fav_food.split(", ");
+                customerData.customer.fav_restaurants = customerData.customer.fav_restaurants.split(", ");
                 if(customerData.customer.fav_restaurants.length > 0){
                     customerData.customer.fav_restaurants_result = [];
                     var query1 = `SELECT * FROM restaurants WHERE name in ('`+customerData.customer.fav_restaurants[0] + `'`;
@@ -290,13 +280,14 @@ export function modifyOrderData(orderData){
 
 // Add or remove address.
 export function modifyAddresses(modAddresses){
+    modAddresses = modAddresses.join(', ');
     customerData.customer.addresses = modAddresses;
     var query = `
     UPDATE customers 
     SET addresses = '${modAddresses}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
-        return database.query(query).then(function() {
+        return database.query(query).then(function(rows) {
             console.log("Record updated");
         });   
     } catch (error) {
@@ -306,13 +297,14 @@ export function modifyAddresses(modAddresses){
 
 // Add or remove favourite food.
 export function modifyFavouriteFood(modFavFood){
+    modFavFood = modFavFood.join(', ');
     customerData.customer.fav_food = modFavFood;
     var query = `
     UPDATE customers 
     SET fav_food = '${modFavFood}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
-        return database.query(query).then(function() {
+        return database.query(query).then(function(rows) {
             console.log("Record updated");
         });   
     } catch (error) {
@@ -322,13 +314,14 @@ export function modifyFavouriteFood(modFavFood){
 
 // Add or remove favourite restaurants.
 export function modifyFavouriteRestaurants(modFavRestaurants){
+    modFavRestaurants = modFavRestaurants.join(', ');
     customerData.customer.fav_restaurants = modFavRestaurants;
     var query = `
     UPDATE customers 
     SET fav_restaurants = '${modFavRestaurants}'
     WHERE email = '${customerData.customer.email}' AND password = '${customerData.customer.password}';`;
     try {
-        return database.query(query).then(function() {
+        return database.query(query).then(function(rows) {
             console.log("Record updated");
         });   
     } catch (error) {
