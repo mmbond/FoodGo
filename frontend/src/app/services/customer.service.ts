@@ -33,7 +33,12 @@ export class CustomerService {
   // update Customer address
   updateCustomerAddresses(_customerAddresses : Array<String>) {
     const requestUrl = `${this._apiUrl}/profile/modAddresses`;
-    this.http.post(requestUrl, _customerAddresses, this._httpHeader);
+    this.http.post(requestUrl, _customerAddresses, this._httpHeader).subscribe(response => {
+      if (response!=null)
+      console.log(response);
+      else
+      console.log('failed');
+    });
   }
 
    // send Customer favourite Restaurants
@@ -51,6 +56,11 @@ export class CustomerService {
   // send Customer favourite Meals
   updateFavMeals(_favMeals: Array<String>) {
     const requestUrl = `${this._apiUrl}/profile/modFavFood`;
-    return this.http.post(requestUrl, _favMeals, this._httpHeader);
+    return this.http.post(requestUrl, _favMeals, this._httpHeader).subscribe(response => {
+      if (response!=null)
+      console.log(response);
+      else
+      console.log('failed');
+    });
   }
 }

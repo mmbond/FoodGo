@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Meal } from 'src/app/models/meal.model';
 import { HistoryService } from 'src/app/services/history.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
+import { CustomerProfile } from 'src/app/models/customer-profile.model';
 
 @Component({
   selector: 'app-food',
@@ -22,9 +23,10 @@ export class FoodComponent implements OnInit {
   }
 
   private _fetchFavouriteMeals(limit: number = 1) {
-   // this._historyService.getFavMeals(limit).toPromise()
-   // .then(response => {  this.favMeals = response; this.total = Array(Math.ceil(response.length / this.limit)); this.current = 1;})
-   //   .catch(error => this.error = ErrorHelper.generateErrorObj(error));
+    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    this.favMeals = customer.fav_meals_result;
+    this.total = Array(Math.ceil(this.favMeals.length / this.limit));
+    this.current = 1;
   }
 
   public showFavourite() : boolean {

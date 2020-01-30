@@ -85,10 +85,24 @@ export class MealComponent implements OnInit {
     this._customerService.updateFavRestaurants(customer.fav_restaurants);
   }
 
-  private isFavoriteFood(mealName: string) {
-    // TODO Implement this
-    console.log(mealName);
-    this.favorite = !this.favorite;
+  private isFavoriteMeal(mealName: string) {
+    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    return customer.fav_meals.includes(mealName);
+  }
+
+  private sendFavoriteMeal(meal: Meal) {
+    console.log(meal);
+    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    if (this.isFavoriteMeal(meal.name)) {
+      console.log('skloni');
+      customer.fav_meals_result.splice(customer.fav_meals_result.findIndex((m)=>m.name==meal.name),1);
+      customer.fav_meals.splice(customer.fav_meals.findIndex((m)=>m==meal.name),1);
+    } else {
+      customer.fav_meals_result.push(meal);
+      customer.fav_meals.push(meal.name);
+    } 
+    localStorage.setItem("customer",JSON.stringify(customer));
+    this._customerService.updateFavMeals(customer.fav_meals);
   }
 
   private scrollToCategory(category: string) {
