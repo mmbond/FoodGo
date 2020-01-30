@@ -177,10 +177,14 @@ export function insertCustomer(customer){
 }
 
 // Get customer if exists.
-export function getCustomerIfExists(customer){
+export function getCustomerIfExists(customer, flag = null){
     var query = `
     SELECT * FROM customers
-    WHERE email = '${customer.email}' AND password = '${customer.password}';`;
+    WHERE email = '${customer.email}'`;
+    if(flag == "login"){
+        query +=  ` AND password = '${customer.password}'`;
+    }
+    query += `;`;
     try {
         return database.query(query).then(function(rows) {
             if(rows[0]){
