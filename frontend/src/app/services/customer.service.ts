@@ -37,7 +37,7 @@ export class CustomerService {
     console.log(_customerAddresses);
   }
 
-   // get Customer favourite Restaurants
+   // send Customer favourite Restaurants
   updateFavRestaurants(_favRestaurants: Array<String>) {
     const requestUrl = `${this._apiUrl}/profile/modFavRest`;
     return this.http.post(requestUrl, _favRestaurants)
@@ -49,7 +49,7 @@ export class CustomerService {
         });
   }
 
-  // get Customer favourite Meals
+  // send Customer favourite Meals
   updateFavMeals(_favMeals: Array<String>) {
     const requestUrl = `${this._apiUrl}/profile/modFavFood`;
     return this.http.post(requestUrl, _favMeals)

@@ -32,12 +32,14 @@ export class AddressComponent implements OnInit {
   private _fetchCustomerAddresses() {
     let customer = localStorage.getItem("customer");
     this.addresses = JSON.parse(customer).addresses;
+    this.total = Array(Math.ceil(this.addresses.length / this.limit)); this.current = 1;
   }
 
   private updateAddresses(index: number) {
     this.addresses.splice(index, 1);
-    // var updateAddresses = new ProfileAddressList();
-    // updateAddresses.addresses = this.addresses;
+    let customer = JSON.parse(localStorage.getItem("customer"));
+    customer.addresses = this.addresses;
+    localStorage.setItem('customer', JSON.stringify(customer));
     this._customerService.updateCustomerAddresses(this.addresses);
     this.total = Array(Math.ceil(this.addresses.length / this.limit));
     if (index>this.total.length){
@@ -60,8 +62,9 @@ export class AddressComponent implements OnInit {
     }
     this.addresses.push(this.f.address.value);
     this.total = Array(Math.ceil(this.addresses.length / this.limit));
-    // var updateAddresses = new ProfileAddressList();
-    // updateAddresses.addresses = this.addresses;
+    let customer = JSON.parse(localStorage.getItem("customer"));
+    customer.addresses = this.addresses;
+    localStorage.setItem('customer', JSON.stringify(customer));
     this._customerService.updateCustomerAddresses(this.addresses);
     this.addressForm.reset();
     this.submitted = false;
