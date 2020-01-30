@@ -20,7 +20,7 @@ export class CommentComponent implements OnInit {
   submitted = false;
   total: Array<number>;
   current: number;
-  limit = 5; 
+  limit = 5;
   constructor(private router: Router, private _historyService: HistoryService, private _orderService: OrderService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class CommentComponent implements OnInit {
 
   private _fetchOrders(customerId: number) {
     this._historyService.getOrders(customerId).toPromise()
-      .then(response => this.orders = response)
+      .then(response => { this.orders = response; this.total = Array(Math.ceil(response.length / this.limit)); this.current = 1; });
   }
 
   private goToOrders() {
@@ -54,7 +54,7 @@ export class CommentComponent implements OnInit {
     if (this.commentForm.invalid) {
       return;
     }
-    var updateOrder = this.orders.find(order => order.orderId==this.orderId);
+    var updateOrder = this.orders.find(order => order.orderId == this.orderId);
     updateOrder.comment = this.f.comment.value;
     this._orderService.edit(updateOrder);
     this.commentForm.reset();
@@ -70,7 +70,7 @@ export class CommentComponent implements OnInit {
     this.submitted = false;
     this.closeCommentModal.nativeElement.click();
   }
-  
+
   public receiveCurrentPage($event) {
     this.current = $event;
     console.log($event);
