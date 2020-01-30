@@ -7,6 +7,8 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Ingredients } from 'src/app/models/ingredients.model';
+import { CustomerProfile } from 'src/app/models/customer-profile.model';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
   selector: 'app-meal',
@@ -23,7 +25,7 @@ export class MealComponent implements OnInit {
   favorite = false;
   chosedMeal: Meal;
   ingredients: Array<Ingredients>;
-  constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
+  constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private _customerService: CustomerService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -38,11 +40,13 @@ export class MealComponent implements OnInit {
       .then(response => this.meals = response)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
+
   private _fetchRestaurant(restaurantId: number) {
     this._restaurantService.getRestuarant(restaurantId).toPromise()
       .then(response => this.restaurant = response)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
+  
   private getRestaurantImage(): string {
     return this.restaurant != null ? `url(${this.restaurant.restaurantLogo})` : 'none';
   }
@@ -63,10 +67,24 @@ export class MealComponent implements OnInit {
     this.closeMealModal.nativeElement.click();
   }
 
-  private isFavorite(restaurantName: string) {
-    // TODO Implement this
-    this.favorite = !this.favorite;
+  private isFavoriteRest(restaurantName: string) {
+    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    return customer.fav_restaurants.includes(restaurantName);
   }
+
+  private sendFavoriteRest(restaurantName: string) {
+    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    if (this.isFavoriteRest(restaurantName)) {
+      customer.fav_restaurants_result.splice(customer.fav_restaurants_result.findIndex((r)=>r==this.restaurant),1);
+      customer.fav_restaurants.splice(customer.fav_restaurants.findIndex((r)=> r==restaurantName),1);
+    } else {
+      customer.fav_restaurants_result.push(this.restaurant);
+      customer.fav_restaurants.push(restaurantName);
+    } 
+    localStorage.setItem("customer",JSON.stringify(customer));
+    this._customerService.updateFavRestaurants(customer.fav_restaurants);
+  }
+
   private isFavoriteFood(mealName: string) {
     // TODO Implement this
     console.log(mealName);

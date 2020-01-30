@@ -18,7 +18,7 @@
 | modAddresses | POST   | addresses         | CustomerProfile    |
 | modFavFood   | POST   | favFood           | CustomerProfile    |
 | modFavRest   | POST   | favRestaurants    | CustomerProfile    |
-
+# Provertii out nije isti kao sto ovde pise
 
 ## Restaurant
 > rute počinju sa `api/restaurant/`

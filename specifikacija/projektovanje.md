@@ -22,15 +22,18 @@
 | customer       | [CustomerProfile](#customerprofile) |
 
 ## CustomerProfile
-| Naziv atributa | Tip            |
-|----------------|----------------|
-| addresses      | List<String>   |
-| customerId     | Long           |
-| email          | String         |
-| favoriteMeals  | List<String>   |
-| firstName      | String         |
-| lastName       | String         |
-| phone          | String         |
+| Naziv atributa         | Tip                             |
+|------------------------|---------------------------------|
+| addresses              | List<String>                    |
+| customerId             | Long                            |
+| email                  | String                          |
+| fav_food               | List<String>                    |
+| fav_restaurants        | List<String>                    |
+| firstName              | String                          |
+| lastName               | String                          |
+| password               | String(SHA256)                  |
+| phone                  | String                          |
+| fav_restaurants_result | List<[Restaurant](#restaurant)> |
 
 # Operativni rad aplikacije
 
@@ -78,11 +81,7 @@
 ## Category
 | Vrednosti    |
 |--------------|
-| Hamburger    |
-| Cheeseburger |
-| Sandwich     |
-| Burrito      |
-| Taco         |
+# TODO srediti ovo
 
 ## Status
 | Naziv atributa | Tip    | Vrednosti   |

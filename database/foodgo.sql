@@ -2069,7 +2069,7 @@ CREATE TABLE `restaurants` (
 -- ----------------------------
 -- Records of restaurants
 -- ----------------------------
-INSERT INTO `restaurants` VALUES ('1', 'Burger House ', '', 'Nikole Spasića 3', 'Naš meni je kombinacija premijum burgera, domaćeg pomfrita, soseva i sendviča sa originalnim sastojcima. ', '8-11', '4.6', 'assets/restaurants/burger_house.jpg');
+INSERT INTO `restaurants` VALUES ('1', 'Burger House', '', 'Nikole Spasića 3', 'Naš meni je kombinacija premijum burgera, domaćeg pomfrita, soseva i sendviča sa originalnim sastojcima. ', '8-11', '4.6', 'assets/restaurants/burger_house.jpg');
 INSERT INTO `restaurants` VALUES ('2', 'Majstor i Margarita', '', 'Balkanska 16', 'Mesto gde se prijatelji i porodica rado okupljaju oko majstorskih ukusa prave italijanske pice', '8-11', '4.6', 'assets/restaurants/majstor_i_margarita.jpg');
 INSERT INTO `restaurants` VALUES ('3', 'KFC - Studentski Trg', '', 'Vase Čarapića 24', 'Dobro, prste da poližeš!', '8-11', '4.6', 'assets/restaurants/kfc_-_studentski_trg.jpg');
 INSERT INTO `restaurants` VALUES ('4', 'Smokvica - Jovanova', '', 'Gospodar Jovanova 45a ', 'Naši restorani su poznati u Beogradu, kao i u celom regionu. Naša misija je poznata od samog početka: da služimo najbolju hranu i pića i ništa manje od toga.', '8-11', '4.6', 'assets/restaurants/smokvica_-_jovanova.jpg');

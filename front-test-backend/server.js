@@ -81,9 +81,6 @@ app.post('/api/profile/edit', function (req, res) {
     res.send(true);
   }
 })
-<<<<<<< HEAD
-*/
-=======
 
 // favRestaurants All GET METHOD
 app.get('/api/history/getFavRestaurants', function (req, res) {
@@ -97,4 +94,4 @@ app.get('/api/history/getFavMeals', function (req, res) {
   let favRestaurants = require('./favMeals.json');
   res.json(favRestaurants);
 })
->>>>>>> master
+*/

@@ -15,6 +15,7 @@ export class AuthenticationService {
   private currentCustomerSubject: BehaviorSubject<CustomerProfile>;
   public currentCustomer: Observable<CustomerProfile>;
   private _apiUrl = environment.apiUrl;
+  private _httpHeader = environment.httpHeader;
 
   constructor(private http: HttpClient) {
     this.currentCustomerSubject = new BehaviorSubject<CustomerProfile>(JSON.parse(localStorage.getItem('customer')));
@@ -25,7 +26,7 @@ export class AuthenticationService {
   }
 
   login(_customerLogin: CustomerLogin) {
-    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/login`, _customerLogin)
+    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/login`, _customerLogin, this._httpHeader)
       .pipe(map(loginResponse => {
         // login successful if there's a jwt token in the response
         if (loginResponse) { // && customer.token) {
@@ -41,7 +42,7 @@ export class AuthenticationService {
 
   logout(_customerId: number) {
     // remove user from local storage to log user out
-    return this.http.post<boolean>(`${this._apiUrl}/administration/logout`, _customerId)
+    return this.http.post<boolean>(`${this._apiUrl}/administration/logout`, _customerId, this._httpHeader)
       .pipe(logout => {
         // logout success if true 
         if (logout) {
@@ -56,7 +57,7 @@ export class AuthenticationService {
   }
   register(_customerRegistration: CustomerRegistration) {
     // register user 
-    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/register`, _customerRegistration)
+    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/register`, _customerRegistration, this._httpHeader)
       .pipe(map(loginResponse => {
         // register successful if there's a jwt token in the response
         if (loginResponse) { // && customer.token) {
