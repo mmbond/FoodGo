@@ -6,6 +6,7 @@ export class Order {
     orderId: number;
     customerId: number;
     restaurant: Restaurant;
+    restaurantId: number;
     address: string;
     status: Status;
     meals: Array<Meal>;
@@ -14,7 +15,7 @@ export class Order {
     price: number;
     note: string;
     mark: number;
-    meal_ids: String;//List<Long> 
-    meal_ingredients_ids: any;    
+    meals_ids: string;
+    meal_ingredients_ids: string;    
     meal_count: string;
 }
