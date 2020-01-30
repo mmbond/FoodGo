@@ -66,8 +66,8 @@ app.get('/api/meal/all', function (req, res) {
 app.post('/api/administration/login', function (req, res) {
     if (req.body) {
       model.getCustomerIfExists(req.body, "login").then(function() {
-        if(model.customerData.customer) res.json(model.customerData);
-        else res.json(false);
+        console.log(model.customerData);
+        res.json(model.customerData);
       });
     }
 })
@@ -90,7 +90,6 @@ app.post('/api/administration/register', function (req, res) {
     var emailAndPass = {};
     emailAndPass.email = req.body.email;
     emailAndPass.password = req.body.password;
-    model.customerData = {};
     model.getCustomerIfExists(emailAndPass).then(function() {
       if(model.isEmpty(model.customerData)){
         model.insertCustomer(req.body).then(function() {
@@ -99,7 +98,7 @@ app.post('/api/administration/register', function (req, res) {
           });
         });
       } else {
-        res.json(model.customerData);
+        res.json({});
       }
     });
     

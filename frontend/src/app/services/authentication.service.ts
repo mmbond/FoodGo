@@ -29,7 +29,7 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>(`${this._apiUrl}/administration/login`, _customerLogin, this._httpHeader)
       .pipe(map(loginResponse => {
         // login successful if there's a jwt token in the response
-        if (loginResponse) { // && customer.token) {
+        if (Object.entries(loginResponse).length !== 0) { // && customer.token) {
           let customer = loginResponse.customer;
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('customer', JSON.stringify(customer));
@@ -60,7 +60,7 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>(`${this._apiUrl}/administration/register`, _customerRegistration, this._httpHeader)
       .pipe(map(loginResponse => {
         // register successful if there's a jwt token in the response
-        if (loginResponse) { // && customer.token) {
+        if (Object.entries(loginResponse).length !== 0) { // && customer.token) {
           let customer = loginResponse.customer;
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('customer', JSON.stringify(customer));

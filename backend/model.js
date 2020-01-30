@@ -4,7 +4,7 @@ export var restaurants = [];
 export var restaurant = {};
 export var meals = [];
 export var ordersHistory = [];
-export var customerData = {"customer": {}};
+export var customerData = {};
 export var currentOrder = {};
 export var addedOrder = false;
 
@@ -42,11 +42,7 @@ var database = new Database({
 
 // Check if object is empty.
 export function isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
+    return Object.entries(obj).length === 0
 }
 
 // Get all restaurants.
@@ -187,7 +183,7 @@ export function getCustomerIfExists(customer, flag = null){
     query += `;`;
     try {
         return database.query(query).then(function(rows) {
-            if(rows[0]){
+            if(rows.length > 0){
                 customerData.customer = JSON.parse(JSON.stringify(rows))[0];
                 if(customerData.customer.addresses != null && customerData.customer.addresses != undefined){
                     customerData.customer.addresses = customerData.customer.addresses.split(", ");

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-30 16:57:19
+Date: 2020-01-30 22:31:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `customers` (
   `fav_meals` varchar(255) DEFAULT NULL,
   `fav_restaurants` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customers
@@ -38,6 +38,7 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` VALUES ('1', 'Marko', 'Milic', 'marko@marko.com', '0648979549', 'Bulevar Oslobodjenja 110, Danijelova 32, Bulevar Patrijarha Pavla 23', 'e3c4a8e68c23890091f9b9531ef3e0f805ce0a9378d6fb4bbcb6eed403c91342', 'Dečji Meni, Soprano, Nocciolatta', 'KFC - Studentski Trg, Majstor i Margarita');
 INSERT INTO `customers` VALUES ('2', 'Toma', 'Joksimovic', 'toma.joksimovic@gmail.com', '065344744', 'Pozeska 69', 'adb4052aad053dacb971db23206a047c8a6c3b1486873e434017f60f7a352ee9', 'Big burger, Salmone, Grander Meni', 'Burger House, KFC - Studentski Trg');
 INSERT INTO `customers` VALUES ('3', 'Jovan', 'Gucevski', 'jovan.gucevski@gmail.com', '064567890', 'Bulevar Oslobodjenja 128', 'b4622ba7bb55e3c7504f9cf9c4522cc7481ee0d59bf9697145b888ec2198cad5', 'Standard burger, Rainbow', 'Mayka');
+INSERT INTO `customers` VALUES ('4', 'Pujo', 'Sotka', 'pujo@gmail.com', '065556665', 'Ruzveltova 5', 'af4f26e73de6f704be789f0709d0618d485a4e89d361214601166c72a5764f84', null, null);
 
 -- ----------------------------
 -- Table structure for ingredients
