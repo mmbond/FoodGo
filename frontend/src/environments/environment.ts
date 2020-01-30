@@ -1,3 +1,5 @@
+import { HttpHeaders } from '@angular/common/http';
+
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
@@ -5,7 +7,11 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8888/api',
-
+  httpHeader : {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  },
   dialogflow: {
     foodGoBot: '58f79119e1fc4623a05c8275ffcd8bb5'
   }

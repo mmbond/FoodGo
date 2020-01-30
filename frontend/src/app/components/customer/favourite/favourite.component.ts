@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { HistoryService } from 'src/app/services/history.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
+import { CustomerProfile } from 'src/app/models/customer-profile.model';
 
 @Component({
   selector: 'app-favourite',
@@ -14,16 +15,17 @@ export class FavouriteComponent implements OnInit {
   total: Array<number>;
   current: number;
   limit = 5; 
-  constructor( private _historyService: HistoryService) { }
+  constructor() { }
 
   ngOnInit() {
-    this._fetchFavouriteRestraurants(10);
+    this._fetchFavouriteRestraurants();
   }
 
-  private _fetchFavouriteRestraurants(limit: number = 1) {
-    //this._historyService.getFavRestaurants(limit).toPromise()
-    //  .then(response => {  this.favRestaurants = response; this.total = Array(Math.ceil(response.length / this.limit)); this.current = 1;})
-    //  .catch(error => this.error = ErrorHelper.generateErrorObj(error));
+  private _fetchFavouriteRestraurants() {
+    let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    this.favRestaurants = customer.fav_restaurants_result;
+    this.total = Array(Math.ceil(this.favRestaurants.length / this.limit));
+    this.current = 1;
   }
 
   public showFavourite() : boolean {
@@ -32,7 +34,6 @@ export class FavouriteComponent implements OnInit {
 
   public receiveCurrentPage($event) {
     this.current = $event;
-    console.log($event);
   }
 
   public getPageLimit(id: number) {

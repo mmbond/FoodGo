@@ -32,7 +32,8 @@ export class AddressComponent implements OnInit {
   private _fetchCustomerAddresses() {
     let customer = localStorage.getItem("customer");
     this.addresses = JSON.parse(customer).addresses;
-    this.total = Array(Math.ceil(this.addresses.length / this.limit)); this.current = 1;
+    this.total = Array(Math.ceil(this.addresses.length / this.limit)); 
+    this.current = 1;
   }
 
   private updateAddresses(index: number) {

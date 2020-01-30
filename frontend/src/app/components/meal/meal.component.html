@@ -1,4 +1,4 @@
-<main *ngIf='restaurant!=undefined' role="main">
+<main role="main">
   <section class="jumbotron text-center meal-bg" [ngStyle]="{'background-image': getRestaurantImage()}">
     <div class="container">
       <h1 class="jumbotron-heading text-white title">{{restaurant.name}}</h1>
@@ -12,11 +12,11 @@
             {{restaurant.description}}
           </div>
           <div class="col-md-3 row justify-content-center">
-            <button type="button" (click)="isFavorite(restaurant.name)" placement="bottom"
+            <button type="button" (click)="sendFavoriteRest(restaurant.name)" placement="bottom"
               ngbTooltip="Dodajte/Sklonite omiljene restorane" tooltipClass="foodgo-tooltip"
-              class="btn btn-sm btn-outline-secondary" [disabled]='!loggedIn()'><i [class.fav]='favorite' class="fa fa-heart fa-2x"></i></button>
+              class="btn btn-sm btn-outline-secondary" [disabled]='!loggedIn()'><i [class.fav]='isFavoriteRest(restaurant.name)' class="fa fa-heart fa-2x"></i></button>
           </div>
-          <div class="col-md-3" *ngIf="restaurant!=undefined">
+          <div class="col-md-3">
             <app-rating [read]=true [currentRate]=restaurant.mark></app-rating>
           </div>
         </div>
