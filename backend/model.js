@@ -184,20 +184,41 @@ export function getCustomerIfExists(customer){
     try {
         return database.query(query).then(function(rows) {
             if(rows[0]){
-                customerData.customer = rows[0];
+                customerData.customer = JSON.parse(JSON.stringify(rows))[0];
                 customerData.customer.addresses = customerData.customer.addresses.split(", ");
-                customerData.customer.fav_food = customerData.customer.fav_food.split(", ");
+                customerData.customer.fav_meals = customerData.customer.fav_food.split(", ");
                 customerData.customer.fav_restaurants = customerData.customer.fav_restaurants.split(", ");
                 if(customerData.customer.fav_restaurants.length > 0){
                     customerData.customer.fav_restaurants_result = [];
-                    var query1 = `SELECT * FROM restaurants WHERE name in ('`+customerData.customer.fav_restaurants[0] + `'`;
-                    for(var i = 1; i < customerData.customer.fav_restaurants.length; i++){
-                        query1 += `,'${customerData.customer.fav_restaurants[i]}'`
+                    var query1 = `SELECT * FROM restaurants WHERE name in ('`;
+                    for(var i = 0; i < customerData.customer.fav_restaurants.length; i++){
+                        query1 += `'${customerData.customer.fav_restaurants[i]}'`;
+                        if(i < customerData.customer.fav_restaurants.length - 1){
+                            query1 += `,`;
+                        }
                     }
                     query1 += `);`;
                     try {  
                         return database.query(query1).then(function(rows) {
-                            customerData.customer.fav_restaurants_result = rows;
+                            customerData.customer.fav_restaurants_result = JSON.parse(JSON.stringify(rows));
+                            if(customerData.customer.fav_meals.length > 0){
+                                customerData.customer.fav_meals_result = [];
+                                var query2 = `SELECT * FROM meals WHERE name in ('`;
+                                for(var j = 0; j < customerData.customer.fav_meals.length; j++){
+                                    query2 += `'${customerData.customer.fav_meals[j]}'`;
+                                    if(j < customerData.customer.fav_meals.length - 1){
+                                        query2 += `,`;
+                                    }
+                                }
+                                query2 += `);`;
+                                try {  
+                                    return database.query(query2).then(function(rows) {
+                                        customerData.customer.fav_meals_result = JSON.parse(JSON.stringify(rows));
+                                    });    
+                                } catch (error) {
+                                    console.error(error);
+                                }
+                            }
                         });    
                     } catch (error) {
                         console.error(error);
