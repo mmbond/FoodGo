@@ -4,6 +4,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/order.model';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { Status } from 'src/app/models/status.model';
+import { CustomerProfile } from 'src/app/models/customer-profile.model';
 
 @Component({
   selector: 'app-order',
@@ -20,6 +21,8 @@ export class OrderComponent implements OnInit {
 
   orderPrice = 0;
   mealCount: Array< number > = [];
+  // dodati kad budu sastojci
+  ingridients: {}
 
   constructor(private orderService: OrderService) { }
 
@@ -76,24 +79,26 @@ export class OrderComponent implements OnInit {
   }
 
   private sendOrder() {
-    // TODO saljem preko apija
+    let customer = JSON.parse(localStorage.getItem("customer"));    
+    let mealIds = []; 
+    this.mealsToSet().forEach(meal => mealIds.push(meal.mealId));
     let order : Order = {
       orderId: null,
-      customerId: null,
-      address: null,
+      customerId: customer.customerId,
+      address: customer.addresses[0], // dodati da odabere adresu 
+      restaurantId: this.restaurantOrder.restaurantId, 
       restaurant: this.restaurantOrder,
-      status: Status.IN_PROGRESS,// vratiEnumZaString("in progress"),
+      status: Status.IN_PROGRESS,
       meals: this.mealOrder,
-      comment: null, // TODO pregled spec za razliku comment note
+      comment: null,
       timestamp: new Date(), // definisati foramt data koji se salje backendu
       price: this.orderPrice,
       note: null, // TDOO add note
       mark: null,
-      meal_ids: null, 
+      meals_ids: mealIds.join(', '), 
       meal_ingredients_ids: null,  
-      meal_count: null
+      meal_count: this.mealCount.map(m=> m.toString()).join(", ")
     }
-    //console.log(order);
     let orderRecieved = this.orderService.send(order);
     if (orderRecieved) {
       // TODO mozda neki dijalog se pojavljuje

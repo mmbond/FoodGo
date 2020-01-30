@@ -74,9 +74,9 @@
 | price                | Long                  |
 | note                 | String                |
 | mark                 | Integer               |
-| meals_ids            | List<Long>            |
+| meals_ids            | String                |
 | meal_ingredients_ids | ???                   |
-| meal_count           | List<Long>            |
+| meal_count           | String                |
 
 
 ## Ingredients
