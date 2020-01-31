@@ -34,7 +34,10 @@ export class OrdersComponent implements OnInit {
   }
 
   public showOrders(): boolean {
-    return this.orders != undefined;
+    if (this.orders != undefined && this.orders.length >0){
+      return true;
+    }
+    return false;
   }
 
   private restaurant() {

@@ -34,7 +34,7 @@ class Database {
 var database = new Database({
     host: "localhost",
     user: "root",
-    password: "spartanac97+", // za drugu bazu ""
+    password: "", // za drugu bazu ""
     database: "foodgo",
     port: 3306
 });
@@ -307,9 +307,9 @@ export function updateCustomer(customerEdited){
 export function createOrder(startOrderData){
     startOrderData.timestamp = startOrderData.timestamp.substring(0,startOrderData.timestamp.length-4).replace("T", " ");
     let query = `
-    INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, comment, meal_count, note)
+    INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, comment, meal_count, notes)
     VALUES (${startOrderData.customerId}, ${startOrderData.restaurantId}, '${startOrderData.address}', ${startOrderData.price}, '${startOrderData.timestamp}',
-    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.comment}', '${startOrderData.meal_count}', '${startOrderData.note}');`;
+    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.comment}', '${startOrderData.meal_count}', '${startOrderData.notes}');`;
     try {
         return database.query(query).then(function() {
             console.log("Record inserted");

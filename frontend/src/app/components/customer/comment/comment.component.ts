@@ -45,7 +45,10 @@ export class CommentComponent implements OnInit {
   get f() { return this.commentForm.controls; }
 
   private showComments(): boolean {
-    return this.orders != undefined;
+    if (this.orders != undefined && this.orders.length >0){
+      return true;
+    }
+    return false;
   }
 
   addComment() {
