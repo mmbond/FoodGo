@@ -22,7 +22,7 @@
             {{meal.count}} x {{meal.name}}
           </p>
           </td>
-        <td *ngIf="getPageLimit(i)">{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
+        <td *ngIf="getPageLimit(i)">{{order.timestamp | date:'dd.MM.yyyy. h:mm a'}}</td>
         <td *ngIf="getPageLimit(i)">{{order.price}} RSD</td>
         <td *ngIf="getPageLimit(i)">{{order.note}}</td>
         <td *ngIf="getPageLimit(i)"><app-rating *ngIf="order.mark==undefined && order.status.toUpperCase()=='FINISHED'" [order]=order [read]=false [currentRate]=0></app-rating>
