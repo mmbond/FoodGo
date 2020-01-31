@@ -93,7 +93,7 @@ export class OrderComponent implements OnInit {
       comment: null,
       timestamp: new Date(), // definisati foramt data koji se salje backendu
       price: this.orderPrice,
-      notes: null, // TDOO add note
+      note: null, // TDOO add note
       mark: null,
       meals_ids: mealIds.join(', '), 
       meal_ingredients_ids: null,  

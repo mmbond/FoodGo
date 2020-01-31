@@ -69,6 +69,9 @@ export class MealComponent implements OnInit {
   private isFavoriteRest(restaurantName: string) {
     if(this.loggedIn()){
       let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+      if (customer.fav_restaurants==undefined || customer.fav_restaurants==null) {
+        customer.fav_restaurants = []
+      }
       return customer.fav_restaurants.includes(restaurantName);
     }
     
@@ -76,6 +79,7 @@ export class MealComponent implements OnInit {
 
   private sendFavoriteRest(restaurantName: string) {
     let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+    console.log(customer);
     if (this.isFavoriteRest(restaurantName)) {
       customer.fav_restaurants_result.splice(customer.fav_restaurants_result.findIndex((r)=>r==this.restaurant),1);
       customer.fav_restaurants.splice(customer.fav_restaurants.findIndex((r)=> r==restaurantName),1);
@@ -90,6 +94,9 @@ export class MealComponent implements OnInit {
   private isFavoriteMeal(mealName: string) {
     if(this.loggedIn()){
       let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
+      if (customer.fav_meals==undefined || customer.fav_meals==null) {
+        customer.fav_meals = []
+      }
       return customer.fav_meals.includes(mealName);
     }
   }

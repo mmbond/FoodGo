@@ -30,6 +30,10 @@ export class AuthenticationService {
       .pipe(map(loginResponse => {
         // login successful if there's a jwt token in the response
         if (Object.entries(loginResponse).length !== 0) { // && customer.token) {
+          loginResponse.customer.fav_meals ===null? loginResponse.customer.fav_meals=[]: loginResponse.customer.fav_meals;
+          loginResponse.customer.fav_restaurants ===null? loginResponse.customer.fav_restaurants=[]: loginResponse.customer.fav_restaurants;
+          loginResponse.customer.fav_restaurants_result ===undefined? loginResponse.customer.fav_restaurants_result=[]: loginResponse.customer.fav_restaurants_result;
+          loginResponse.customer.fav_meals_result ===undefined? loginResponse.customer.fav_meals_result=[]: loginResponse.customer.fav_meals_result;
           let customer = loginResponse.customer;
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('customer', JSON.stringify(customer));
@@ -61,6 +65,10 @@ export class AuthenticationService {
       .pipe(map(loginResponse => {
         // register successful if there's a jwt token in the response
         if (Object.entries(loginResponse).length !== 0) { // && customer.token) {
+          loginResponse.customer.fav_meals = [];
+          loginResponse.customer.fav_restaurants = [];
+          loginResponse.customer.fav_restaurants_result = [];
+          loginResponse.customer.fav_meals_result = [];
           let customer = loginResponse.customer;
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('customer', JSON.stringify(customer));

@@ -73,7 +73,7 @@
 | comment              | String                |
 | timestamp            | Date                  |
 | price                | Long                  |
-| notes                | String                |
+| note                 | String                |
 | mark                 | Integer               |
 | meals_ids            | String                |
 | meal_ingredients_ids | JSON                  |
