@@ -24,6 +24,7 @@ export class MealComponent implements OnInit {
   favorite = false;
   chosedMeal: Meal;
   ingredients: Array<Ingredients>;
+  collapse = false;
   constructor(private _restaurantService: RestaurantService, private _customerService: CustomerService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
@@ -147,6 +148,10 @@ export class MealComponent implements OnInit {
   private scrollToMeal(meal: Meal) {
     this.activeCategory = meal.category;
     document.getElementById(meal.name).scrollIntoView();
+    this.collapse =  true;
+  }
+  private focusSearch() {
+    this.collapse =  false;
   }
 
 }
