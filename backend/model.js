@@ -2,7 +2,6 @@ const mysql = require('mysql');
 
 export var restaurants = [];
 export var restaurant = {};
-//export var meals = [];
 export var ordersHistory = [];
 export var customerData = {};
 export var currentOrder = {};

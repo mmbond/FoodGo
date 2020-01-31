@@ -28,16 +28,11 @@ app.get('/api/restaurant/all', function (req, res) {
 // restaurant GET METHOD
 app.get('/api/restaurant/id', function (req, res) {
   if (req.body) {
-    console.log("New request");
     if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
-      console.log(1);
       model.getRestaurantById(parseInt(req.query.restaurantId)).then(function() {
-        console.log(2);
         res.json(model.restaurant);
       });
-      
     } else {
-      console.log(3);
       res.json(model.restaurant);
     }
   }
@@ -58,7 +53,6 @@ app.post('/api/administration/logout', function (req, res) {
   if (req.body) {
     model.restaurants = [];
     model.restaurant = {};
-    //model.meals = [];
     model.ordersHistory = [];
     model.customerData = {};
     res.send(true);
