@@ -24,6 +24,9 @@ export class FavouriteComponent implements OnInit {
   private _fetchFavouriteRestraurants() {
     let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
     this.favRestaurants = customer.fav_restaurants_result;
+    if (this.favRestaurants==undefined) {
+      this.favRestaurants = [];
+    }
     this.total = Array(Math.ceil(this.favRestaurants.length / this.limit));
     this.current = 1;
   }

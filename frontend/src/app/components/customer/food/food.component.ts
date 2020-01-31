@@ -25,6 +25,9 @@ export class FoodComponent implements OnInit {
   private _fetchFavouriteMeals(limit: number = 1) {
     let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
     this.favMeals = customer.fav_meals_result;
+    if (this.favMeals==undefined) {
+      this.favMeals = [];
+    }
     this.total = Array(Math.ceil(this.favMeals.length / this.limit));
     this.current = 1;
   }
