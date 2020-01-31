@@ -115,7 +115,7 @@ export function getRestaurantById(restaurantId){
     }
 }
 
-// Get orders history for one customer. - NE RADI (DELOVI GDE JE UPIT UNUTAR PETLJE)
+// Get orders history for one customer. - NE RADI (DELOVI GDE JE UPIT UNUTAR PETLJE ZBOG ASINHRONOSTI UPITA)
 export function getAllOrdersHistory(customerId){
     var query = `
     SELECT * FROM orders
@@ -194,7 +194,7 @@ export function insertCustomer(customer){
     }
 }
 
-// Get customer if exists. - NE RADI (DELOVI GDE JE UPIT UNUTAR PETLJE)
+// Get customer if exists. - RADI
 export function getCustomerIfExists(customer, flag = null){
     customerData = {};
     var query = `
