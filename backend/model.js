@@ -44,6 +44,15 @@ export function isEmpty(obj) {
     return Object.entries(obj).length === 0
 }
 
+export function logoutClearCache(){
+    restaurants = [];
+    restaurant = {};
+    currentOrder = {};
+    ordersHistory = [];
+    customerData = {};
+    addedOrder = false;
+}
+
 // Get all restaurants. - RADI
 export function getAllRestaurants(){
     var query = "SELECT * FROM restaurants;";
@@ -91,7 +100,7 @@ export function getRestaurantById(restaurantId){
     }
 }
 
-// Get orders history for one customer. - RADI
+// Get orders history for one customer. - NE RADI (DELOVI GDE JE UPIT UNUTAR PETLJE)
 export function getAllOrdersHistory(customerId){
     var query = `
     SELECT * FROM orders
@@ -169,7 +178,7 @@ export function insertCustomer(customer){
     }
 }
 
-// Get customer if exists. - RADI
+// Get customer if exists. - NE RADI (DELOVI GDE JE UPIT UNUTAR PETLJE)
 export function getCustomerIfExists(customer, flag = null){
     var query = `
     SELECT * FROM customers
@@ -215,6 +224,17 @@ export function getCustomerIfExists(customer, flag = null){
                                         try {  
                                             return database.query(query2).then(function(rows) {
                                                 customerData.customer.fav_meals_result = JSON.parse(JSON.stringify(rows));
+                                                for(var k = 0; k < customerData.customer.fav_meals_result.length; k++){
+                                                    customerData.customer.fav_meals_result[k].ingredients = [];
+                                                    var query3 = `SELECT * FROM ingredients WHERE mealId = ${customerData.customer.fav_meals_result[k].mealId};`;
+                                                    try{
+                                                        return database.query(query3).then(function(rows) {
+                                                            if(rows.length > 0) customerData.customer.fav_meals_result[k].ingredients = JSON.parse(JSON.stringify(rows));
+                                                        });
+                                                    } catch (error) {
+                                                        console.error(error);
+                                                    } 
+                                                }
                                             });    
                                         } catch (error) {
                                             console.error(error);
@@ -275,20 +295,27 @@ export function createOrder(startOrderData){
     }
 }
 
-// Change order data, finish order or cancel order.
+// Change order data, finish order or cancel order. - RADI
 export function modifyOrderData(orderData){
+    orderData.timestamp = orderData.timestamp.substring(0,orderData.timestamp.length-4).replace("T", " ");
     var query = `
     UPDATE orders 
-    SET`;
+    SET `;
     // Update current order.
     Object.keys(orderData).forEach(function(key){
         if(currentOrder[key] != orderData[key]){ // update if they are not same (both in cache and in db)
             currentOrder[key] = orderData[key];
-            query += `${key} = '${orderData[key]}', `;
+            if(typeof orderData[key] != 'object'){
+                if(typeof orderData[key] != 'number'){
+                    query += `${key} = '${orderData[key]}', `;
+                } else {
+                    query += `${key} = ${orderData[key]}, `;
+                }
+            } 
         }
     });
-    query = query.substring(0, query.length-1);
-    query += `WHERE customerId = '${currentOrder.customerId}' AND restaurantId = '${currentOrder.restaurantId}';`;
+    query = query.substring(0, query.length-2);
+    query += ` WHERE customerId = ${orderData.customerId} AND restaurantId = ${orderData.restaurantId};`;
     try {
         return database.query(query).then(function() {
             console.log("Record updated");

@@ -40,21 +40,17 @@ app.get('/api/restaurant/id', function (req, res) {
 
 // login POST METHOD
 app.post('/api/administration/login', function (req, res) {
-    if (req.body) {
-      model.getCustomerIfExists(req.body, "login").then(function() {
-        res.json(model.customerData);
-      });
-    }
+  if (req.body) {
+    model.getCustomerIfExists(req.body, "login").then(function() {
+      res.json(model.customerData);
+    });
+  }
 })
 
 // logout POST METHOD
 app.post('/api/administration/logout', function (req, res) {
   if (req.body) {
-    model.restaurants = [];
-    model.restaurant = {};
-    model.ordersHistory = [];
-    model.customerData = {};
-    res.send(true);
+    model.logoutClearCache().then(res.send(true));
   }
 })
 
@@ -83,7 +79,6 @@ app.post('/api/administration/register', function (req, res) {
 app.get('/api/history/all', function (req, res) {
   if (req.body) {
     model.getAllOrdersHistory(req.query.customerId).then(function() {
-      console.log(model.ordersHistory);
       res.json(model.ordersHistory);
     });
   }
