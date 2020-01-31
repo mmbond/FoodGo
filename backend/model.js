@@ -78,18 +78,33 @@ export function getRestaurantById(restaurantId){
             WHERE meals_restaurants.restaurantId = ${restaurant.restaurantId};`;
             try {
                 return database.query(query1).then(function(rows) {
-                    restaurant.meals = JSON.parse(JSON.stringify(rows));  
+                    restaurant.meals = JSON.parse(JSON.stringify(rows));
+                    var mealNames = ``;
                     for(var i = 0; i < restaurant.meals.length; i++){
-                        restaurant.meals[i].ingredients = [];
-                        var query2 = `SELECT * FROM ingredients WHERE mealId = ${restaurant.meals[i].mealId};`;
-                        try{
-                            return database.query(query2).then(function(rows) {
-                                if(rows.length > 0) restaurant.meals[i].ingredients = JSON.parse(JSON.stringify(rows));
-                            });
-                        } catch (error) {
-                            console.error(error);
-                        } 
+                        mealNames += `'${restaurant.meals[i].name}'`;
+                        if(i < restaurant.meals.length - 1){
+                            mealNames += `, `;
+                        }
                     }
+                    var query2 =`
+                    SELECT ingredients.ingredientId as "ingredientId", ingredients.name as "name", ingredients.price as "price", ingredients.mealId as "mealId"
+                    FROM ingredients INNER JOIN meals ON ingredients.mealId = meals.mealId
+                    WHERE meals.name in (${mealNames});`;
+                    try{
+                        return database.query(query2).then(function(rows) {
+                            var ingredients = JSON.parse(JSON.stringify(rows));
+                            for(var k = 0; k < restaurant.meals.length; k++){
+                                restaurant.meals[k].ingredients = [];
+                                for(var x = 0; x < ingredients.length; x++){
+                                    if(restaurant.meals[k].mealId == ingredients[x].mealId){
+                                        restaurant.meals[k].ingredients.push(ingredients[x]);
+                                    }
+                                }
+                            }
+                        });
+                    } catch (error) {
+                        console.error(error);
+                    } 
                 }); 
             } catch (error) {
                 console.error(error);
@@ -112,11 +127,12 @@ export function getAllOrdersHistory(customerId){
                 ordersHistory[i].meals_ids = ordersHistory[i].meals_ids.split(", ");
                 ordersHistory[i].meal_count = ordersHistory[i].meal_count.split(", ");
                 ordersHistory[i].meal_ingredients_ids = JSON.parse(ordersHistory[i].meal_ingredients_ids);
+                ordersHistory[i].restaurant = {};
+                ordersHistory[i].meals = [];
                 var query1 = `SELECT * FROM restaurants WHERE restaurantId = ${ordersHistory[i].restaurantId};`;
                 try {
                     return database.query(query1).then(function(rows) {
                         ordersHistory[i].restaurant = JSON.parse(JSON.stringify(rows))[0];
-                        ordersHistory[i].meals = [];
 
                         // for every distinct meal
                         for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
@@ -214,27 +230,38 @@ export function getCustomerIfExists(customer, flag = null){
                                     if(customerData.customer.fav_meals.length > 0){
                                         customerData.customer.fav_meals_result = [];
                                         var query2 = `SELECT * FROM meals WHERE name in (`;
+                                        var mealNames = ``;
                                         for(var j = 0; j < customerData.customer.fav_meals.length; j++){
-                                            query2 += `'${customerData.customer.fav_meals[j]}'`;
+                                            mealNames += `'${customerData.customer.fav_meals[j]}'`;
                                             if(j < customerData.customer.fav_meals.length - 1){
-                                                query2 += `, `;
+                                                mealNames += `, `;
                                             }
                                         }
+                                        query2 += mealNames;
                                         query2 += `);`;
                                         try {  
                                             return database.query(query2).then(function(rows) {
                                                 customerData.customer.fav_meals_result = JSON.parse(JSON.stringify(rows));
-                                                for(var k = 0; k < customerData.customer.fav_meals_result.length; k++){
-                                                    customerData.customer.fav_meals_result[k].ingredients = [];
-                                                    var query3 = `SELECT * FROM ingredients WHERE mealId = ${customerData.customer.fav_meals_result[k].mealId};`;
-                                                    try{
-                                                        return database.query(query3).then(function(rows) {
-                                                            if(rows.length > 0) customerData.customer.fav_meals_result[k].ingredients = JSON.parse(JSON.stringify(rows));
-                                                        });
-                                                    } catch (error) {
-                                                        console.error(error);
-                                                    } 
-                                                }
+                                                var query3 =`
+                                                SELECT ingredients.ingredientId as "ingredientId", ingredients.name as "name", ingredients.price as "price", ingredients.mealId as "mealId"
+                                                FROM ingredients INNER JOIN meals ON ingredients.mealId = meals.mealId
+                                                WHERE meals.name in (${mealNames});`;
+                                                try{
+                                                    return database.query(query3).then(function(rows) {
+                                                        var ingredients = JSON.parse(JSON.stringify(rows));
+                                                        for(var k = 0; k < customerData.customer.fav_meals_result.length; k++){
+                                                            customerData.customer.fav_meals_result[k].ingredients = [];
+                                                            for(var x = 0; x < ingredients.length; x++){
+                                                                if(customerData.customer.fav_meals_result[k].mealId == ingredients[x].mealId){
+                                                                    customerData.customer.fav_meals_result[k].ingredients.push(ingredients[x]);
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                } catch (error) {
+                                                    console.error(error);
+                                                } 
+                                                
                                             });    
                                         } catch (error) {
                                             console.error(error);
