@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MealService } from 'src/app/services/meal.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { Meal } from 'src/app/models/meal.model';
 import { RestaurantService } from 'src/app/services/restaurant.service';
@@ -16,7 +15,6 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./meal.component.sass']
 })
 export class MealComponent implements OnInit {
-  @Input() meals: Array<Meal>;
   @Input() restaurant: Restaurant;
   @ViewChild('closeMealModal', { static: true }) closeMealModal: ElementRef;
   orderMeals: Array<Meal> = [];
@@ -26,20 +24,13 @@ export class MealComponent implements OnInit {
   favorite = false;
   chosedMeal: Meal;
   ingredients: Array<Ingredients>;
-  constructor(private _mealService: MealService, private _restaurantService: RestaurantService, private _customerService: CustomerService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
+  constructor(private _restaurantService: RestaurantService, private _customerService: CustomerService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       window.scrollTo(0, 0);
-      this._fetchMeals(params['restaurantId']);
       this._fetchRestaurant(params['restaurantId']);
     });
-  }
-
-  private _fetchMeals(restaurantId: number) {
-    return this._mealService.getMeals(restaurantId).toPromise()
-      .then(response => this.meals = response)
-      .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
 
   private _fetchRestaurant(restaurantId: number) {
@@ -54,13 +45,13 @@ export class MealComponent implements OnInit {
 
   private getCategories(): Set<string> {
     let categories = new Set<string>();
-    this.meals.forEach(meal => categories.add(meal.category));
+    this.restaurant.meals.forEach(meal => categories.add(meal.category));
     return categories;
   }
 
   private chooseMealToOrder(id) {
-    this.chosedMeal = this.meals[id];
-    this.ingredients = this.meals[id].ingredients;
+    this.chosedMeal = this.restaurant.meals[id];
+    this.ingredients = this.restaurant.meals[id].ingredients;
   }
 
   private addToOrder() {
@@ -129,7 +120,7 @@ export class MealComponent implements OnInit {
   }
 
   private firstCategory(category: string, index: number): boolean {
-    var first = this.meals.findIndex(meal => meal.category == category);
+    var first = this.restaurant.meals.findIndex(meal => meal.category == category);
     return first == index;
   }
 
@@ -150,7 +141,7 @@ export class MealComponent implements OnInit {
       this.visibleMeals = undefined;
       return;
     }
-    this.visibleMeals = this.meals.filter(meal=>meal.name.toLowerCase().includes(event.target.value.toLowerCase())).slice(0,5);
+    this.visibleMeals = this.restaurant.meals.filter(meal=>meal.name.toLowerCase().includes(event.target.value.toLowerCase())).slice(0,5);
   }
 
   private scrollToMeal(meal: Meal) {

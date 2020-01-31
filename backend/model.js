@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 export var restaurants = [];
 export var restaurant = {};
-export var meals = [];
+//export var meals = [];
 export var ordersHistory = [];
 export var customerData = {};
 export var currentOrder = {};
@@ -62,37 +62,37 @@ export function getRestaurantById(restaurantId){
     var query = `SELECT * FROM restaurants WHERE restaurantId = ${restaurantId};`;
     try {
         return database.query(query).then(function(rows) {
-            restaurant = rows[0];
+            restaurant = JSON.parse(JSON.stringify(rows))[0];
+            var query1 = `
+            SELECT meals.mealId as "mealId", meals.name as "name", meals.category as "category", meals.mealPicture as "mealPicture", meals.description as "description", meals_restaurants.price as "price"
+            FROM meals INNER JOIN meals_restaurants 
+            ON meals.mealId = meals_restaurants.mealId
+            WHERE meals_restaurants.restaurantId = ${restaurant.restaurantId};`;
+            try {
+                return database.query(query1).then(function(rows) {
+                    restaurant.meals = JSON.parse(JSON.stringify(rows));  
+                    for(var i = 0; i < restaurant.meals.length; i++){
+                        restaurant.meals[i].ingredients = [];
+                        var query2 = `SELECT * FROM ingredients WHERE mealId = ${restaurant.meals[i].mealId};`;
+                        try{
+                            return database.query(query2).then(function(rows) {
+                                if(rows.length > 0) restaurant.meals[i].ingredients = JSON.parse(JSON.stringify(rows));
+                            });
+                        } catch (error) {
+                            console.error(error);
+                        } 
+                    }
+                }); 
+            } catch (error) {
+                console.error(error);
+            }
         });
     } catch (error) {
         console.error(error);
     }
 }
 
-// Get all meals by restaurant Id. - RADI
-export function getAllMeals(restaurantId){
-    var query = `
-    SELECT meals.mealId as "mealId", meals.name as "name", meals.category as "category", meals.mealPicture as "mealPicture", meals.description as "description", meals_restaurants.price as "price"
-    FROM meals INNER JOIN meals_restaurants 
-    ON meals.mealId = meals_restaurants.mealId
-    WHERE meals_restaurants.restaurantId = ${restaurantId};`;
-    try {
-        return database.query(query).then(function(rows) {
-            meals = JSON.parse(JSON.stringify(rows));  
-            for(var i = 0; i < meals.length; i++){
-                meals[i].ingredients = [];
-                var query1 = `SELECT * FROM ingredients WHERE mealId = ${meals[i].mealId};`;
-                return database.query(query1).then(function(rows) {
-                    if(rows.length > 0) meals[i].ingredients = JSON.parse(JSON.stringify(rows));
-                });
-            }
-        }); 
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-// Get orders history for one customer.
+// Get orders history for one customer. - RADI
 export function getAllOrdersHistory(customerId){
     var query = `
     SELECT * FROM orders
@@ -106,50 +106,51 @@ export function getAllOrdersHistory(customerId){
                 ordersHistory[i].meal_ingredients_ids = JSON.parse(ordersHistory[i].meal_ingredients_ids);
                 ordersHistory[i].timestamp = ordersHistory[i].timestamp.replace("T", " ");
                 ordersHistory[i].timestamp = ordersHistory[i].timestamp.replace(".000Z", "");
-                ordersHistory[i].meals = [];
 
-                // for every distinct meal
-                for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
-                    let meal_id = parseInt(ordersHistory[i].meals_ids[j]);
-                    var query1 = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
-                    try {
-                        return database.query(query1).then(function(rows) {
-                            let meal = JSON.parse(JSON.stringify(rows[0]));
-                            // Push same meal by count in order
-                            console.log(ordersHistory[i]);
-                            for(var k = 0; k < parseInt(ordersHistory[i].meal_count[j]); k++){
-                                meal.ingredients = [];
-                                let mealIdKey = toString(meal.mealId);
-                                
-                                // Find all ingredients for specific meal and push in meal object
-                                if(ordersHistory[i].meal_ingredients_ids.hasOwnProperty(mealIdKey) && ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length > 0){
-                                    for(var x = 0; x < ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length; x++){
-                                        let ingredient_id = parseInt(ordersHistory[i].meal_ingredients_ids[mealIdKey][k][x]);
-                                        var query2 = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
-                                        try {
-                                            return database.query(query2).then(function(rows) {
-                                                let ingredient = JSON.parse(JSON.stringify(rows[0]));
-                                                meal.ingredients.push(ingredient);
-                                                var query3 = `SELECT * FROM restaurants WHERE restaurantId = ${ordersHistory[i].restaurantId};`;
+                var query1 = `SELECT * FROM restaurants WHERE restaurantId = ${ordersHistory[i].restaurantId};`;
+                try {
+                    return database.query(query1).then(function(rows) {
+                        ordersHistory[i].restaurant = JSON.parse(JSON.stringify(rows[0]));
+                        ordersHistory[i].meals = [];
+
+                        // for every distinct meal
+                        for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
+                            let meal_id = parseInt(ordersHistory[i].meals_ids[j]);
+                            var query1 = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
+                            try {
+                                return database.query(query1).then(function(rows) {
+                                    let meal = JSON.parse(JSON.stringify(rows[0]));
+
+                                    // Push same meal by count in order
+                                    for(var k = 0; k < parseInt(ordersHistory[i].meal_count[j]); k++){
+                                        meal.ingredients = [];
+                                        let mealIdKey = toString(meal.mealId);
+                                        
+                                        // Find all ingredients for specific meal and push in meal object
+                                        if(ordersHistory[i].meal_ingredients_ids.hasOwnProperty(mealIdKey) && ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length > 0){
+                                            for(var x = 0; x < ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length; x++){
+                                                let ingredient_id = parseInt(ordersHistory[i].meal_ingredients_ids[mealIdKey][k][x]);
+                                                var query3 = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
                                                 try {
                                                     return database.query(query3).then(function(rows) {
-                                                        ordersHistory[i].restaurant = JSON.parse(JSON.stringify(rows[0]));
-                                                    });
+                                                        let ingredient = JSON.parse(JSON.stringify(rows[0]));
+                                                        meal.ingredients.push(ingredient);
+                                                    }); 
                                                 } catch (error) {
                                                     console.error(error);
                                                 }
-                                            }); 
-                                        } catch (error) {
-                                            console.error(error);
+                                            }
                                         }
+                                        ordersHistory[i].meals.push(meal);
                                     }
-                                }
-                                ordersHistory[i].meals.push(meal);
+                                });  
+                            } catch (error) {
+                                console.error(error);
                             }
-                        });  
-                    } catch (error) {
-                        console.error(error);
-                    }
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
                 }
             }
         });

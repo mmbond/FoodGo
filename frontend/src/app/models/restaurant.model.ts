@@ -1,3 +1,5 @@
+import { Meal } from './meal.model';
+
 export class Restaurant {
     
     restaurantId: number;
@@ -6,4 +8,5 @@ export class Restaurant {
     description: string;
     mark: number;
     address: string;
+    meals: Array<Meal>;
 }
