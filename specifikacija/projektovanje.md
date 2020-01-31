@@ -39,15 +39,16 @@
 # Operativni rad aplikacije
 
 ## Restaurant
-| Naziv atributa | Tip    |
-|----------------|--------|
-| restaurantId   | Long   |
-| name           | String |
-| restaurantLogo | String |
-| description    | String |
-| work_time      | String |
-| mark           | Long   |
-| address        | String |
+| Naziv atributa | Tip                   |
+|----------------|-----------------------|
+| restaurantId   | Long                  |
+| name           | String                |
+| restaurantLogo | String                |
+| description    | String                |
+| work_time      | String                |
+| mark           | Long                  |
+| address        | String                |
+| meals          | List< [Meal](#meal) > |
 
 ## Meal
 | Naziv atributa | Tip                               |

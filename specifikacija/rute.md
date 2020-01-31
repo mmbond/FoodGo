@@ -34,7 +34,6 @@
 
 | Ruta | Metoda | In                  | Out          |
 |------|--------|---------------------|--------------|
-| all  | GET    | RestaurantId (long) | List< Meal > |
 | id   | GET    | MealId (long)       | Meal         |
 
 
