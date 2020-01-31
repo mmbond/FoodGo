@@ -56,7 +56,7 @@
           </ul>
         </div>
         <div class="col-md-6">
-          <div class="row" *ngFor="let meal of meals; let i = index">
+          <div class="row" *ngFor="let meal of restaurant.meals; let i = index">
             <h3 *ngIf="firstCategory(meal.category,i)" [attr.id]="meal.category">{{meal.category}}</h3>
             <div class="card mb-4 box-shadow" [attr.id]="meal.name">
               <img class="card-img-top" [attr.alt]="meal.name" style="height: 280px; width: 100%; display: block;"

@@ -28,36 +28,17 @@ app.get('/api/restaurant/all', function (req, res) {
 // restaurant GET METHOD
 app.get('/api/restaurant/id', function (req, res) {
   if (req.body) {
+    console.log("New request");
     if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
-      if(model.restaurants.length > 0){
-        const foundRestaurant = model.restaurants.find(restaurant => restaurant.restaurantId == req.query.restaurantId);
-        if(foundRestaurant != undefined){
-          model.restaurant = foundRestaurant;
-        } else {
-          model.getRestaurantById(parseInt(req.query.restaurantId)).then(function() {
-            res.json(model.restaurant);
-          });
-        }
-      } else {
-        model.getRestaurantById(parseInt(req.query.restaurantId)).then(function() {
-          res.json(model.restaurant);
-        });
-      }
-    } else {
-      res.json(model.restaurant);
-    }
-  }
-})
-
-// meal All GET METHOD
-app.get('/api/meal/all', function (req, res) {
-  if (req.body) {
-    if(model.isEmpty(model.restaurant) || model.restaurant.restaurantId != req.query.restaurantId){
-      model.getAllMeals(req.query.restaurantId).then(function() {
-        res.json(model.meals);
+      console.log(1);
+      model.getRestaurantById(parseInt(req.query.restaurantId)).then(function() {
+        console.log(2);
+        res.json(model.restaurant);
       });
+      
     } else {
-      res.json(model.meals);
+      console.log(3);
+      res.json(model.restaurant);
     }
   }
 })
@@ -77,7 +58,7 @@ app.post('/api/administration/logout', function (req, res) {
   if (req.body) {
     model.restaurants = [];
     model.restaurant = {};
-    model.meals = [];
+    //model.meals = [];
     model.ordersHistory = [];
     model.customerData = {};
     res.send(true);
