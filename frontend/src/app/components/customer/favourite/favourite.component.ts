@@ -3,6 +3,7 @@ import { Restaurant } from 'src/app/models/restaurant.model';
 import { HistoryService } from 'src/app/services/history.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { CustomerProfile } from 'src/app/models/customer-profile.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-favourite',
@@ -14,11 +15,13 @@ export class FavouriteComponent implements OnInit {
   error: any;
   total: Array<number>;
   current: number;
-  limit = 5; 
-  constructor() { }
+  limit = 5;   
+  returnUrl: string;
+  constructor( private route: ActivatedRoute, private router: Router ) { }
 
   ngOnInit() {
     this._fetchFavouriteRestraurants();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   private _fetchFavouriteRestraurants() {
@@ -41,5 +44,9 @@ export class FavouriteComponent implements OnInit {
 
   public getPageLimit(id: number) {
     return (((this.current - 1) * this.limit) <= id) && (id < (this.current * this.limit));
+  }
+
+  public addFavourites() {
+    this.router.navigate([this.returnUrl]);
   }
 }
