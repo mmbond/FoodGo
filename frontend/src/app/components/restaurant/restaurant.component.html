@@ -38,13 +38,13 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
-                    <h5 class="card-text">{{restaurant.name}}</h5>
+                    <h5 class="card-text"  id="name">{{restaurant.name}}</h5>
                     <p class="text-muted">{{restaurant.address}}</p>
                   </div>
                   <app-rating [read]=true [currentRate]=restaurant.mark></app-rating>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                  <p class="card-text">{{restaurant.description}}</p>
+                  <p class="card-text" id="description">{{restaurant.description}}</p>
                 </div>
               </div>
             </div>
