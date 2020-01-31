@@ -98,7 +98,7 @@
 </main>
 <div class="modal fade" id="mealModal" tabindex="-1" role="dialog" aria-labelledby="mealModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="mealModalLabel">Dodajte u korpu</h5>
@@ -117,11 +117,19 @@
         <form>
           <div *ngIf='ingredients!=undefined && ingredients.length>0'>
             <h5>Odaberite priloge</h5>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item" *ngFor="let ingredient of ingredients; let i = index">
-                <label><input type="checkbox" value="{{ingredient.price}}">{{ingredient.name}}, {{ingredient.price}} RSD</label>
-              </li>
-            </ul>
+              <div *ngFor="let ingredient of ingredients; let i = index">
+                <div *ngIf="i % 3 == 0" class="row" >
+                  <div class="col-md-4" *ngIf="i < ingredients.length" style="width: 18rem;">
+                      <input type="checkbox" value="{{ingredients[i].price}}">{{ingredients[i].name}}, {{ingredients[i].price}} RSD
+                  </div>
+                  <div class="col-md-4" *ngIf="i + 1 < ingredients.length" style="width: 18rem;">
+                      <input type="checkbox" value="{{ingredients[i+1].price}}">{{ingredients[i+1].name}}, {{ingredients[i+1].price}} RSD
+                  </div>
+                  <div class="col-md-4" *ngIf="i + 2 < ingredients.length" style="width: 18rem;">
+                    <input type="checkbox" value="{{ingredients[i+2].price}}">{{ingredients[i+2].name}}, {{ingredients[i+2].price}} RSD
+                </div>
+                </div>
+              </div>
           </div>
           <div *ngIf='ingredients!=undefined && ingredients.length==0' class="m-3">
             Nema dodataka za ovo jelo

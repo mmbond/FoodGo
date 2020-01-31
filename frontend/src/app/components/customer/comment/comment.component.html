@@ -17,7 +17,7 @@
         <th *ngIf="getPageLimit(i)" scope="row">{{order.orderId}}</th>
         <td *ngIf="getPageLimit(i)">{{order.status}}</td>
         <td *ngIf="getPageLimit(i)">{{order.restaurant.name}}</td>
-        <td *ngIf="getPageLimit(i)">{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
+        <td *ngIf="getPageLimit(i)">{{order.timestamp | date:'dd.MM.yyyy. h:mm a'}}</td>
         <td *ngIf='order.comment!=undefined'>{{order.comment}}</td>
         <td *ngIf='order.comment==undefined'>Nema komentara</td>
         <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa input text area i unosi se utisak-->
