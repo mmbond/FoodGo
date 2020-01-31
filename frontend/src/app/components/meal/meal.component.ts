@@ -24,6 +24,7 @@ export class MealComponent implements OnInit {
   favorite = false;
   chosedMeal: Meal;
   ingredients: Array<Ingredients>;
+  orderIngredients: Array<Ingredients>;
   collapse = false;
   constructor(private _restaurantService: RestaurantService, private _customerService: CustomerService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
 
@@ -53,6 +54,11 @@ export class MealComponent implements OnInit {
   private chooseMealToOrder(id) {
     this.chosedMeal = this.restaurant.meals[id];
     this.ingredients = this.restaurant.meals[id].ingredients;
+    this.orderIngredients = [];
+  } 
+
+  private dodajPrilog($event) {
+    this.orderIngredients.push($event.target.value);
   }
 
   private addToOrder() {

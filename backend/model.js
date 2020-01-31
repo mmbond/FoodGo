@@ -79,11 +79,11 @@ export function getRestaurantById(restaurantId){
             try {
                 return database.query(query1).then(function(rows) {
                     restaurant.meals = JSON.parse(JSON.stringify(rows));  
-                    for(var i = 0; i < restaurant.meals.length; i++){
+                    for(let i = 0; i < restaurant.meals.length; i++){
                         restaurant.meals[i].ingredients = [];
                         var query2 = `SELECT * FROM ingredients WHERE mealId = ${restaurant.meals[i].mealId};`;
                         try{
-                            return database.query(query2).then(function(rows) {
+                            database.query(query2).then(function(rows) {
                                 if(rows.length > 0) restaurant.meals[i].ingredients = JSON.parse(JSON.stringify(rows));
                             });
                         } catch (error) {
