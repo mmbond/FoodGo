@@ -78,7 +78,6 @@ export function getRestaurantById(restaurantId){
             WHERE meals_restaurants.restaurantId = ${restaurant.restaurantId};`;
             try {
                 return database.query(query1).then(function(rows) {
-<<<<<<< HEAD
                     restaurant.meals = JSON.parse(JSON.stringify(rows));
                     var mealNames = ``;
                     for(var i = 0; i < restaurant.meals.length; i++){
@@ -86,19 +85,6 @@ export function getRestaurantById(restaurantId){
                         if(i < restaurant.meals.length - 1){
                             mealNames += `, `;
                         }
-=======
-                    restaurant.meals = JSON.parse(JSON.stringify(rows));  
-                    for(let i = 0; i < restaurant.meals.length; i++){
-                        restaurant.meals[i].ingredients = [];
-                        var query2 = `SELECT * FROM ingredients WHERE mealId = ${restaurant.meals[i].mealId};`;
-                        try{
-                            database.query(query2).then(function(rows) {
-                                if(rows.length > 0) restaurant.meals[i].ingredients = JSON.parse(JSON.stringify(rows));
-                            });
-                        } catch (error) {
-                            console.error(error);
-                        } 
->>>>>>> d3e157c2792b7f025107e71f147b79ee04181fd7
                     }
                     var query2 =`
                     SELECT ingredients.ingredientId as "ingredientId", ingredients.name as "name", ingredients.price as "price", ingredients.mealId as "mealId"
