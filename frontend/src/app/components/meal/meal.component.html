@@ -23,13 +23,13 @@
       </div>
     </div>
   </div>
-  <div class="py-2 bg-light">
+  <div class="py-2 bg-light"> 
     <div class="container">
-      <div class="form-group row">
-        <h3 class="py-3">Meni</h3>
+      <div class="form-group row py-2">
+        <h3 class="col-sm-2">Meni</h3>
         <div class="col-sm-10">
-          <input (keyup)="pretraga($event)" class="form-control" type="text" placeholder="Pretražite Obroke" aria-label="Search">
-          <div class="card" *ngIf="visibleMeals!=undefined" id="searchBox">
+          <input (keyup)="pretraga($event)" (focus)="focusSearch()" class="form-control" type="text" placeholder="Pretražite Obroke" aria-label="Search">
+          <div class="card" *ngIf="visibleMeals!=undefined" id="searchBox" [ngClass]="{'hide':collapse}">
             <div *ngFor="let meal of visibleMeals">
               <a (click)="scrollToMeal(meal)" class="link">
             <div class="card-body">
