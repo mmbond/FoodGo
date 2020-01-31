@@ -42,7 +42,6 @@ app.get('/api/restaurant/id', function (req, res) {
 app.post('/api/administration/login', function (req, res) {
     if (req.body) {
       model.getCustomerIfExists(req.body, "login").then(function() {
-        console.log(model.customerData);
         res.json(model.customerData);
       });
     }
@@ -83,13 +82,10 @@ app.post('/api/administration/register', function (req, res) {
 // orders history All GET METHOD
 app.get('/api/history/all', function (req, res) {
   if (req.body) {
-    if(model.ordersHistory.length < 1){
-      model.getAllOrdersHistory(req.query.customerId).then(function() {
-        res.json(model.ordersHistory);
-      });
-    } else {
+    model.getAllOrdersHistory(req.query.customerId).then(function() {
+      console.log(model.ordersHistory);
       res.json(model.ordersHistory);
-    }
+    });
   }
 })
 

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-31 00:08:05
+Date: 2020-01-31 03:22:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2035,21 +2035,22 @@ CREATE TABLE `orders` (
   `comment` varchar(255) DEFAULT NULL,
   `status` set('finished','in progress','canceled') NOT NULL DEFAULT 'in progress',
   `meal_count` varchar(255) NOT NULL,
-  `note` varchar(255) DEFAULT NULL,
-  `mark` decimal(2,1) DEFAULT '3.0',
+  `notes` varchar(255) DEFAULT NULL,
+  `mark` smallint(1) DEFAULT NULL,
   PRIMARY KEY (`orderId`),
   KEY `FK_CUSTOMER` (`customerId`),
   KEY `FK_RESTAURANT` (`restaurantId`),
   CONSTRAINT `FK_CUSTOMER` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_RESTAURANT` FOREIGN KEY (`restaurantId`) REFERENCES `restaurants` (`restaurantId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-01-28 17:15:55', '1', '{\"1\": [[]]}', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4.0');
-INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-01-28 17:16:04', '41, 43', '{\"41\": [[]], \"43\": [[]]}', 'druga porudzbina', 'in progress', '1, 1', null, '3.0');
-INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-01-28 17:16:08', '42, 52', '{\"42\": [[], []], \"52\": [[]]}', null, 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5.0');
+INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-01-28 17:15:55', '1', '{\"1\": [[]]}', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
+INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-01-28 17:16:04', '41, 43', '{\"41\": [[]], \"43\": [[]]}', 'druga porudzbina', 'in progress', '1, 1', null, '3');
+INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-01-28 17:16:08', '42, 52', '{\"42\": [[], []], \"52\": [[]]}', null, 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
+INSERT INTO `orders` VALUES ('4', '2', '14', 'Kraljice Katarine 33', '1650', '2020-01-31 03:09:32', '703, 706', 'null', 'null', 'in progress', '2, 1', 'null', null);
 
 -- ----------------------------
 -- Table structure for restaurants

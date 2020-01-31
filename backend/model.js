@@ -103,22 +103,19 @@ export function getAllOrdersHistory(customerId){
                 ordersHistory[i].meals_ids = ordersHistory[i].meals_ids.split(", ");
                 ordersHistory[i].meal_count = ordersHistory[i].meal_count.split(", ");
                 ordersHistory[i].meal_ingredients_ids = JSON.parse(ordersHistory[i].meal_ingredients_ids);
-                ordersHistory[i].timestamp = ordersHistory[i].timestamp.replace("T", " ");
-                ordersHistory[i].timestamp = ordersHistory[i].timestamp.replace(".000Z", "");
-
                 var query1 = `SELECT * FROM restaurants WHERE restaurantId = ${ordersHistory[i].restaurantId};`;
                 try {
                     return database.query(query1).then(function(rows) {
-                        ordersHistory[i].restaurant = JSON.parse(JSON.stringify(rows[0]));
+                        ordersHistory[i].restaurant = JSON.parse(JSON.stringify(rows))[0];
                         ordersHistory[i].meals = [];
 
                         // for every distinct meal
                         for(var j = 0; j < ordersHistory[i].meal_count.length; j++){
                             let meal_id = parseInt(ordersHistory[i].meals_ids[j]);
-                            var query1 = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
+                            var query2 = `SELECT * FROM meals WHERE mealId = ${meal_id};`;
                             try {
-                                return database.query(query1).then(function(rows) {
-                                    let meal = JSON.parse(JSON.stringify(rows[0]));
+                                return database.query(query2).then(function(rows) {
+                                    let meal = JSON.parse(JSON.stringify(rows))[0];
 
                                     // Push same meal by count in order
                                     for(var k = 0; k < parseInt(ordersHistory[i].meal_count[j]); k++){
@@ -132,7 +129,7 @@ export function getAllOrdersHistory(customerId){
                                                 var query3 = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
                                                 try {
                                                     return database.query(query3).then(function(rows) {
-                                                        let ingredient = JSON.parse(JSON.stringify(rows[0]));
+                                                        let ingredient = JSON.parse(JSON.stringify(rows))[0];
                                                         meal.ingredients.push(ingredient);
                                                     }); 
                                                 } catch (error) {
@@ -257,14 +254,13 @@ export function updateCustomer(customerEdited){
     }
 }
 
-// Add new order.
+// Add new order. - RADI
 export function createOrder(startOrderData){
     startOrderData.timestamp = startOrderData.timestamp.substring(0,startOrderData.timestamp.length-4).replace("T", " ");
     let query = `
-    INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, comment, meal_count, note)
+    INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, comment, meal_count, notes)
     VALUES (${startOrderData.customerId}, ${startOrderData.restaurantId}, '${startOrderData.address}', ${startOrderData.price}, '${startOrderData.timestamp}',
-    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.comment}', '${startOrderData.meal_count}', '${startOrderData.note}');`;
-    console.log(query);
+    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.comment}', '${startOrderData.meal_count}', '${startOrderData.notes}');`;
     try {
         return database.query(query).then(function() {
             console.log("Record inserted");
