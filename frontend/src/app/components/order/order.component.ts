@@ -18,11 +18,11 @@ export class OrderComponent implements OnInit {
   @Output() mealOrderChange = new EventEmitter();
   @Input()
   restaurantOrder: Restaurant;
+  @Input()
+  ingredientOrder: Array<number>;
 
   orderPrice = 0;
   mealCount: Array< number > = [];
-  // dodati kad budu sastojci
-  ingridients: {}
 
   constructor(private orderService: OrderService) { }
 
@@ -47,9 +47,9 @@ export class OrderComponent implements OnInit {
   private hasOrders(): boolean {
     if (this.mealOrder == undefined || this.mealOrder.length == 0) {
       return false;
-
     }
     this.orderPrice = this.mealOrder.map(meal => meal.price).reduce((accumulator, currentValue) => accumulator + currentValue);
+    this
     return true;
   }
 
@@ -107,4 +107,10 @@ export class OrderComponent implements OnInit {
     this.closeOrderModal.nativeElement.click();
   }
 
+  private loggedIn(): boolean {
+    if(localStorage.getItem("customer")){
+      return true;
+    }
+    return false;
+  }
 }

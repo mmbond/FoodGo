@@ -11,10 +11,17 @@
           <div class="col-md-6 justify-content-center">
             {{restaurant.description}}
           </div>
-          <div class="col-md-3 row justify-content-center">
+          <div *ngIf="loggedIn()" class="col-md-3 row justify-content-center">
             <button type="button" (click)="sendFavoriteRest(restaurant.name)" placement="bottom"
               ngbTooltip="Dodajte/Sklonite omiljene restorane" tooltipClass="foodgo-tooltip"
-              class="btn btn-sm btn-outline-secondary" [disabled]='!loggedIn()'><i [class.fav]='isFavoriteRest(restaurant.name)' class="fa fa-heart fa-2x"></i></button>
+              class="btn btn-sm btn-outline-secondary" [disabled]='!loggedIn()'><i
+                [class.fav]='isFavoriteRest(restaurant.name)' class="fa fa-heart fa-2x"></i></button>
+          </div>
+          <div *ngIf="!loggedIn()" class="col-md-3 row justify-content-center"
+            ngbTooltip="Prijavite se kako bi imali ovu opciju" tooltipClass="foodgo-tooltip">
+            <button type="button" (click)="sendFavoriteRest(restaurant.name)" placement="bottom"
+              class="btn btn-sm btn-outline-secondary" [disabled]='!loggedIn()'><i
+                [class.fav]='isFavoriteRest(restaurant.name)' class="fa fa-heart fa-2x"></i></button>
           </div>
           <div class="col-md-3">
             <app-rating [read]=true [currentRate]=restaurant.mark></app-rating>
@@ -23,23 +30,24 @@
       </div>
     </div>
   </div>
-  <div class="py-2 bg-light"> 
+  <div class="py-2 bg-light">
     <div class="container">
       <div class="form-group row py-2">
         <h3 class="col-sm-2">Meni</h3>
         <div class="col-sm-10">
-          <input (keyup)="pretraga($event)" (focus)="focusSearch()" class="form-control" type="text" placeholder="Pretražite Obroke" aria-label="Search">
+          <input (keyup)="pretraga($event)" (focus)="focusSearch()" class="form-control" type="text"
+            placeholder="Pretražite Obroke" aria-label="Search">
           <div class="card" *ngIf="visibleMeals!=undefined" id="searchBox" [ngClass]="{'hide':collapse}">
             <div *ngFor="let meal of visibleMeals">
               <a (click)="scrollToMeal(meal)" class="link">
-            <div class="card-body">
-              {{meal.name}}
+                <div class="card-body">
+                  {{meal.name}}
+                </div>
+              </a>
             </div>
-            </a>
-          </div>
-              <div *ngIf="visibleMeals!=undefined && visibleMeals==0"class="card-body">
+            <div *ngIf="visibleMeals!=undefined && visibleMeals==0" class="card-body">
               <h3>Nema traženog obroka</h3>
-            </div> 
+            </div>
           </div>
         </div>
       </div>
@@ -67,15 +75,23 @@
                     <h5 class="card-text">{{meal.name}}</h5>
                     <p class="text-muted">Cena: {{meal.price}} RSD</p>
                   </div>
-                  <button (click)="sendFavoriteMeal(meal)"
-                  ngbTooltip="Dodajte/Sklonite omiljenu hranu" tooltipClass="foodgo-tooltip" [disabled]='!loggedIn()'
-                  class="btn btn-sm"><i [class.fav]='isFavoriteMeal(meal.name)' class="fa fa-heart"></i></button>
+                  <div *ngIf='loggedIn()'><button (click)="sendFavoriteMeal(meal)"
+                      ngbTooltip="Dodajte/Sklonite omiljenu hranu" tooltipClass="foodgo-tooltip"
+                      [disabled]='!loggedIn()' class="btn btn-sm"><i [class.fav]='isFavoriteMeal(meal.name)'
+                        class="fa fa-heart"></i></button></div>
+                  <div *ngIf='!loggedIn()' ngbTooltip="Prijavite se kako bi imali ovu opciju"
+                    tooltipClass="foodgo-tooltip"><button [disabled]='!loggedIn()' class="btn btn-sm"><i
+                        [class.fav]='isFavoriteMeal(meal.name)' class="fa fa-heart"></i></button></div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <p class="card-text">{{meal.description}}</p>
-                  <div class="btn-group">
-                    <button data-toggle="modal" (click)="chooseMealToOrder(i)" data-target="#mealModal" [disabled]='!loggedIn()'
-                      class="btn btn-warning">Dodajte</button>
+                  <div class="btn-group" *ngIf='loggedIn()'>
+                    <button data-toggle="modal" (click)="chooseMealToOrder(i)" data-target="#mealModal"
+                      [disabled]='!loggedIn()' class="btn btn-warning">Dodajte</button>
+                  </div>
+                  <div class="btn-group" *ngIf='!loggedIn()' ngbTooltip="Prijavite se kako bi imali ovu opciju"
+                    tooltipClass="foodgo-tooltip">
+                    <button data-toggle="modal" [disabled]='!loggedIn()' class="btn btn-warning">Dodajte</button>
                   </div>
                 </div>
               </div>
@@ -89,15 +105,14 @@
           <div id="map-container-google-1" class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" [src]="getMapUrl()" frameborder="1" style="border:0"></iframe>
           </div>
-          <app-order [(mealOrder)]=orderMeals [restaurantOrder]=restaurant class="p-3"></app-order>
+          <app-order [(mealOrder)]=orderMeals [restaurantOrder]=restaurant [ingredientOrder]=orderIngredients class="p-3"></app-order>
         </div>
       </div>
     </div>
   </div>
 
 </main>
-<div class="modal fade" id="mealModal" tabindex="-1" role="dialog" aria-labelledby="mealModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="mealModal" tabindex="-1" role="dialog" aria-labelledby="mealModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -108,34 +123,37 @@
       </div>
       <div class="modal-body">
         <div *ngIf='chosedMeal!=undefined'>
-        <div class="modal-title" class="d-flex justify-content-between">
-          <h5>{{chosedMeal.name}}</h5>
-          <p>{{chosedMeal.price}} RSD</p>
+          <div class="modal-title" class="d-flex justify-content-between">
+            <h5>{{chosedMeal.name}}</h5>
+            <p>{{chosedMeal.price}} RSD</p>
+          </div>
+          <p>{{chosedMeal.description}}</p>
         </div>
-        <p>{{chosedMeal.description}}</p>
-      </div>
         <form>
           <div *ngIf='ingredients!=undefined && ingredients.length>0'>
             <h5>Odaberite priloge</h5>
-              <div *ngFor="let ingredient of ingredients; let i = index">
-                <div *ngIf="i % 3 == 0" class="row" >
-                  <div class="col-md-4" *ngIf="i < ingredients.length" style="width: 18rem;">
-                      <input type="checkbox" value="{{ingredients[i].price}}">{{ingredients[i].name}}, {{ingredients[i].price}} RSD
-                  </div>
-                  <div class="col-md-4" *ngIf="i + 1 < ingredients.length" style="width: 18rem;">
-                      <input type="checkbox" value="{{ingredients[i+1].price}}">{{ingredients[i+1].name}}, {{ingredients[i+1].price}} RSD
-                  </div>
-                  <div class="col-md-4" *ngIf="i + 2 < ingredients.length" style="width: 18rem;">
-                    <input type="checkbox" value="{{ingredients[i+2].price}}">{{ingredients[i+2].name}}, {{ingredients[i+2].price}} RSD
+            <div *ngFor="let ingredient of ingredients; let i = index">
+              <div *ngIf="i % 3 == 0" class="row">
+                <div (change)="dodajPrilog($event)"  class="col-md-4" *ngIf="i < ingredients.length" style="width: 18rem;">
+                  <input type="checkbox" value="{{ingredients[i].ingredientId}}">{{ingredients[i].name}},
+                  {{ingredients[i].price}} RSD
                 </div>
+                <div  (change)="dodajPrilog($event)" class="col-md-4" *ngIf="i + 1 < ingredients.length" style="width: 18rem;">
+                  <input type="checkbox" value="{{ingredients[i+1].ingredientId}}">{{ingredients[i+1].name}},
+                  {{ingredients[i+1].price}} RSD
+                </div>
+                <div (change)="dodajPrilog($event)" class="col-md-4" *ngIf="i + 2 < ingredients.length" style="width: 18rem;">
+                  <input type="checkbox" value="{{ingredients[i+2].ingredientId}}">{{ingredients[i+2].name}},
+                  {{ingredients[i+2].price}} RSD
                 </div>
               </div>
+            </div>
           </div>
           <div *ngIf='ingredients!=undefined && ingredients.length==0' class="m-3">
             Nema dodataka za ovo jelo
           </div>
           <!-- <textarea formControlName="note" -->
-            <textarea class="form-control" rows="5" placeholder="Unesite posebne zahteve-beleške"></textarea>
+          <textarea class="form-control" rows="5" placeholder="Unesite posebne zahteve-beleške"></textarea>
         </form>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvorite</button>
