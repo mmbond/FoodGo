@@ -196,6 +196,7 @@ export function insertCustomer(customer){
 
 // Get customer if exists. - NE RADI (DELOVI GDE JE UPIT UNUTAR PETLJE)
 export function getCustomerIfExists(customer, flag = null){
+    customerData = {};
     var query = `
     SELECT * FROM customers
     WHERE email = '${customer.email}'`;
@@ -243,7 +244,8 @@ export function getCustomerIfExists(customer, flag = null){
                                             return database.query(query2).then(function(rows) {
                                                 customerData.customer.fav_meals_result = JSON.parse(JSON.stringify(rows));
                                                 var query3 =`
-                                                SELECT ingredients.ingredientId as "ingredientId", ingredients.name as "name", ingredients.price as "price", ingredients.mealId as "mealId"
+                                                SELECT ingredients.ingredientId as "ingredientId", ingredients.name as "name", 
+                                                ingredients.price as "price", ingredients.mealId as "mealId"
                                                 FROM ingredients INNER JOIN meals ON ingredients.mealId = meals.mealId
                                                 WHERE meals.name in (${mealNames});`;
                                                 try{
