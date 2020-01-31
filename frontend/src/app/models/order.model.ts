@@ -13,7 +13,7 @@ export class Order {
     comment: string;
     timestamp: Date;
     price: number;
-    note: string;
+    notes: string;
     mark: number;
     meals_ids: string;
     meal_ingredients_ids: string;    
