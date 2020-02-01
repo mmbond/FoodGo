@@ -83,7 +83,7 @@
 ## Ingredients
 | Naziv atributa | Tip    |
 |----------------|--------|
-| ingridientsId  | Long   |
+| ingredientId   | Long   |
 | name           | String |
 | price          | Long   |
 

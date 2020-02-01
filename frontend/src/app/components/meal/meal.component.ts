@@ -24,7 +24,7 @@ export class MealComponent implements OnInit {
   favorite = false;
   chosedMeal: Meal;
   ingredients: Array<Ingredients>;
-  orderIngredients: Array<Ingredients>;
+  orderIngredients: Array<string>;
   collapse = false;
   constructor(private _restaurantService: RestaurantService, private _customerService: CustomerService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
 
@@ -40,7 +40,7 @@ export class MealComponent implements OnInit {
       .then(response => this.restaurant = response)
       .catch(error => this.error = ErrorHelper.generateErrorObj(error));
   }
-  
+
   private getRestaurantImage(): string {
     return this.restaurant != null ? `url(${this.restaurant.restaurantLogo})` : 'none';
   }
@@ -52,49 +52,55 @@ export class MealComponent implements OnInit {
   }
 
   private chooseMealToOrder(id) {
-    this.chosedMeal = this.restaurant.meals[id];
+    this.chosedMeal = { ...this.restaurant.meals[id]};
     this.ingredients = this.restaurant.meals[id].ingredients;
     this.orderIngredients = [];
-  } 
+  }
 
   private dodajPrilog($event) {
-    this.orderIngredients.push($event.target.value);
+    if (this.orderIngredients.includes($event.target.value)) {
+      let id = this.orderIngredients.findIndex((e) => e==$event.target.value);
+      this.orderIngredients.splice(id,1);
+    }else{
+      this.orderIngredients.push($event.target.value);
+    }
   }
 
   private addToOrder() {
+    this.chosedMeal.ingredients = this.chosedMeal.ingredients.filter((ing)=> this.orderIngredients.includes(ing.ingredientId.toString()));
+    console.log(this.chosedMeal);
     this.orderMeals.push(this.chosedMeal);
     this.closeMealModal.nativeElement.click();
   }
 
   private isFavoriteRest(restaurantName: string) {
-    if(this.loggedIn()){
+    if (this.loggedIn()) {
       let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
-      if (customer.fav_restaurants==undefined || customer.fav_restaurants==null) {
+      if (customer.fav_restaurants == undefined || customer.fav_restaurants == null) {
         customer.fav_restaurants = []
       }
       return customer.fav_restaurants.includes(restaurantName);
     }
-    
+
   }
 
   private sendFavoriteRest(restaurantName: string) {
     let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
-    console.log(customer);
     if (this.isFavoriteRest(restaurantName)) {
-      customer.fav_restaurants_result.splice(customer.fav_restaurants_result.findIndex((r)=>r==this.restaurant),1);
-      customer.fav_restaurants.splice(customer.fav_restaurants.findIndex((r)=> r==restaurantName),1);
+      customer.fav_restaurants_result.splice(customer.fav_restaurants_result.findIndex((r) => r == this.restaurant), 1);
+      customer.fav_restaurants.splice(customer.fav_restaurants.findIndex((r) => r == restaurantName), 1);
     } else {
       customer.fav_restaurants_result.push(this.restaurant);
       customer.fav_restaurants.push(restaurantName);
-    } 
-    localStorage.setItem("customer",JSON.stringify(customer));
+    }
+    localStorage.setItem("customer", JSON.stringify(customer));
     this._customerService.updateFavRestaurants(customer.fav_restaurants);
   }
 
   private isFavoriteMeal(mealName: string) {
-    if(this.loggedIn()){
+    if (this.loggedIn()) {
       let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
-      if (customer.fav_meals==undefined || customer.fav_meals==null) {
+      if (customer.fav_meals == undefined || customer.fav_meals == null) {
         customer.fav_meals = []
       }
       return customer.fav_meals.includes(mealName);
@@ -102,17 +108,15 @@ export class MealComponent implements OnInit {
   }
 
   private sendFavoriteMeal(meal: Meal) {
-    console.log(meal);
     let customer: CustomerProfile = JSON.parse(localStorage.getItem("customer"));
     if (this.isFavoriteMeal(meal.name)) {
-      console.log('skloni');
-      customer.fav_meals_result.splice(customer.fav_meals_result.findIndex((m)=>m.name==meal.name),1);
-      customer.fav_meals.splice(customer.fav_meals.findIndex((m)=>m==meal.name),1);
+      customer.fav_meals_result.splice(customer.fav_meals_result.findIndex((m) => m.name == meal.name), 1);
+      customer.fav_meals.splice(customer.fav_meals.findIndex((m) => m == meal.name), 1);
     } else {
       customer.fav_meals_result.push(meal);
       customer.fav_meals.push(meal.name);
-    } 
-    localStorage.setItem("customer",JSON.stringify(customer));
+    }
+    localStorage.setItem("customer", JSON.stringify(customer));
     this._customerService.updateFavMeals(customer.fav_meals);
   }
 
@@ -144,7 +148,7 @@ export class MealComponent implements OnInit {
   }
 
   private loggedIn(): boolean {
-    if(localStorage.getItem("customer")){
+    if (localStorage.getItem("customer")) {
       return true;
     }
     return false;
@@ -155,16 +159,16 @@ export class MealComponent implements OnInit {
       this.visibleMeals = undefined;
       return;
     }
-    this.visibleMeals = this.restaurant.meals.filter(meal=>meal.name.toLowerCase().includes(event.target.value.toLowerCase())).slice(0,5);
+    this.visibleMeals = this.restaurant.meals.filter(meal => meal.name.toLowerCase().includes(event.target.value.toLowerCase())).slice(0, 5);
   }
 
   private scrollToMeal(meal: Meal) {
     this.activeCategory = meal.category;
     document.getElementById(meal.name).scrollIntoView();
-    this.collapse =  true;
+    this.collapse = true;
   }
   private focusSearch() {
-    this.collapse =  false;
+    this.collapse = false;
   }
 
 }
