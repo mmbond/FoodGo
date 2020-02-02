@@ -16,6 +16,6 @@ export class Order {
     notes: string;
     mark: number;
     meals_ids: string;
-    meal_ingredients_ids: string;    
+    meal_ingredients_ids: string;
     meal_count: string;
 }

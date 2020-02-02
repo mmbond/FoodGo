@@ -62,23 +62,22 @@
 | ingredients    | List([Ingredients](#ingredients)) |
 
 ## Order
-| Naziv atributa       | Tip                   |
-|----------------------|-----------------------|
-| orderId              | Long                  |
-| customerId           | Long                  |
-| restaurantId         | Long                  |
-| address              | String                |
-| status               | [Status](#status)     |
-| meals                | List< [Meal](#meal) > |
-| comment              | String                |
-| timestamp            | Date                  |
-| price                | Long                  |
-| notes                | String                |
-| mark                 | Integer               |
-| meals_ids            | String                |
-| meal_ingredients_ids | JSON                  |
-| meal_count           | String                |
-
+| Naziv atributa       | Tip                   | Opis                                              |
+|----------------------|-----------------------|---------------------------------------------------|
+| orderId              | Long                  |                                                   |
+| customerId           | Long                  |                                                   |
+| restaurantId         | Long                  |                                                   |
+| address              | String                |                                                   |
+| status               | [Status](#status)     |                                                   |
+| meals                | List< [Meal](#meal) > |                                                   |
+| comment              | String                |                                                   |
+| timestamp            | Date                  |                                                   |
+| price                | Long                  |                                                   |
+| notes                | String                |                                                   |
+| mark                 | Integer               |                                                   |
+| meals_ids            | String                | string meal ideva odvojenih zarezom               |
+| meal_ingredients_ids | String                | JSON format {"mealId[Long]":[[IngredientID],...]} |
+| meal_count           | String                | string broja jela odvojenih zarezo                |
 
 ## Ingredients
 | Naziv atributa | Tip    |

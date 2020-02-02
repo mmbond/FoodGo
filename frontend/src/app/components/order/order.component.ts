@@ -4,7 +4,6 @@ import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/order.model';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { Status } from 'src/app/models/status.model';
-import { CustomerProfile } from 'src/app/models/customer-profile.model';
 import { Ingredients } from 'src/app/models/ingredients.model';
 
 @Component({
@@ -29,7 +28,6 @@ export class OrderComponent implements OnInit {
   }
 
   private mealsToSet() {
-    // TODO ovde me nesto zeza
   let data = this.mealOrder.map(meal =>  meal.name + " "+ meal.ingredients.map(ingredient => ingredient.name)).reduce(function (acc, curr) {
       if (typeof acc[curr] == 'undefined') {
         acc[curr] = 1;
@@ -41,9 +39,9 @@ export class OrderComponent implements OnInit {
     }, {});
     let mealCount = Object.keys(data).map(key => ({ name: String(key), count: data[key] }));
     this.mealCount = mealCount.map(meal => meal.count);
-    let a = this.mealOrder.map(meal => meal).filter((value, index, self) => 
+    let mealSet = this.mealOrder.map(meal => meal).filter((value, index, self) => 
     self.map(meal => meal.name).indexOf(value.name) === index || self.map(i => i.ingredients.map(i=>i.name).join(" ")).indexOf(value.ingredients.map(i=>i.name).join(" ")) === index)
-    return a;
+    return mealSet;
   }
 
   private hasOrders(): boolean {
@@ -89,10 +87,23 @@ export class OrderComponent implements OnInit {
     this.mealOrderChange.emit(this.mealOrder);
   }
 
+
+  private mealIngredientsJSON() {
+    let mealSet = this.mealsToSet();
+    return mealSet.map(m=>m.mealId).reduce(function (acc, curr, id) {
+      if (typeof acc[curr] == 'undefined') {  
+        acc[curr] = []; 
+      }
+	  acc[curr].push(mealSet[id].ingredients.length>0?mealSet[id].ingredients.map(i =>i.ingredientId):[]);   
+      return acc;
+    }, {});
+  }
+
   private sendOrder() {
     let customer = JSON.parse(localStorage.getItem("customer"));
     let mealIds = [];
     this.mealsToSet().forEach(meal => mealIds.push(meal.mealId));
+
     let order: Order = {
       orderId: null,
       customerId: customer.customerId,
@@ -102,17 +113,16 @@ export class OrderComponent implements OnInit {
       status: Status.IN_PROGRESS,
       meals: this.mealOrder,
       comment: null,
-      timestamp: new Date(), // definisati foramt data koji se salje backendu
+      timestamp: new Date(),
       price: this.orderPrice,
       notes: null, // TDOO add note
       mark: null,
       meals_ids: mealIds.join(', '),
-      meal_ingredients_ids: null,
+      meal_ingredients_ids: JSON.stringify(this.mealIngredientsJSON()),
       meal_count: this.mealCount.map(m => m.toString()).join(", ")
     }
     let orderRecieved = this.orderService.send(order);
     if (orderRecieved) {
-      // TODO mozda neki dijalog se pojavljuje
       this.clearOrder();
     }
     this.closeOrderModal.nativeElement.click();
