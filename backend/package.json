@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "node backend REST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node controller.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "hashset": "0.0.6",
+    "mongoose": "^5.8.3",
+    "mysql": "github:mysqljs/mysql",
+    "window": "^4.2.6"
+  }
+}

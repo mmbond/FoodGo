@@ -1,7 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { HistoryService } from 'src/app/services/history.service';
-import { Status } from 'src/app/models/status.model';
 import { Order } from 'src/app/models/order.model';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-rating',
@@ -13,7 +12,7 @@ export class RatingComponent implements OnInit {
   @Input() read: boolean;
   @Input() order: Order;
 
-  constructor( private _historyService: HistoryService) { }
+  constructor( private _orderService: OrderService) { }
 
   ngOnInit() {
   }
@@ -23,7 +22,7 @@ export class RatingComponent implements OnInit {
       return true;
     }
     this.order.mark = rate;
-    this._historyService.rateOrder(this.order);
+    this._orderService.edit(this.order);
     return false;
   }
 }

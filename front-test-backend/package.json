@@ -1,20 +1,21 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "node backend REST",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.2"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongoose": "^5.8.3"
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "node backend REST",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "nodemon server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "nodemon": "^2.0.2"
+    },
+    "dependencies": {
+      "cors": "^2.8.5",
+      "express": "^4.17.1",
+      "mongoose": "^5.8.3"
+    }
   }
-}
+  

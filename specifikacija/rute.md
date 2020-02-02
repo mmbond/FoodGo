@@ -11,12 +11,14 @@
 ## Profil
 > rute počinju sa `api/profile/`
 
-| Ruta            | Metoda | In                 | Out                |
-|-----------------|--------|--------------------|--------------------|
-| edit            | POST   | CustomerProfile    |                    |
-| get             | GET    | CustomerId (long)  | CustomerProfile    |
-| getAddresses    | GET    | CustomerId (long)  | ProfileAddressList |
-| updateAddresses | POST   | ProfileAddressList |                    |
+| Ruta         | Metoda | In                | Out                |
+|--------------|--------|-------------------|--------------------|
+| edit         | POST   | CustomerProfile   | CustomerProfile    |
+| get          | GET    | CustomerId (long) | CustomerProfile    |
+| modAddresses | POST   | addresses         | CustomerProfile    |
+| modFavFood   | POST   | favFood           | CustomerProfile    |
+| modFavRest   | POST   | favRestaurants    | CustomerProfile    |
+# Provertii out nije isti kao sto ovde pise
 
 ## Restaurant
 > rute počinju sa `api/restaurant/`
@@ -32,17 +34,16 @@
 
 | Ruta | Metoda | In                  | Out          |
 |------|--------|---------------------|--------------|
-| all  | GET    | RestaurantId (long) | List< Meal > |
 | id   | GET    | MealId (long)       | Meal         |
 
 
 ## Order
 > rute počinju sa `api/order/`
 
-| Ruta   | Metoda | In    | Out     |
-|--------|--------|-------|---------|
-| send   | POST   | Order | boolean |
-| cancel | POST   | Order |         |
+| Ruta | Metoda | In                  | Out        |
+|------|--------|---------------------|------------|
+| send | POST   | Order               | Boolean    |
+| edit | POST   | Order               | Order      |
 
 
 ## History
@@ -51,7 +52,3 @@
 | Ruta              | Metoda | In         | Out                |
 |-------------------|--------|------------|--------------------|
 | all               | GET    | CustomerId | List< Order >      |
-| addComment        | POST   | Order      |                    |
-| rateOrder         | POST   | Order      |                    |
-| getFavRestaurants | GET    | CustomerId | List< Restaurant > |
-| getFavMeals       | GET    | CustomerId | List< Meal >       |

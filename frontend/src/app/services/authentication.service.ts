@@ -15,6 +15,7 @@ export class AuthenticationService {
   private currentCustomerSubject: BehaviorSubject<CustomerProfile>;
   public currentCustomer: Observable<CustomerProfile>;
   private _apiUrl = environment.apiUrl;
+  private _httpHeader = environment.httpHeader;
 
   constructor(private http: HttpClient) {
     this.currentCustomerSubject = new BehaviorSubject<CustomerProfile>(JSON.parse(localStorage.getItem('customer')));
@@ -25,10 +26,14 @@ export class AuthenticationService {
   }
 
   login(_customerLogin: CustomerLogin) {
-    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/login`, _customerLogin)
+    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/login`, _customerLogin, this._httpHeader)
       .pipe(map(loginResponse => {
         // login successful if there's a jwt token in the response
-        if (loginResponse) { // && customer.token) {
+        if (Object.entries(loginResponse).length !== 0) { // && customer.token) {
+          loginResponse.customer.fav_meals ===null? loginResponse.customer.fav_meals=[]: loginResponse.customer.fav_meals;
+          loginResponse.customer.fav_restaurants ===null? loginResponse.customer.fav_restaurants=[]: loginResponse.customer.fav_restaurants;
+          loginResponse.customer.fav_restaurants_result ===undefined? loginResponse.customer.fav_restaurants_result=[]: loginResponse.customer.fav_restaurants_result;
+          loginResponse.customer.fav_meals_result ===undefined? loginResponse.customer.fav_meals_result=[]: loginResponse.customer.fav_meals_result;
           let customer = loginResponse.customer;
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('customer', JSON.stringify(customer));
@@ -41,7 +46,7 @@ export class AuthenticationService {
 
   logout(_customerId: number) {
     // remove user from local storage to log user out
-    return this.http.post<boolean>(`${this._apiUrl}/administration/logout`, _customerId)
+    return this.http.post<boolean>(`${this._apiUrl}/administration/logout`, _customerId, this._httpHeader)
       .pipe(logout => {
         // logout success if true 
         if (logout) {
@@ -56,10 +61,14 @@ export class AuthenticationService {
   }
   register(_customerRegistration: CustomerRegistration) {
     // register user 
-    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/register`, _customerRegistration)
+    return this.http.post<LoginResponse>(`${this._apiUrl}/administration/register`, _customerRegistration, this._httpHeader)
       .pipe(map(loginResponse => {
         // register successful if there's a jwt token in the response
-        if (loginResponse) { // && customer.token) {
+        if (Object.entries(loginResponse).length !== 0) { // && customer.token) {
+          loginResponse.customer.fav_meals = [];
+          loginResponse.customer.fav_restaurants = [];
+          loginResponse.customer.fav_restaurants_result = [];
+          loginResponse.customer.fav_meals_result = [];
           let customer = loginResponse.customer;
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('customer', JSON.stringify(customer));

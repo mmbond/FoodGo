@@ -16,11 +16,11 @@ export class RestaurantComponent implements OnInit {
   constructor(private _restaurantService: RestaurantService) { }
 
   ngOnInit() {
-    this._fetchRestaurants(10); 
+    this._fetchRestaurants(); 
   }
 
-  private _fetchRestaurants(limit: number = 1) {
-    this._restaurantService.getRestaurants(limit).toPromise()
+  private _fetchRestaurants() {
+    this._restaurantService.getRestaurants().toPromise()
         .then(response => this.restaurants = response)
         .catch(error => this.error = ErrorHelper.generateErrorObj(error));
     }

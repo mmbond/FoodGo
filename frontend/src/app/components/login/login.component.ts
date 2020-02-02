@@ -4,6 +4,7 @@ import { CustomerLogin } from 'src/app/models/customer-login.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { sha256 } from 'js-sha256';
 
 @Component({
   selector: 'app-login',
@@ -50,16 +51,17 @@ export class LoginComponent implements OnInit {
     }
 
     this.customer.email = this.f.email.value;
-    this.customer.password = this.f.password.value;
+    this.customer.password = sha256(this.f.password.value);
     this.loading = true;
     this.authenticationService.login(this.customer)
       .pipe(first())
       .subscribe(
         data => {
+          if (data!=undefined || data!=null)
           this.router.navigate([this.returnUrl]);
+          this.loading = false;
         },
         error => {
-          //this.alertService.error(error);
           this.loading = false;
         });
   }

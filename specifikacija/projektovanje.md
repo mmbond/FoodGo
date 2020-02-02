@@ -16,39 +16,39 @@
 | phone          | String         |
 | password       | String(SHA256) |
 
-## ProfileAddressList
-| Naziv atributa | Tip            |
-|----------------|----------------|
-| addresses      | List< String > |
-
 ## LoginResponse
 | Naziv atributa | Tip                                 |
 |----------------|-------------------------------------|
 | customer       | [CustomerProfile](#customerprofile) |
 
 ## CustomerProfile
-| Naziv atributa | Tip            |
-|----------------|----------------|
-| address        | String         |
-| customerId     | Long           |
-| email          | String         |
-| favoriteMeals  | List< String > |
-| firstName      | String         |
-| lastName       | String         |
-| phone          | String         |
-
+| Naziv atributa         | Tip                             |
+|------------------------|---------------------------------|
+| addresses              | List<String>                    |
+| customerId             | Long                            |
+| email                  | String                          |
+| fav_meals              | List<String>                    |
+| fav_restaurants        | List<String>                    |
+| firstName              | String                          |
+| lastName               | String                          |
+| password               | String(SHA256)                  |
+| phone                  | String                          |
+| fav_restaurants_result | List<[Restaurant](#restaurant)> |
+| fav_meals_result       | List([Meal](#Meal))             |
 
 # Operativni rad aplikacije
 
 ## Restaurant
-| Naziv atributa | Tip    |
-|----------------|--------|
-| restaurantId   | Long   |
-| name           | String |
-| restorantLogo  | String |
-| description    | String |
-| mark           | Long   |
-| address        | String |
+| Naziv atributa | Tip                   |
+|----------------|-----------------------|
+| restaurantId   | Long                  |
+| name           | String                |
+| restaurantLogo | String                |
+| description    | String                |
+| work_time      | String                |
+| mark           | Long                  |
+| address        | String                |
+| meals          | List< [Meal](#meal) > |
 
 ## Meal
 | Naziv atributa | Tip                               |
@@ -57,38 +57,40 @@
 | name           | String                            |
 | mealPicture    | String                            |
 | description    | String                            |
-| category       | [Category](#category)             |
+| category       | String                            |
 | price          | Long                              |
 | ingredients    | List([Ingredients](#ingredients)) |
 
 ## Order
-| Naziv atributa | Tip                       |
-|----------------|---------------------------|
-| orderId        | Long                      |
-| restaurant     | [Restaurant](#restaurant) |
-| status         | [Status](#status)         |
-| meals          | List< [Meal](#meal) >     |
-| comment        | String                    |
-| orderDate      | Date                      |
-| price          | Long                      |
-| note           | String                    |
-| mark           | Integer                   |
+| Naziv atributa       | Tip                   | Opis                                              |
+|----------------------|-----------------------|---------------------------------------------------|
+| orderId              | Long                  |                                                   |
+| customerId           | Long                  |                                                   |
+| restaurantId         | Long                  |                                                   |
+| address              | String                |                                                   |
+| status               | [Status](#status)     |                                                   |
+| meals                | List< [Meal](#meal) > |                                                   |
+| comment              | String                |                                                   |
+| timestamp            | Date                  |                                                   |
+| price                | Long                  |                                                   |
+| notes                | String                |                                                   |
+| mark                 | Integer               |                                                   |
+| meals_ids            | String                | string meal ideva odvojenih zarezom               |
+| meal_ingredients_ids | String                | JSON format {"mealId[Long]":[[IngredientID],...]} |
+| meal_count           | String                | string broja jela odvojenih zarezo                |
 
 ## Ingredients
 | Naziv atributa | Tip    |
 |----------------|--------|
-| ingridientsId  | Long   |
+| ingredientId   | Long   |
 | name           | String |
+| mealId         | Long   |
 | price          | Long   |
 
 ## Category
 | Vrednosti    |
 |--------------|
-| Hamburger    |
-| Cheeseburger |
-| Sandwich     |
-| Burrito      |
-| Taco         |
+# TODO srediti ovo
 
 ## Status
 | Naziv atributa | Tip    | Vrednosti   |

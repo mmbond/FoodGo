@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 14 23:30:52 2020
-
-@author: takmicenje
-"""
 
 import requests
 from urllib.request import urlretrieve

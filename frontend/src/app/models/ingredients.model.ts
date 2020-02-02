@@ -1,6 +1,7 @@
 export class Ingredients {
 
-    ingridientsId: number;
+    ingredientId: number;
     name: string;
+    mealId: number;
     price: number;
 }

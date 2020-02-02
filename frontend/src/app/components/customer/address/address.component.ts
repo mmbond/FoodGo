@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
-import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
-import { ProfileAddressList } from 'src/app/models/profile-address-list.model';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
@@ -24,24 +22,26 @@ export class AddressComponent implements OnInit {
   constructor(private router: Router, private _customerService: CustomerService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this._fetchCustomerAddresses(10);
+
+    this._fetchCustomerAddresses();
     this.addressForm = this.formBuilder.group({
       address: ['', Validators.required],
     });
   }
 
-  private _fetchCustomerAddresses(limit: number = 1) {
-    this._customerService.getCustomerAddresses(limit).toPromise()
-      .then(response => { this.addresses = response.addresses; this.total = Array(Math.ceil(response.addresses.length / this.limit)); this.current = 1; })
-      .catch(error => this.error = ErrorHelper.generateErrorObj(error));
+  private _fetchCustomerAddresses() {
+    let customer = localStorage.getItem("customer");
+    this.addresses = JSON.parse(customer).addresses;
+    this.total = Array(Math.ceil(this.addresses.length / this.limit)); 
+    this.current = 1;
   }
 
   private updateAddresses(index: number) {
-    //var index = this.addresses.findIndex(address => address == removeAddress);
     this.addresses.splice(index, 1);
-    var updateAddresses = new ProfileAddressList();
-    updateAddresses.addresses = this.addresses;
-    this._customerService.updateCustomerAddresses(updateAddresses);
+    let customer = JSON.parse(localStorage.getItem("customer"));
+    customer.addresses = this.addresses;
+    localStorage.setItem('customer', JSON.stringify(customer));
+    this._customerService.updateCustomerAddresses(this.addresses);
     this.total = Array(Math.ceil(this.addresses.length / this.limit));
     if (index>this.total.length){
       this.current = this.current-1;
@@ -63,9 +63,10 @@ export class AddressComponent implements OnInit {
     }
     this.addresses.push(this.f.address.value);
     this.total = Array(Math.ceil(this.addresses.length / this.limit));
-    var updateAddresses = new ProfileAddressList();
-    updateAddresses.addresses = this.addresses;
-    this._customerService.updateCustomerAddresses(updateAddresses);
+    let customer = JSON.parse(localStorage.getItem("customer"));
+    customer.addresses = this.addresses;
+    localStorage.setItem('customer', JSON.stringify(customer));
+    this._customerService.updateCustomerAddresses(this.addresses);
     this.addressForm.reset();
     this.submitted = false;
     this.closeAddressModal.nativeElement.click();
@@ -73,7 +74,6 @@ export class AddressComponent implements OnInit {
 
   public receiveCurrentPage($event) {
     this.current = $event;
-    console.log($event);
   }
 
   public getPageLimit(id: number) {

@@ -1,3 +1,4 @@
+/*
 'use strict';
 const express = require('express')
 const bodyParser = require('body-parser');
@@ -93,3 +94,4 @@ app.get('/api/history/getFavMeals', function (req, res) {
   let favRestaurants = require('./favMeals.json');
   res.json(favRestaurants);
 })
+*/

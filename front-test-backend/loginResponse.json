@@ -1,12 +1,13 @@
 {
     "customer": {
-        "address": "Neswto 123",
+        "address": "Paunova 25",
         "customerId": 1,
         "email": "marko@marko.com",
+        "password": "marko123",
         "favoriteMeals": [
-            "pizza",
-            "chicken",
-            "tortilja"
+            "pica",
+            "piletina",
+            "pasta"
         ],
         "firstName": "Marko",
         "lastName": "Milic",

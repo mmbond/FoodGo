@@ -4,12 +4,18 @@ import { Status } from './status.model';
 
 export class Order {
     orderId: number;
+    customerId: number;
     restaurant: Restaurant;
+    restaurantId: number;
+    address: string;
     status: Status;
     meals: Array<Meal>;
     comment: string;
-    orderDate: Date;
+    timestamp: Date;
     price: number;
-    note: string;
+    notes: string;
     mark: number;
+    meals_ids: string;
+    meal_ingredients_ids: string;
+    meal_count: string;
 }

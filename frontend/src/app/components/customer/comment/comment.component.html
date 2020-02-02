@@ -9,7 +9,7 @@
         <th scope="col">Restoran</th>
         <th scope="col">Datum</th>
         <th scope="col">Utisak</th>
-        <th scope="col">Opcija</th>
+        <th scope="col">Ostavite Utisak</th>
       </tr>
     </thead>
     <tbody>
@@ -17,11 +17,11 @@
         <th *ngIf="getPageLimit(i)" scope="row">{{order.orderId}}</th>
         <td *ngIf="getPageLimit(i)">{{order.status}}</td>
         <td *ngIf="getPageLimit(i)">{{order.restaurant.name}}</td>
-        <td *ngIf="getPageLimit(i)">{{order.orderDate | date:'dd.MM.yyyy. h:mm a'}}</td>
-        <td *ngIf='order.comment!=undefined'>{{order.comment}}</td>
-        <td *ngIf='order.comment==undefined'>Nema komentara</td>
+        <td *ngIf="getPageLimit(i)">{{order.timestamp | date:'dd.MM.yyyy. h:mm a'}}</td>
+        <td *ngIf='order.comment!=null'>{{order.comment}}</td>
+        <td *ngIf='order.comment==null'>Nema komentara</td>
         <!-- TODO klikni opcija moze detaljnije gde se otvara dialog sa input text area i unosi se utisak-->
-        <td *ngIf='order.comment==undefined'><button (click)="index(order.orderId)" data-toggle="modal" data-target="#commentModal"
+        <td *ngIf='order.comment==null'><button (click)="index(order.orderId)" data-toggle="modal" data-target="#commentModal"
             class="btn btn-warning">Ostavite utisak</button></td>
       </tr>
     </tbody>

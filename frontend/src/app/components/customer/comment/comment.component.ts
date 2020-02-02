@@ -4,6 +4,7 @@ import { Order } from 'src/app/models/order.model';
 import { HistoryService } from 'src/app/services/history.service';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-comment',
@@ -19,20 +20,21 @@ export class CommentComponent implements OnInit {
   submitted = false;
   total: Array<number>;
   current: number;
-  limit = 5; 
-  constructor(private router: Router, private _historyService: HistoryService, private formBuilder: FormBuilder) { }
+  limit = 5;
+  constructor(private router: Router, private _historyService: HistoryService, private _orderService: OrderService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this._fetchOrders(10);
+    let customer = localStorage.getItem("customer");
+    let customerId = JSON.parse(customer).customerId;
+    this._fetchOrders(customerId);
     this.commentForm = this.formBuilder.group({
       comment: ['', Validators.required],
     });
   }
 
-  private _fetchOrders(limit: number = 1) {
-    this._historyService.getOrders(limit).toPromise()
-      .then(response => { this.orders = response; this.total = Array(Math.ceil(response.length / this.limit)); this.current = 1; })
-      .catch(error => this.error = ErrorHelper.generateErrorObj(error));
+  private _fetchOrders(customerId: number) {
+    this._historyService.getOrders(customerId).toPromise()
+      .then(response => { this.orders = response; this.total = Array(Math.ceil(response.length / this.limit)); this.current = 1; });
   }
 
   private goToOrders() {
@@ -43,7 +45,10 @@ export class CommentComponent implements OnInit {
   get f() { return this.commentForm.controls; }
 
   private showComments(): boolean {
-    return this.orders != undefined;
+    if (this.orders != undefined && this.orders.length >0){
+      return true;
+    }
+    return false;
   }
 
   addComment() {
@@ -52,9 +57,9 @@ export class CommentComponent implements OnInit {
     if (this.commentForm.invalid) {
       return;
     }
-    var updateOrder = this.orders.find(order => order.orderId==this.orderId);
+    var updateOrder = this.orders.find(order => order.orderId == this.orderId);
     updateOrder.comment = this.f.comment.value;
-    this._historyService.addComment(updateOrder);
+    this._orderService.edit(updateOrder);
     this.commentForm.reset();
     this.submitted = false;
     this.closeCommentModal.nativeElement.click();
@@ -68,7 +73,7 @@ export class CommentComponent implements OnInit {
     this.submitted = false;
     this.closeCommentModal.nativeElement.click();
   }
-  
+
   public receiveCurrentPage($event) {
     this.current = $event;
     console.log($event);
