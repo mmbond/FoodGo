@@ -368,7 +368,7 @@ export function createOrder(startOrderData){
     let query = `
     INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, meal_count, notes)
     VALUES (${startOrderData.customerId}, ${startOrderData.restaurantId}, '${startOrderData.address}', ${startOrderData.price}, '${startOrderData.timestamp}',
-    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.meal_count}', '${startOrderData.notes}');`;
+    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.meal_count}', ${startOrderData.notes});`;
     try {
         return database.query(query).then(function() {
             console.log("Record inserted");

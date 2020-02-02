@@ -4916,9 +4916,9 @@ INSERT INTO `meals` VALUES ('331', 'Schweppes bitter 0,25', 'PIĆA', 'assets/mea
 INSERT INTO `meals` VALUES ('332', 'Edamame', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/edamame.jpg', 'Edamame sa krupnom morskom solju');
 INSERT INTO `meals` VALUES ('333', 'Prolećne rolnice', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/prolećne_rolnice.jpg', 'Mix povrća, šitaki pečurke, pirinčane tanke nudle sa slatko-ljutim sosom');
 INSERT INTO `meals` VALUES ('334', 'Gyoza', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/gyoza.jpg', 'Kuvane i pržene knedle, punjene svinjetinom i kupusom sa pikantnim ponzu sosom i mladim lukom');
-INSERT INTO `meals` VALUES ('335', 'Pileći \'satay\'', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/pileći_satay.jpg', 'Grilovani ražnjić sa mariniranim pilećim fileom, homemade sos od kikirikija');
+INSERT INTO `meals` VALUES ('335', 'Pileći satay', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/pileći_satay.jpg', 'Grilovani ražnjić sa mariniranim pilećim fileom, homemade sos od kikirikija');
 INSERT INTO `meals` VALUES ('336', 'Vijetnamska salata sa susamom', 'STARTERI', 'assets/meals/sakura/vijetnamska_salata_sa_susamom.jpg', 'Mix zelenih salata, špargle, šargarepe, čeri paradajza u homemade susam dresingu');
-INSERT INTO `meals` VALUES ('337', 'Koreanska \'kimchi\' tuna', 'STARTERI', 'assets/meals/sakura/koreanska_kimchi_tuna.jpg', 'Slatko ljuta začinjena tuna sa koreanskom čili pastom, kimčijem i probranim povrćem');
+INSERT INTO `meals` VALUES ('337', 'Koreanska kimchi tuna', 'STARTERI', 'assets/meals/sakura/koreanska_kimchi_tuna.jpg', 'Slatko ljuta začinjena tuna sa koreanskom čili pastom, kimčijem i probranim povrćem');
 INSERT INTO `meals` VALUES ('338', 'Losos tataki', 'STARTERI', 'assets/meals/sakura/losos_tataki.jpg', 'Losos sa podlogom od teriyaki sosa, segmentima pomorandže, listićima crnog tartufa, ikurom i ponzo sosom');
 INSERT INTO `meals` VALUES ('339', 'Crispy prawns', 'STARTERI', 'assets/meals/sakura/crispy_prawns.jpg', 'Fritirane rolnice sa black tiger gamborima i japanski čili majonez');
 INSERT INTO `meals` VALUES ('340', 'Tatar biftek', 'STARTERI', 'assets/meals/sakura/tatar_biftek.jpg', 'Kockice junećeg filea, prepeličje jaje, crni tartuf i dresing od soje i ulja belih tartufa');
@@ -6555,10 +6555,10 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-02-01 22:31:44', '1', 'null', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
+INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-02-01 22:31:44', '1', '{\"1\": [[]]}', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
 INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-02-02 02:01:30', '41, 48', '{\"48\": [[27, 30]]}', 'druga porudzbina', 'in progress', '1, 1', null, '3');
 INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-02-01 22:31:58', '47, 52', '{\"47\": [[7, 8, 9], [1, 3]], \"52\": [[116, 118, 119]]}', 'Odlicno jee', 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
-INSERT INTO `orders` VALUES ('4', '2', '14', 'Kraljice Katarine 33', '1650', '2020-02-01 22:32:05', '703, 706', 'null', 'null', 'in progress', '2, 1', 'null', null);
+INSERT INTO `orders` VALUES ('4', '2', '14', 'Kraljice Katarine 33', '1650', '2020-02-01 22:32:05', '703, 706', null, null, 'in progress', '2, 1', null, null);
 
 -- ----------------------------
 -- Table structure for restaurants
