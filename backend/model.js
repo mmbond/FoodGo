@@ -211,6 +211,7 @@ export function getAllOrdersHistory(customerId){
                                                         sameMealIndex = 0;
                                                     }
                                                     var uniqueMealIngredientsIds = ordersHistory[i].meal_ingredients_ids[ordersHistory[i].meals[j].mealId.toString()][sameMealIndex];
+                                                    uniqueMealIngredientsIds = uniqueMealIngredientsIds!=undefined ? uniqueMealIngredientsIds: [];
                                                     for(var k = 0; k < uniqueMealIngredientsIds.length; k++){
                                                         var ingredientObj = allIngredients.find(ingredient => ingredient.ingredientId === uniqueMealIngredientsIds[k]);
                                                         ordersHistory[i].meals[j].ingredients.push(ingredientObj);
@@ -365,9 +366,9 @@ export function updateCustomer(customerEdited){
 export function createOrder(startOrderData){
     startOrderData.timestamp = startOrderData.timestamp.substring(0,startOrderData.timestamp.length-4).replace("T", " ");
     let query = `
-    INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, comment, meal_count, notes)
+    INSERT INTO orders (customerId, restaurantId, address, price, timestamp, meals_ids, meal_ingredients_ids, meal_count, notes)
     VALUES (${startOrderData.customerId}, ${startOrderData.restaurantId}, '${startOrderData.address}', ${startOrderData.price}, '${startOrderData.timestamp}',
-    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.comment}', '${startOrderData.meal_count}', '${startOrderData.notes}');`;
+    '${startOrderData.meals_ids}', '${startOrderData.meal_ingredients_ids}', '${startOrderData.meal_count}', '${startOrderData.notes}');`;
     try {
         return database.query(query).then(function() {
             console.log("Record inserted");

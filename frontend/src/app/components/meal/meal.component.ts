@@ -54,6 +54,7 @@ export class MealComponent implements OnInit {
 
   private chooseMealToOrder(id) {
     this.chosedMeal = {...this.restaurant.meals[id]};
+    this.chosedMeal.ingredients = this.restaurant.meals[id].ingredients!=undefined?this.restaurant.meals[id].ingredients:[];
     this.ingredients = this.restaurant.meals[id].ingredients;
     this.orderIngredients = [];
   }
@@ -75,7 +76,9 @@ export class MealComponent implements OnInit {
   }
 
   private addToOrder() {
+    if (this.chosedMeal.ingredients.length>0) {
     this.chosedMeal.ingredients = this.chosedMeal.ingredients.filter((ing)=> this.orderIngredients.includes(ing.ingredientId.toString()));
+    }
     this.orderMeals.push(this.chosedMeal);
     this.closeMealModal.nativeElement.click();
   }

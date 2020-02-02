@@ -18,13 +18,12 @@
         <th *ngIf="getPageLimit(i)"scope="row">{{order.orderId}}</th>
         <td *ngIf="getPageLimit(i)">{{order.status.toUpperCase()}}</td>
         <td *ngIf="getPageLimit(i)">
-          <p *ngFor='let meal of mealList(order.meals)'>
-            {{meal.count}} x {{meal.name}}
-          </p>
+            <p *ngFor='let count of  order.meal_count; let mealID = index;'>
+              {{count}} x {{findById(order,mealID)}} {{ingredientsName(order)}}</p> 
           </td>
         <td *ngIf="getPageLimit(i)">{{order.timestamp | date:'dd.MM.yyyy. h:mm a'}}</td>
         <td *ngIf="getPageLimit(i)">{{order.price}} RSD</td>
-        <td *ngIf="getPageLimit(i)">{{order.note}}</td>
+        <td *ngIf="getPageLimit(i)">{{order.notes}}</td>
         <td *ngIf="getPageLimit(i)"><app-rating *ngIf="order.mark==undefined && order.status.toUpperCase()=='FINISHED'" [order]=order [read]=false [currentRate]=0></app-rating>
           <button *ngIf="order.status.toUpperCase()=='IN PROGRESS'" (click)="cancelOrder(i)" class="btn btn-warning">ODUSTANITE</button> </td>
       </tr>
