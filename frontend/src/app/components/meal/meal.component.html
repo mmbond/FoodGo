@@ -105,7 +105,7 @@
           <div id="map-container-google-1" class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" [src]="getMapUrl()" frameborder="1" style="border:0"></iframe>
           </div>
-          <app-order [(mealOrder)]=orderMeals [restaurantOrder]=restaurant [ingredientOrder]=orderIngredients class="p-3"></app-order>
+          <app-order [(mealOrder)]=orderMeals [restaurantOrder]=restaurant class="p-3"></app-order>
         </div>
       </div>
     </div>
@@ -133,18 +133,24 @@
           <div *ngIf='ingredients!=undefined && ingredients.length>0'>
             <h5>Odaberite priloge</h5>
             <div *ngFor="let ingredient of ingredients; let i = index">
-              <div *ngIf="i % 3 == 0" class="row">
-                <div (change)="dodajPrilog($event)"  class="col-md-4" *ngIf="i < ingredients.length" style="width: 18rem;">
-                  <input type="checkbox" value="{{ingredients[i].ingredientId}}">{{ingredients[i].name}},
-                  {{ingredients[i].price}} RSD
+              <div *ngIf="i % 3 == 0" class="row pl-4">
+                <div (change)="dodajPrilog($event)" class="form-check col-md-4" *ngIf="i < ingredients.length" style="width: 18rem;">
+                  <input #checkboxes class="form-check-input" type="checkbox" value="{{ingredients[i].ingredientId}}"
+                    id="{{ingredients[i].ingredientId}}"><label class="form-check-label" for="{{ingredients[i].ingredientId}}">
+                    {{ingredients[i].name}}, {{ingredients[i].price}} RSD
+                  </label>
                 </div>
-                <div  (change)="dodajPrilog($event)" class="col-md-4" *ngIf="i + 1 < ingredients.length" style="width: 18rem;">
-                  <input type="checkbox" value="{{ingredients[i+1].ingredientId}}">{{ingredients[i+1].name}},
-                  {{ingredients[i+1].price}} RSD
+                <div (change)="dodajPrilog($event)" class="form-check col-md-4" *ngIf="i + 1 < ingredients.length" style="width: 18rem;">
+                  <input #checkboxes class="form-check-input" type="checkbox" value="{{ingredients[i+1].ingredientId}}"
+                    id="{{ingredients[i+1].ingredientId}}"><label class="form-check-label" for="{{ingredients[i+1].ingredientId}}">
+                    {{ingredients[i+1].name}}, {{ingredients[i+1].price}} RSD
+                  </label>
                 </div>
-                <div (change)="dodajPrilog($event)" class="col-md-4" *ngIf="i + 2 < ingredients.length" style="width: 18rem;">
-                  <input type="checkbox" value="{{ingredients[i+2].ingredientId}}">{{ingredients[i+2].name}},
-                  {{ingredients[i+2].price}} RSD
+                <div (change)="dodajPrilog($event)" class="form-check col-md-4" *ngIf="i + 2 < ingredients.length" style="width: 18rem;">
+                  <input #checkboxes class="form-check-input" type="checkbox" value="{{ingredients[i+2].ingredientId}}"
+                    id="{{ingredients[i+2].ingredientId}}"><label class="form-check-label" for="{{ingredients[i+2].ingredientId}}">
+                    {{ingredients[i+2].name}}, {{ingredients[i+2].price}} RSD
+                  </label>
                 </div>
               </div>
             </div>
@@ -157,7 +163,7 @@
         </form>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvorite</button>
-          <button class="btn btn-warning" (click)="addToOrder(mealName)">Dodajte</button>
+          <button class="btn btn-warning" (click)="addToOrder();uncheckAll()">Dodajte</button>
         </div>
       </div>
     </div>

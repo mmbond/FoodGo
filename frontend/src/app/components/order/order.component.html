@@ -13,19 +13,27 @@
                 <div>
                     <div class="d-flex justify-content-between">
                         <h5>{{meal.name}}</h5>
-                        <button (click)="clearOneOrder(meal.name)" type="button" class="btn btn-xs order-close"
+                        <button (click)="clearOneOrder(meal.name, meal.ingredients)" type="button" class="btn btn-xs order-close"
                             aria-label="RemoveOrder"><i class="fa fa-times" aria-hidden="true"></i></button>
                     </div>
                     <div class="d-flex justify-content-between" style="height: 30px">
                         <div>
-                            <button class="btn btn-xs btn-default" (click)="removeFromOrder(meal.name)"
-                                [disabled]="!hasOrder(meal.name)"><i class="fa fa-minus"
+                            <button class="btn btn-xs btn-default" (click)="removeFromOrder(meal.name, meal.ingredients)"
+                                [disabled]="!hasOrder(meal.name, meal.ingredients)"><i class="fa fa-minus"
                                     aria-hidden="true"></i></button>
                             <span class="m-2">{{mealCount[i]}}</span>
                             <button class="btn btn-xs btn-default" (click)="addToOrder(meal)"><i class="fa fa-plus"
                                     aria-hidden="true"></i></button>
                         </div>
                         <p class="text-muted mt-2">{{meal.price}} RSD </p>
+                    </div>
+                </div>
+                <div *ngIf="meal.ingredients.length>0">
+                    <div *ngFor="let ingredient of meal.ingredients">
+                        <div class="d-flex justify-content-between pt-0 mt-0" style="line-height: 1;">
+                        <p class="text-muted">{{ingredient.name}}</p>
+                        <p class="text-muted">{{ingredient.price}} RSD </p>
+                    </div>
                     </div>
                 </div>
             </li>
