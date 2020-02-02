@@ -28,7 +28,7 @@ export class OrderComponent implements OnInit {
   }
 
   private mealsToSet() {
-  let data = this.mealOrder.map(meal =>  meal.name + " "+ meal.ingredients.map(ingredient => ingredient.name)).reduce(function (acc, curr) {
+  let data = this.mealOrder.map(meal =>  meal.name).reduce(function (acc, curr) {
       if (typeof acc[curr] == 'undefined') {
         acc[curr] = 1;
       } else {
@@ -102,7 +102,9 @@ export class OrderComponent implements OnInit {
   private sendOrder() {
     let customer = JSON.parse(localStorage.getItem("customer"));
     let mealIds = [];
-    this.mealsToSet().forEach(meal => mealIds.push(meal.mealId));
+    this.mealsToSet().forEach(function(meal){
+      if(!mealIds.includes(meal.mealId)) mealIds.push(meal.mealId);
+    });
 
     let order: Order = {
       orderId: null,
