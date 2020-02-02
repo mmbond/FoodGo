@@ -85,6 +85,7 @@
 |----------------|--------|
 | ingridientsId  | Long   |
 | name           | String |
+| mealId         | Long   |
 | price          | Long   |
 
 ## Category

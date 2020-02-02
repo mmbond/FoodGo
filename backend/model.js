@@ -116,7 +116,7 @@ export function getRestaurantById(restaurantId){
     }
 }
 
-// Get orders history for one customer. - NE RADI (DELOVI GDE JE UPIT UNUTAR PETLJE ZBOG ASINHRONOSTI UPITA)
+// Get orders history for one customer. - RADI
 export function getAllOrdersHistory(customerId){
     var query = `
     SELECT * FROM orders
@@ -149,6 +149,7 @@ export function getAllOrdersHistory(customerId){
                         }
                     }
 
+                    // Add all meals which belongs to specific order.
                     var mealIds = [];
                     for(var i = 0; i < ordersHistory.length; i++){
                         for(var j = 0; j < ordersHistory[i].meals_ids.length; j++){
@@ -169,28 +170,59 @@ export function getAllOrdersHistory(customerId){
                                         var meal_id_index = ordersHistory[i].meals_ids.indexOf(allMeals[j].mealId.toString());
                                         var meal_count = ordersHistory[i].meal_count[meal_id_index].toString();
                                         for(var k = 0; k < meal_count; k++){
-                                            ordersHistory[i].meals.push(allMeals[j]);
+                                            var meal = Object.assign({}, allMeals[j]);
+                                            ordersHistory[i].meals.push(meal);
                                         }
                                     }
                                 }
                             }
-
-                            /*
-                            // Find all ingredients for specific meal and push in meal object
-                            if(ordersHistory[i].meal_ingredients_ids.hasOwnProperty(mealIdKey) && ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length > 0){
-                                for(var x = 0; x < ordersHistory[i].meal_ingredients_ids[mealIdKey][k].length; x++){
-                                    let ingredient_id = parseInt(ordersHistory[i].meal_ingredients_ids[mealIdKey][k][x]);
-                                    var query3 = `SELECT * FROM ingredients WHERE ingredientId = ${ingredient_id};`;
-                                    try {
-                                        return database.query(query3).then(function(rows) {
-                                            let ingredient = JSON.parse(JSON.stringify(rows))[0];
-                                            meal.ingredients.push(ingredient);
-                                        }); 
-                                    } catch (error) {
-                                        console.error(error);
+                            // Find all ingredients for every meal object.
+                            var ingredientsIds = [];
+                            for(var i = 0; i < ordersHistory.length; i++){
+                                if(ordersHistory[i].meal_ingredients_ids != null){
+                                    var mealKeys = Object.keys(ordersHistory[i].meal_ingredients_ids);
+                                    for(var j = 0; j < mealKeys.length; j++){
+                                        for(var k = 0; k < ordersHistory[i].meal_ingredients_ids[mealKeys[j]].length; k++){
+                                            for(var x = 0; x < ordersHistory[i].meal_ingredients_ids[mealKeys[j]][k].length; x++){
+                                                if(!ingredientsIds.includes(ordersHistory[i].meal_ingredients_ids[mealKeys[j]][k][x])){
+                                                    ingredientsIds.push(ordersHistory[i].meal_ingredients_ids[mealKeys[j]][k][x]);
+                                                }
+                                            }
+                                        }
                                     }
-                                }
-                            } */
+                                } 
+                            }
+                            ingredientsIds = ingredientsIds.join(`, `);
+                            var query3 = `SELECT * FROM ingredients WHERE ingredientId in (${ingredientsIds});`;
+                            try {
+                                return database.query(query3).then(function(rows) {
+                                    var allIngredients = JSON.parse(JSON.stringify(rows));
+                                    for(var i = 0; i < ordersHistory.length; i++){
+                                        if(ordersHistory[i].meal_ingredients_ids != null){
+                                            var sameMealIndex = 0;
+                                            var previousMealId = 0;
+                                            for(var j = 0; j < ordersHistory[i].meals.length; j++){ 
+                                                ordersHistory[i].meals[j].ingredients = [];
+                                                if(ordersHistory[i].meal_ingredients_ids[ordersHistory[i].meals[j].mealId.toString()] != undefined){
+                                                    if(previousMealId === ordersHistory[i].meals[j].mealId){
+                                                        sameMealIndex++;
+                                                    } else {
+                                                        previousMealId = ordersHistory[i].meals[j].mealId;
+                                                        sameMealIndex = 0;
+                                                    }
+                                                    var uniqueMealIngredientsIds = ordersHistory[i].meal_ingredients_ids[ordersHistory[i].meals[j].mealId.toString()][sameMealIndex];
+                                                    for(var k = 0; k < uniqueMealIngredientsIds.length; k++){
+                                                        var ingredientObj = allIngredients.find(ingredient => ingredient.ingredientId === uniqueMealIngredientsIds[k]);
+                                                        ordersHistory[i].meals[j].ingredients.push(ingredientObj);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }); 
+                            } catch (error) {
+                                console.error(error);
+                            }
                         }); 
                     } catch (error) {
                         console.error(error);

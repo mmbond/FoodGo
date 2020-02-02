@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-01-31 05:30:21
+Date: 2020-02-02 03:41:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -6555,10 +6555,10 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-01-28 17:15:55', '1', '{\"1\": [[]]}', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
-INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-01-28 17:16:04', '41, 43', '{\"41\": [[]], \"43\": [[]]}', 'druga porudzbina', 'in progress', '1, 1', null, '3');
-INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-01-28 16:16:08', '42, 52', '{\"42\": [[], []], \"52\": [[]]}', 'Odlicno jee', 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
-INSERT INTO `orders` VALUES ('4', '2', '14', 'Kraljice Katarine 33', '1650', '2020-01-31 03:09:32', '703, 706', 'null', 'null', 'in progress', '2, 1', 'null', null);
+INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-02-01 22:31:44', '1', 'null', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
+INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-02-02 02:01:30', '41, 48', '{\"48\": [[27, 30]]}', 'druga porudzbina', 'in progress', '1, 1', null, '3');
+INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-02-01 22:31:58', '47, 52', '{\"47\": [[7, 8, 9], [1, 3]], \"52\": [[116, 118, 119]]}', 'Odlicno jee', 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
+INSERT INTO `orders` VALUES ('4', '2', '14', 'Kraljice Katarine 33', '1650', '2020-02-01 22:32:05', '703, 706', 'null', 'null', 'in progress', '2, 1', 'null', null);
 
 -- ----------------------------
 -- Table structure for restaurants
