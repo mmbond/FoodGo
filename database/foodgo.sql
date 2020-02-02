@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2020-02-02 20:09:45
+Date: 2020-02-02 22:21:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4917,7 +4917,7 @@ INSERT INTO `meals` VALUES ('331', 'Schweppes bitter 0,25', 'PIĆA', 'assets/mea
 INSERT INTO `meals` VALUES ('332', 'Edamame', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/edamame.jpg', 'Edamame sa krupnom morskom solju');
 INSERT INTO `meals` VALUES ('333', 'Prolećne rolnice', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/prolećne_rolnice.jpg', 'Mix povrća, šitaki pečurke, pirinčane tanke nudle sa slatko-ljutim sosom');
 INSERT INTO `meals` VALUES ('334', 'Gyoza', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/gyoza.jpg', 'Kuvane i pržene knedle, punjene svinjetinom i kupusom sa pikantnim ponzu sosom i mladim lukom');
-INSERT INTO `meals` VALUES ('335', 'Pileći \'satay\'', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/pileći_satay.jpg', 'Grilovani ražnjić sa mariniranim pilećim fileom, homemade sos od kikirikija');
+INSERT INTO `meals` VALUES ('335', 'Pileći satay', 'ZALOGAJI ZA DOBAR POČETAK', 'assets/meals/sakura/pileći_satay.jpg', 'Grilovani ražnjić sa mariniranim pilećim fileom, homemade sos od kikirikija');
 INSERT INTO `meals` VALUES ('336', 'Vijetnamska salata sa susamom', 'STARTERI', 'assets/meals/sakura/vijetnamska_salata_sa_susamom.jpg', 'Mix zelenih salata, špargle, šargarepe, čeri paradajza u homemade susam dresingu');
 INSERT INTO `meals` VALUES ('337', 'Koreanska \'kimchi\' tuna', 'STARTERI', 'assets/meals/sakura/koreanska_kimchi_tuna.jpg', 'Slatko ljuta začinjena tuna sa koreanskom čili pastom, kimčijem i probranim povrćem');
 INSERT INTO `meals` VALUES ('338', 'Losos tataki', 'STARTERI', 'assets/meals/sakura/losos_tataki.jpg', 'Losos sa podlogom od teriyaki sosa, segmentima pomorandže, listićima crnog tartufa, ikurom i ponzo sosom');
@@ -6551,7 +6551,7 @@ CREATE TABLE `orders` (
   KEY `FK_RESTAURANT` (`restaurantId`),
   CONSTRAINT `FK_CUSTOMER` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_RESTAURANT` FOREIGN KEY (`restaurantId`) REFERENCES `restaurants` (`restaurantId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orders
@@ -6559,11 +6559,10 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` VALUES ('1', '1', '1', 'Bulevar Oslobodjenja 110', '345', '2020-02-02 16:30:40', '1', '{\"1\": [[]]}', 'prva porudzbina', 'finished', '1', 'Sa kecapom, bez luka :D', '4');
 INSERT INTO `orders` VALUES ('2', '1', '2', 'Danijelova 32', '685', '2020-02-02 16:30:51', '41, 48', '{\"41\": [[]], \"48\": [[27, 30]]}', 'druga porudzbina', 'in progress', '1, 1', null, '3');
 INSERT INTO `orders` VALUES ('3', '2', '2', 'Pozeska 69', '1460', '2020-02-01 22:31:58', '47, 52', '{\"47\": [[7, 8, 9], [1, 3]], \"52\": [[116, 118, 119]]}', 'Odlicno jee', 'finished', '2, 1', 'Interfon ne radi, zvati na mobilni', '5');
-INSERT INTO `orders` VALUES ('4', '2', '14', 'Kraljice Katarine 33', '1650', '2020-02-01 21:32:05', '703, 706', 'null', 'null', 'canceled', '2, 1', 'null', null);
-INSERT INTO `orders` VALUES ('5', '4', '2', 'Ruzveltova 5', '1430', '2020-02-02 17:15:00', '41, 42', '{\"41\": [[]], \"42\": [[1911, 1923], []]}', null, 'in progress', '2, 2', null, null);
-INSERT INTO `orders` VALUES ('6', '2', '2', 'Kraljice Katarine 33', '1200', '2020-02-02 17:38:37', '42', '{\"42\": [[], [1923, 1926], []]}', null, 'in progress', '3', null, null);
-INSERT INTO `orders` VALUES ('7', '2', '2', 'Kraljice Katarine 33', '1550', '2020-02-02 17:31:44', '43, 42', '{\"42\": [[], [1926]], \"43\": [[], []]}', null, 'in progress', '2, 2', null, null);
-INSERT INTO `orders` VALUES ('8', '2', '2', 'Kraljice Katarine 33', '1800', '2020-02-02 19:08:54', '42, 43', '{\"42\": [[], [1920, 1921]], \"43\": [[1943, 1947]]}', null, 'in progress', '2, 2', null, null);
+INSERT INTO `orders` VALUES ('4', '4', '2', 'Ruzveltova 5', '1430', '2020-02-02 22:17:32', '41, 42', '{\"41\": [[]], \"42\": [[1911, 1923], []]}', null, 'in progress', '2, 2', null, null);
+INSERT INTO `orders` VALUES ('5', '2', '2', 'Kraljice Katarine 33', '1200', '2020-02-02 22:17:34', '42', '{\"42\": [[], [1923, 1926], []]}', null, 'in progress', '3', null, null);
+INSERT INTO `orders` VALUES ('6', '2', '2', 'Kraljice Katarine 33', '1550', '2020-02-02 22:17:36', '43, 42', '{\"42\": [[], [1926]], \"43\": [[], []]}', null, 'in progress', '2, 2', null, null);
+INSERT INTO `orders` VALUES ('7', '2', '2', 'Kraljice Katarine 33', '1800', '2020-02-02 22:17:38', '42, 43', '{\"42\": [[], [1920, 1921]], \"43\": [[1943, 1947]]}', null, 'in progress', '2, 2', null, null);
 
 -- ----------------------------
 -- Table structure for restaurants
