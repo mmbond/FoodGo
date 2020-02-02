@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorHelper } from 'src/app/utilities/ErrorHelper';
 import { Meal } from 'src/app/models/meal.model';
@@ -26,8 +26,9 @@ export class MealComponent implements OnInit {
   ingredients: Array<Ingredients>;
   orderIngredients: Array<string>;
   collapse = false;
+  @ViewChildren("checkboxes") checkboxes: QueryList<ElementRef>;
   constructor(private _restaurantService: RestaurantService, private _customerService: CustomerService, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
-
+  
   ngOnInit() {
     this.route.params.subscribe(params => {
       window.scrollTo(0, 0);
@@ -52,7 +53,7 @@ export class MealComponent implements OnInit {
   }
 
   private chooseMealToOrder(id) {
-    this.chosedMeal = { ...this.restaurant.meals[id]};
+    this.chosedMeal = {...this.restaurant.meals[id]};
     this.ingredients = this.restaurant.meals[id].ingredients;
     this.orderIngredients = [];
   }
@@ -63,12 +64,18 @@ export class MealComponent implements OnInit {
       this.orderIngredients.splice(id,1);
     }else{
       this.orderIngredients.push($event.target.value);
+      
     }
+  }
+  
+  uncheckAll() {
+    this.checkboxes.forEach((element) => {
+      element.nativeElement.checked = false;
+    });
   }
 
   private addToOrder() {
     this.chosedMeal.ingredients = this.chosedMeal.ingredients.filter((ing)=> this.orderIngredients.includes(ing.ingredientId.toString()));
-    console.log(this.chosedMeal);
     this.orderMeals.push(this.chosedMeal);
     this.closeMealModal.nativeElement.click();
   }

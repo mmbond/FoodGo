@@ -29,6 +29,7 @@ export class OrderComponent implements OnInit {
   }
 
   private mealsToSet() {
+    // TODO ovde me nesto zeza
   let data = this.mealOrder.map(meal =>  meal.name + " "+ meal.ingredients.map(ingredient => ingredient.name)).reduce(function (acc, curr) {
       if (typeof acc[curr] == 'undefined') {
         acc[curr] = 1;
@@ -40,7 +41,9 @@ export class OrderComponent implements OnInit {
     }, {});
     let mealCount = Object.keys(data).map(key => ({ name: String(key), count: data[key] }));
     this.mealCount = mealCount.map(meal => meal.count);
-    return new Set(this.mealOrder);
+    let a = this.mealOrder.map(meal => meal).filter((value, index, self) => 
+    self.map(meal => meal.name).indexOf(value.name) === index || self.map(i => i.ingredients.map(i=>i.name).join(" ")).indexOf(value.ingredients.map(i=>i.name).join(" ")) === index)
+    return a;
   }
 
   private hasOrders(): boolean {
